@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#102a43"><meta name="description" content="TECHNICAL 24 Sp3 - إدارة العملاء والمبيعات">
+<link rel="manifest" href="manifest.json">
+<title>TECHNICAL 24 Sp3 ❄️</title>
+<style>
+:root{--navy:#102a43;--blue:#176b87;--ice:#e8f6fa;--bg:#f3f7fa;--ink:#183247;--muted:#718096;--line:#e2eaf0;--green:#16845b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial;color:var(--ink)}
+header{background:linear-gradient(135deg,#102a43,#176b87);color:white;padding:22px 18px 25px;border-radius:0 0 25px 25px}
+.brand{font-size:21px;font-weight:850;letter-spacing:.2px}.sub{opacity:.8;font-size:12px;margin-top:4px}
+.wrap{max-width:850px;margin:auto;padding:14px}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:-8px}
+.stat,.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 5px 18px #173c5510}
+.stat small{color:var(--muted)}.stat strong{display:block;font-size:22px;margin-top:5px;color:var(--navy)}
+nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 0}
+nav button,.btn{border:0;border-radius:12px;padding:12px 9px;font-weight:750;background:#e4eef4;color:var(--navy);font-size:13px}
+nav button.active,.primary{background:var(--navy);color:white}
+h2{font-size:18px;margin:4px 0 14px}.panel{margin:12px 0}
+label{display:block;font-size:13px;font-weight:700;margin:11px 0 6px}
+input,textarea,select{width:100%;padding:12px;border:1px solid #d6e1e9;border-radius:10px;background:#fbfdfe;font:inherit;font-size:14px;color:var(--ink)}
+textarea{min-height:75px;resize:vertical}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{cursor:pointer}.primary{width:100%;padding:14px;border-radius:12px;font-size:15px;margin-top:15px}
+.muted{color:var(--muted);font-size:12px}.hidden{display:none!important}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.record{padding:13px 0;border-bottom:1px solid var(--line)}.record:last-child{border:0}
+.record b{font-size:14px}.pill{background:var(--ice);color:#176b87;padding:4px 8px;border-radius:30px;font-size:11px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.tools button{flex:1;min-width:110px}
+.donut{width:150px;height:150px;border-radius:50%;margin:10px auto;background:conic-gradient(#176b87 0 60%,#9bcbd8 60% 82%,#dcecf1 82% 100%);position:relative}
+.donut:after{content:"المبيعات";position:absolute;inset:25px;background:white;border-radius:50%;display:grid;place-items:center;font-weight:800}
+footer{text-align:center;color:#8293a1;font-size:11px;padding:20px}
+@media(min-width:650px){.stats{grid-template-columns:repeat(4,1fr)}nav{grid-template-columns:repeat(4,1fr)}}
+</style></head>
+<body>
+<header><div class="brand">TECHNICAL 24 Sp3 ❄️</div><div class="sub">نظام إدارة العملاء والمبيعات • الريال السعودي</div></header>
+<main class="wrap">
+<section class="stats">
+<div class="stat"><small>مبيعات اليوم</small><strong id="todaySales">0 ر.س</strong></div>
+<div class="stat"><small>مبيعات الشهر</small><strong id="monthSales">0 ر.س</strong></div>
+<div class="stat"><small>عدد العملاء</small><strong id="customerCount">0</strong></div>
+<div class="stat"><small>عدد العمليات</small><strong id="operationCount">0</strong></div>
+</section>
+<nav>
+<button class="active" data-tab="add">＋ تسجيل عملية</button><button data-tab="customers">العملاء</button><button data-tab="reports">التقارير</button><button data-tab="settings">النسخ والتصدير</button>
+</nav>
+<section id="add" class="tab panel">
+<h2>تسجيل عملية جديدة</h2>
+<form id="entryForm">
+<div class="grid2"><div><label>تاريخ العملية</label><input id="date" type="date" required></div><div><label>رقم INQ</label><input id="inq" placeholder="أدخل رقم INQ" required></div></div>
+<label>اسم العميل</label><input id="name" placeholder="اسم العميل" required>
+<div class="grid2"><div><label>رقم الجوال</label><input id="phone" type="tel" placeholder="05xxxxxxxx"></div><div><label>الخدمة المطلوبة</label><select id="service"><option>تنظيف مجاري الدكت</option><option>تنظيف الفلاتر</option><option>غسيل ماكينة</option><option>خدمات متعددة</option><option>أخرى</option></select></div></div>
+<label>عنوان العميل</label><textarea id="address" placeholder="الحي، الشارع، تفاصيل العنوان"></textarea>
+<div class="grid2"><div><label>عدد تنظيف مجاري الدكت</label><input id="duct" type="number" min="0" value="0"></div><div><label>عدد تنظيف الفلتر</label><input id="filter" type="number" min="0" value="0"></div></div>
+<div class="grid2"><div><label>عدد غسيل الماكينة</label><input id="machine" type="number" min="0" value="0"></div><div><label>قيمة البيع (ر.س)</label><input id="amount" type="number" min="0" step=".01" placeholder="0.00" required></div></div>
+<label>ملاحظات</label><textarea id="notes" placeholder="اكتب أي ملاحظات عن العميل أو العملية"></textarea>
+<button class="primary" type="submit">حفظ العملية والعميل</button>
+</form><p class="muted">يتم حفظ البيانات على هذا الجهاز في هذه النسخة التجريبية.</p>
+</section>
+<section id="customers" class="tab panel hidden"><h2>سجل العملاء</h2>
+<label>بحث برقم INQ أو اسم العميل أو الجوال</label><input id="search" placeholder="اكتب رقم INQ للبحث...">
+<div id="customerList"></div></section>
+<section id="reports" class="tab panel hidden"><h2>تقارير المبيعات</h2>
+<div class="grid2"><div><label>نوع التقرير</label><select id="period"><option value="day">يومي</option><option value="month" selected>شهري</option><option value="year">سنوي</option><option value="all">كل العمليات</option></select></div><div><label>التاريخ المرجعي</label><input type="date" id="reportDate"></div></div>
+<div class="stats" style="margin:12px 0"><div class="stat"><small>إجمالي المبيعات</small><strong id="reportSales">0 ر.س</strong></div><div class="stat"><small>عدد العملاء</small><strong id="reportCustomers">0</strong></div><div class="stat"><small>عدد العمليات</small><strong id="reportOps">0</strong></div><div class="stat"><small>متوسط العملية</small><strong id="average">0 ر.س</strong></div></div>
+<div class="donut" id="donut"></div><div id="breakdown" class="muted" style="text-align:center">ملخص الخدمات</div>
+<div class="tools"><button class="btn primary" id="exportCsv">تصدير شيت Excel (CSV)</button></div><div id="reportList"></div>
+</section>
+<section id="settings" class="tab panel hidden"><h2>النسخ الاحتياطي والتصدير</h2><p>احتفظ بنسخة من بياناتك بشكل دوري حتى لا تفقدها عند تغيير الهاتف أو المتصفح.</p>
+<div class="tools"><button class="btn primary" id="backup">تنزيل نسخة احتياطية</button><button class="btn" id="restoreBtn">استيراد نسخة احتياطية</button><input id="restoreFile" type="file" accept="application/json" class="hidden"></div>
+<p class="muted">تنبيه: هذه النسخة تحفظ البيانات محليًا على نفس الجهاز. المزامنة بين عدة أجهزة وتسجيل دخول الموظفين وربط قاعدة بيانات سحابية ستكون في مرحلة الربط القادمة.</p>
+</section>
+<footer>TECHNICAL 24 Sp3 ❄️ — إدارة المبيعات والعملاء</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);let records=JSON.parse(localStorage.getItem('t24_records')||'[]');
+const today=()=>new Date().toISOString().slice(0,10);$('date').value=today();$('reportDate').value=today();
+const money=n=>(Number(n)||0).toLocaleString('ar-SA',{maximumFractionDigits:2})+' ر.س';
+function save(){localStorage.setItem('t24_records',JSON.stringify(records));refresh()}
+function refresh(){let t=today(),m=t.slice(0,7);$('todaySales').textContent=money(records.filter(x=>x.date===t).reduce((a,x)=>a+x.amount,0));$('monthSales').textContent=money(records.filter(x=>x.date.startsWith(m)).reduce((a,x)=>a+x.amount,0));$('customerCount').textContent=new Set(records.map(x=>x.inq)).size;$('operationCount').textContent=records.length;renderCustomers();renderReport()}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.tab').forEach(x=>x.classList.add('hidden'));$(b.dataset.tab).classList.remove('hidden');if(b.dataset.tab==='reports')renderReport()});
+$('entryForm').onsubmit=e=>{e.preventDefault();let r={id:Date.now(),date:$('date').value,inq:$('inq').value.trim(),name:$('name').value.trim(),phone:$('phone').value.trim(),service:$('service').value,address:$('address').value.trim(),duct:+$('duct').value,filter:+$('filter').value,machine:+$('machine').value,amount:+$('amount').value,notes:$('notes').value.trim()};if(records.some(x=>x.inq===r.inq)&&!confirm('رقم INQ مسجل من قبل. هل تريد حفظ عملية جديدة لنفس العميل؟'))return;records.push(r);save();e.target.reset();$('date').value=today();$('duct').value=$('filter').value=$('machine').value=0;alert('تم حفظ العملية بنجاح');};
+function renderCustomers(){let q=($('search').value||'').toLowerCase();let list=records.filter(x=>[x.inq,x.name,x.phone].join(' ').toLowerCase().includes(q)).slice().reverse();$('customerList').innerHTML=list.length?list.map(x=>`<div class="record"><div class="row"><b>${esc(x.name)}</b><span class="pill">${esc(x.inq)}</span></div><div class="muted">${esc(x.date)} • ${esc(x.service)} • ${money(x.amount)}</div><div class="muted">${esc(x.phone)} ${x.address?'• '+esc(x.address):''}</div><div class="muted">دكت: ${x.duct} | فلتر: ${x.filter} | ماكينة: ${x.machine}</div>${x.notes?`<div class="muted">ملاحظة: ${esc(x.notes)}</div>`:''}<div class="tools"><button class="btn" onclick="removeRecord(${x.id})">حذف العملية</button></div></div>`).join(''):'<p class="muted">لا توجد نتائج.</p>'}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+window.removeRecord=id=>{if(confirm('تأكيد حذف العملية؟')){records=records.filter(x=>x.id!==id);save()}};$('search').oninput=renderCustomers;
+function filtered(){let p=$('period').value,d=$('reportDate').value;return records.filter(x=>p==='all'||(p==='day'?x.date===d:p==='month'?x.date.slice(0,7)===d.slice(0,7):x.date.slice(0,4)===d.slice(0,4)))}
+function renderReport(){let a=filtered(),sum=a.reduce((s,x)=>s+x.amount,0);$('reportSales').textContent=money(sum);$('reportCustomers').textContent=new Set(a.map(x=>x.inq)).size;$('reportOps').textContent=a.length;$('average').textContent=money(a.length?sum/a.length:0);let svc={};a.forEach(x=>svc[x.service]=(svc[x.service]||0)+x.amount);let vals=Object.entries(svc).sort((x,y)=>y[1]-x[1]);let total=sum||1,colors=['#176b87','#7ab8c8','#c5e3e9','#e7b65c','#7796ad'];let start=0,stops=vals.map((v,i)=>{let s=start;start+=v[1]/total*100;return `${colors[i%colors.length]} ${s}% ${start}%`});$('donut').style.background=stops.length?'conic-gradient('+stops.join(',')+')':'#e8f1f5';$('breakdown').innerHTML=vals.length?vals.map((v,i)=>`<div>${v[0]}: <b>${money(v[1])}</b> (${Math.round(v[1]/total*100)}%)</div>`).join(''):'لا توجد مبيعات في الفترة المحددة';$('reportList').innerHTML=a.slice().reverse().map(x=>`<div class="record row"><div><b>${esc(x.name)}</b><div class="muted">${esc(x.date)} • INQ: ${esc(x.inq)}</div></div><b>${money(x.amount)}</b></div>`).join('')}
+$('period').onchange=renderReport;$('reportDate').onchange=renderReport;
+$('exportCsv').onclick=()=>{let a=filtered(),rows=[['التاريخ','INQ','اسم العميل','الجوال','العنوان','الخدمة','عدد الدكت','عدد الفلاتر','غسيل ماكينة','المبلغ بالريال','ملاحظات'],...a.map(x=>[x.date,x.inq,x.name,x.phone,x.address,x.service,x.duct,x.filter,x.machine,x.amount,x.notes])];let csv='\\ufeff'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\\r\\n');download(csv,'text/csv;charset=utf-8','TECHNICAL24-sales.csv')};
+function download(data,type,name){let blob=new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url)}
+$('backup').onclick=()=>download(JSON.stringify(records,null,2),'application/json','TECHNICAL24-backup.json');$('restoreBtn').onclick=()=>$('restoreFile').click();$('restoreFile').onchange=async e=>{try{let data=JSON.parse(await e.target.files[0].text());if(!Array.isArray(data))throw 0;if(confirm('سيتم استبدال البيانات الحالية. متابعة؟')){records=data;save();alert('تم استيراد النسخة')}}catch{alert('ملف النسخة غير صالح')}};
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));refresh();
+</script></body></html>
