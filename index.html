@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TC24 | إدارة صيانة المكيفات والمبيعات</title>
+  <title>TC24 | لوحة إدارة الصيانة والمبيعات الشاملة</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -14,6 +14,7 @@
       --accent-beige: #fef3c7;
       --accent-gold: #d97706;
       --accent-green: #059669;
+      --accent-blue: #0284c7;
       --text-dark: #1f2937;
       --text-muted: #6b7280;
       --border-color: #e5e7eb;
@@ -21,6 +22,21 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: var(--bg-main); color: var(--text-dark); padding: 20px; line-height: 1.6; }
+
+    /* الرسالة الترحيبية والهيدر */
+    .welcome-banner {
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      padding: 12px 20px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
 
     header {
       background: linear-gradient(135deg, #78350f, #451a03);
@@ -36,21 +52,23 @@
     header h1 { font-size: 1.6rem; display: flex; align-items: center; gap: 12px; }
     header h1 i { color: #fde68a; }
 
+    /* التبويبات الـ 5 */
     .nav-tabs {
       display: flex;
-      gap: 12px;
+      gap: 8px;
       margin-bottom: 24px;
       background: #f3f4f6;
       padding: 8px;
       border-radius: 14px;
       border: 1px solid var(--border-color);
+      overflow-x: auto;
     }
     .tab-btn {
       flex: 1;
-      padding: 14px;
+      padding: 12px 16px;
       border: none;
       background: transparent;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: var(--text-muted);
       cursor: pointer;
@@ -59,7 +77,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      white-space: nowrap;
     }
     .tab-btn.active {
       background: var(--accent-brown);
@@ -82,12 +101,13 @@
       border-radius: 16px;
       border: 1px solid var(--border-color);
       border-right: 6px solid var(--accent-brown);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
     }
     .stat-card.green { border-color: var(--accent-green); }
     .stat-card.gold { border-color: var(--accent-gold); }
+    .stat-card.blue { border-color: var(--accent-blue); }
     .stat-title { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 6px; }
-    .stat-value { font-size: 1.5rem; font-weight: 800; color: var(--accent-brown); }
+    .stat-value { font-size: 1.4rem; font-weight: 800; color: var(--accent-brown); }
 
     .grid-layout {
       display: grid;
@@ -98,14 +118,14 @@
 
     .card {
       background: var(--card-bg);
-      padding: 26px;
+      padding: 24px;
       border-radius: 18px;
       border: 1px solid var(--border-color);
       box-shadow: 0 4px 12px rgba(0,0,0,0.04);
       margin-bottom: 24px;
     }
     .card h3 {
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -144,36 +164,53 @@
 
     .btn {
       width: 100%;
-      padding: 13px;
+      padding: 12px;
       background: var(--accent-brown);
       color: white;
       border: none;
       border-radius: 10px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 800;
       cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 8px;
+      transition: background 0.2s;
     }
     .btn:hover { background: #5b21b6; }
-    .btn-secondary { background: #fff; color: var(--accent-brown); border: 2px solid #fde68a; width: auto; padding: 10px 18px; }
+    .btn-secondary { background: #fff; color: var(--accent-brown); border: 2px solid #fde68a; width: auto; padding: 10px 16px; }
     .btn-secondary:hover { background: #fef3c7; }
+    .btn-excel { background: #166534; color: white; border: none; }
+    .btn-excel:hover { background: #14532d; }
 
     .action-btns { display: flex; gap: 6px; }
     .btn-action { border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: bold; color: white; }
     .btn-edit { background: #d97706; }
     .btn-delete { background: #dc2626; }
     .btn-print-sm { background: #059669; }
+    .btn-whatsapp { background: #25d366; color: white; }
+
+    /* شارات الحالة */
+    .status-badge { padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; }
+    .status-completed { background: #dcfce7; color: #166534; }
+    .status-pending { background: #fef9c3; color: #854d0e; }
+    .status-inprogress { background: #e0f2fe; color: #075985; }
 
     table { width: 100%; border-collapse: collapse; margin-top: 10px; }
     th, td { padding: 12px 14px; text-align: right; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
     th { background: #fef3c7; color: var(--accent-brown); font-weight: 800; }
 
+    .search-bar-box {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
     @media print {
       body { background: white !important; color: black !important; padding: 0; }
-      header, .nav-tabs, .form-container, .btn, .no-print, .action-btns { display: none !important; }
+      header, .welcome-banner, .nav-tabs, .form-container, .btn, .no-print, .action-btns, .search-bar-box { display: none !important; }
       .card { border: none; box-shadow: none; background: white !important; }
       table { border: 1px solid #ddd; }
       th, td { border: 1px solid #ddd; color: black !important; }
@@ -183,32 +220,45 @@
 </head>
 <body>
 
-  <header>
-    <h1><i class="fa-solid fa-snowflake"></i> تكنيكال 24 - قسم صيانة المكيفات (SP3)</h1>
-    <button class="btn btn-secondary" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة كشف العملاء الشامل</button>
-  </header>
-
-  <div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('sales', this)"><i class="fa-solid fa-users"></i> إدارة العملاء والمبيعات</button>
-    <button class="tab-btn" onclick="switchTab('reports', this)"><i class="fa-solid fa-chart-column"></i> التقارير ومقارنة الشهور</button>
+  <!-- الرسالة الترحيبية -->
+  <div class="welcome-banner">
+    <i class="fa-solid fa-hand"></i> أهلاً وسهلاً بك يا أبو ريان 🤚 - لوحة التحكم الشاملة لإدارة صيانة الدكت والمكيفات (SP3)
   </div>
 
-  <!-- التبويب الأول: العملاء والمبيعات -->
-  <div id="sales" class="tab-content active">
+  <!-- هيدر الشعار -->
+  <header>
+    <h1><i class="fa-solid fa-snowflake"></i> تكنيكال 24 - قسم صيانة المكيفات (SP3)</h1>
+    <div style="display: flex; gap: 10px;">
+      <button class="btn btn-secondary" onclick="exportToExcel()"><i class="fa-solid fa-file-excel"></i> تصدير Excel</button>
+      <button class="btn btn-secondary" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة كشف العملاء</button>
+    </div>
+  </header>
+
+  <!-- التبويبات الـ 5 -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('page-sales', this)"><i class="fa-solid fa-users"></i> 1. العملاء والمبيعات</button>
+    <button class="tab-btn" onclick="switchTab('page-search', this)"><i class="fa-solid fa-magnifying-glass"></i> 2. البحث والواتساب</button>
+    <button class="tab-btn" onclick="switchTab('page-reports', this)"><i class="fa-solid fa-chart-column"></i> 3. التقارير والمقارنات</button>
+    <button class="tab-btn" onclick="switchTab('page-maintenance', this)"><i class="fa-solid fa-bell"></i> 4. الصيانة الدورية (6 شهور)</button>
+    <button class="tab-btn" onclick="switchTab('page-settings', this)"><i class="fa-solid fa-sliders"></i> 5. الإعدادات والنسخ</button>
+  </div>
+
+  <!-- الصفحة 1: العمليات والمبيعات -->
+  <div id="page-sales" class="tab-content active">
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-title">إجمالي المبيعات الإجمالي</div>
+        <div class="stat-title">إجمالي المبيعات</div>
         <div class="stat-value" id="stat-total-sales">0 ر.س</div>
       </div>
       <div class="stat-card green">
-        <div class="stat-title">إجمالي المحصل (كاش / نقدي)</div>
+        <div class="stat-title">المحصل (كاش / نقدي)</div>
         <div class="stat-value" id="stat-cash">0 ر.س</div>
       </div>
       <div class="stat-card gold">
-        <div class="stat-title">إجمالي المحصل (شبكة / تحويل)</div>
+        <div class="stat-title">المحصل (شبكة / تحويل)</div>
         <div class="stat-value" id="stat-card-total">0 ر.س</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card blue">
         <div class="stat-title">عدد العملاء المسجلين</div>
         <div class="stat-value" id="stat-count">0</div>
       </div>
@@ -217,7 +267,7 @@
     <div class="grid-layout">
       <!-- نموذج التسجيل والتعديل -->
       <div class="card form-container">
-        <h3 id="formTitle"><i class="fa-solid fa-user-plus"></i> تسجيل عملية عميل جديدة</h3>
+        <h3 id="formTitle"><i class="fa-solid fa-user-plus"></i> تسجيل عملية صيانة جديدة</h3>
         <form id="serviceForm">
           <input type="hidden" id="editIndex" value="-1">
           <div class="form-group">
@@ -245,6 +295,15 @@
           </div>
 
           <div class="form-group">
+            <label>حالة تنفيذ الخدمة</label>
+            <select id="serviceStatus" class="form-control">
+              <option value="مكتمل">مكتمل</option>
+              <option value="قيد التنفيذ">قيد التنفيذ</option>
+              <option value="معلق">معلق</option>
+            </select>
+          </div>
+
+          <div class="form-group">
             <label>طريقة التحصيل / الدفع</label>
             <select id="payMethod" class="form-control">
               <option value="كاش / نقدي">كاش / نقدي</option>
@@ -266,16 +325,16 @@
 
       <!-- جدول العملاء -->
       <div class="card">
-        <h3><i class="fa-solid fa-address-book"></i> سجل العملاء والمبيعات التفصيلي</h3>
+        <h3><i class="fa-solid fa-address-book"></i> سجل العملاء والمبيعات</h3>
         <div style="overflow-x: auto;">
           <table>
             <thead>
               <tr>
                 <th>الكود</th>
                 <th>التاريخ</th>
-                <th>بيانات العميل</th>
-                <th>الأقسام وطريقة الدفع</th>
-                <th>المبلغ</th>
+                <th>العميل والجوال</th>
+                <th>الأقسام والحالة</th>
+                <th>المبلغ والدفع</th>
                 <th class="no-print">إجراءات</th>
               </tr>
             </thead>
@@ -286,12 +345,51 @@
     </div>
   </div>
 
-  <!-- التبويب الثاني: التقارير -->
-  <div id="reports" class="tab-content">
+  <!-- الصفحة 2: البحث والفلترة والواتساب -->
+  <div id="page-search" class="tab-content">
+    <div class="card">
+      <h3><i class="fa-solid fa-magnifying-glass"></i> البحث والفلترة الذكية والمراسلة الفورية</h3>
+      <div class="search-bar-box">
+        <input type="text" id="searchInput" class="form-control" style="flex:2;" placeholder="ابحث باسم العميل، الكود، أو رقم الجوال..." oninput="filterData()">
+        <select id="filterStatus" class="form-control" style="flex:1;" onchange="filterData()">
+          <option value="all">جميع الحالات</option>
+          <option value="مكتمل">مكتمل</option>
+          <option value="قيد التنفيذ">قيد التنفيذ</option>
+          <option value="معلق">معلق</option>
+        </select>
+        <select id="filterPay" class="form-control" style="flex:1;" onchange="filterData()">
+          <option value="all">جميع طرق الدفع</option>
+          <option value="كاش / نقدي">كاش / نقدي</option>
+          <option value="شبكة">شبكة</option>
+          <option value="تحويل بنكي">تحويل بنكي</option>
+        </select>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>الكود</th>
+              <th>العميل</th>
+              <th>الجوال</th>
+              <th>الأقسام</th>
+              <th>المبلغ</th>
+              <th>الحالة والدفع</th>
+              <th class="no-print">مراسلة واتساب</th>
+            </tr>
+          </thead>
+          <tbody id="searchTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- الصفحة 3: التقارير والرسومات -->
+  <div id="page-reports" class="tab-content">
     <div class="card">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <h3><i class="fa-solid fa-chart-line"></i> رسم بياني لمبيعات ومقارنات الشهور</h3>
-        <button class="btn btn-secondary no-print" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة التقرير</button>
+        <h3><i class="fa-solid fa-chart-line"></i> الرسم البياني لمبيعات الشهور والأداء الفني</h3>
+        <button class="btn btn-secondary no-print" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة التقرير الشامل</button>
       </div>
       <div style="max-height: 400px; position: relative;">
         <canvas id="monthlyChart"></canvas>
@@ -299,8 +397,87 @@
     </div>
   </div>
 
+  <!-- الصفحة 4: الصيانة الدورية 6 شهور -->
+  <div id="page-maintenance" class="tab-content">
+    <div class="card">
+      <h3><i class="fa-solid fa-bell"></i> نظام متابعة الصيانة الدورية (تنبيهات الـ 6 شهور)</h3>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">يتم فرز العملاء الذين مضى على تنظيف دكتات ومكيفات موقعهم 6 أشهر أو أكثر للتواصل وإعادة الصيانة.</p>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>كود العميل</th>
+              <th>اسم العميل</th>
+              <th>الجوال</th>
+              <th>تاريخ آخر صيانة</th>
+              <th>الخدمات المنفذة</th>
+              <th>التنبيه والمراسلة</th>
+            </tr>
+          </thead>
+          <tbody id="maintenanceTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- الصفحة 5: الإعدادات والعمال والنسخ الاحتياطي -->
+  <div id="page-settings" class="tab-content">
+    <div class="grid-layout">
+      <!-- إدارة الفنيين والعمال -->
+      <div class="card">
+        <h3><div class="fa-solid fa-user-gear"></div> ضبط وإضافة الفنيين والعمال</h3>
+        <form id="empForm">
+          <div class="form-group">
+            <label>اسم الفني / العامل</label>
+            <input type="text" id="empName" class="form-control" required placeholder="اسم الفني">
+          </div>
+          <div class="form-group">
+            <label>المسمى الوظيفي</label>
+            <input type="text" id="empRole" class="form-control" required placeholder="فني دكتات / مساعد">
+          </div>
+          <div class="form-group">
+            <label>رقم الجوال</label>
+            <input type="tel" id="empPhone" class="form-control" placeholder="05xxxxxxxx">
+          </div>
+          <button type="submit" class="btn"><i class="fa-solid fa-user-plus"></i> حفظ بيانات الموظف</button>
+        </form>
+
+        <table style="margin-top: 15px;">
+          <thead>
+            <tr>
+              <th>الاسم</th>
+              <th>الوظيفة</th>
+              <th>الجوال</th>
+            </tr>
+          </thead>
+          <tbody id="empTableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- النسخ الاحتياطي والتصدير -->
+      <div class="card">
+        <h3><i class="fa-solid fa-database"></i> النسخ الاحتياطي وتصدير البيانات</h3>
+        <p style="color: var(--text-muted); margin-bottom: 15px;">تصدير سجل المبيعات بالكامل، أو حفظ نسخة احتياطية واستعادتها لعدم ضياع البيانات.</p>
+        
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <button class="btn btn-excel" onclick="exportToExcel()"><i class="fa-solid fa-file-excel"></i> تصدير جميع البيانات إلى شيت Excel / CSV</button>
+          <button class="btn" style="background:#0284c7;" onclick="backupData()"><i class="fa-solid fa-download"></i> تحميل نسخة احتياطية (Backup JSON)</button>
+          
+          <div style="border-top: 1px dashed var(--border-color); padding-top: 10px; margin-top: 10px;">
+            <label style="font-weight: bold; margin-bottom: 6px; display: block;">استعادة نسخة احتياطية سابقًا:</label>
+            <input type="file" id="restoreFile" accept=".json" class="form-control" onchange="restoreData(event)">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     let salesData = JSON.parse(localStorage.getItem('tc24_sales')) || [];
+    let empData = JSON.parse(localStorage.getItem('tc24_emps')) || [
+      { name: "إسلام مرزوق أحمد", role: "المشرف الفني العام", phone: "-" }
+    ];
+
     document.getElementById('serviceDate').valueAsDate = new Date();
 
     function switchTab(tabId, btn) {
@@ -308,7 +485,11 @@
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById(tabId).classList.add('active');
-      if (tabId === 'reports') renderChart();
+
+      if (tabId === 'page-reports') renderChart();
+      if (tabId === 'page-search') filterData();
+      if (tabId === 'page-maintenance') renderMaintenance();
+      if (tabId === 'page-settings') renderEmployees();
     }
 
     function renderSales() {
@@ -322,16 +503,19 @@
         else card += Number(s.cost);
 
         const listText = Array.isArray(s.servicesList) ? s.servicesList.join('، ') : s.service;
+        const statusClass = s.status === 'مكتمل' ? 'status-completed' : (s.status === 'قيد التنفيذ' ? 'status-inprogress' : 'status-pending');
+
         table.innerHTML += `
           <tr>
             <td><strong style="color: var(--accent-brown);">${s.code}</strong></td>
             <td>${s.date}</td>
             <td><strong>${s.client}</strong><br><small style="color:var(--text-muted);"><i class="fa-solid fa-phone"></i> ${s.phone || '-'}</small></td>
-            <td>${listText}<br><small style="color:var(--accent-gold); font-weight:bold;">[${s.payMethod}]</small></td>
-            <td><strong>${Number(s.cost).toLocaleString()} ر.س</strong></td>
+            <td>${listText}<br><span class="status-badge ${statusClass}">${s.status || 'مكتمل'}</span></td>
+            <td><strong>${Number(s.cost).toLocaleString()} ر.س</strong><br><small style="color:var(--accent-gold); font-weight:bold;">[${s.payMethod}]</small></td>
             <td class="no-print">
               <div class="action-btns">
                 <button class="btn-action btn-print-sm" onclick="printInvoice(${index})" title="طباعة"><i class="fa-solid fa-print"></i></button>
+                <button class="btn-action btn-whatsapp" onclick="sendWhatsapp(${index})" title="واتساب"><i class="fa-brands fa-whatsapp"></i></button>
                 <button class="btn-action btn-edit" onclick="editSale(${index})" title="تعديل"><i class="fa-solid fa-pen"></i></button>
                 <button class="btn-action btn-delete" onclick="deleteSale(${index})" title="حذف"><i class="fa-solid fa-trash"></i></button>
               </div>
@@ -365,6 +549,7 @@
         client: document.getElementById('clientName').value,
         phone: document.getElementById('clientPhone').value,
         servicesList: servicesList,
+        status: document.getElementById('serviceStatus').value,
         payMethod: document.getElementById('payMethod').value,
         cost: document.getElementById('serviceCost').value,
         date: document.getElementById('serviceDate').value
@@ -374,7 +559,7 @@
         salesData[editIdx] = dataObj;
         document.getElementById('editIndex').value = "-1";
         document.getElementById('submitBtn').innerHTML = '<i class="fa-solid fa-save"></i> حفظ البيانات';
-        document.getElementById('formTitle').innerHTML = '<i class="fa-solid fa-user-plus"></i> تسجيل عملية عميل جديدة';
+        document.getElementById('formTitle').innerHTML = '<i class="fa-solid fa-user-plus"></i> تسجيل عملية صيانة جديدة';
       } else {
         salesData.unshift(dataObj);
       }
@@ -389,6 +574,7 @@
       document.getElementById('clientCode').value = s.code;
       document.getElementById('clientName').value = s.client;
       document.getElementById('clientPhone').value = s.phone || '';
+      document.getElementById('serviceStatus').value = s.status || 'مكتمل';
       document.getElementById('payMethod').value = s.payMethod || 'كاش / نقدي';
       document.getElementById('serviceCost').value = s.cost;
       document.getElementById('serviceDate').value = s.date;
@@ -400,6 +586,7 @@
       document.getElementById('editIndex').value = index;
       document.getElementById('submitBtn').innerHTML = '<i class="fa-solid fa-check-double"></i> تحديث بيانات العميل';
       document.getElementById('formTitle').innerHTML = '<i class="fa-solid fa-user-pen"></i> تعديل بيانات العميل';
+      switchTab('page-sales', document.querySelectorAll('.tab-btn')[0]);
     }
 
     function deleteSale(index) {
@@ -409,6 +596,148 @@
       }
     }
 
+    // إرسال الفاتورة بالواتساب
+    function sendWhatsapp(index) {
+      const s = salesData[index];
+      const listText = Array.isArray(s.servicesList) ? s.servicesList.join(' - ') : s.service;
+      const phoneClean = s.phone.replace(/[^0-9]/g, '');
+      const msg = `مرحباً بك يا ${s.client} 👋%0Aإليك تفاصيل فاتورة خدمة الصيانة من شركة تكنيكال 24:%0A- كود العميل: ${s.code}%0A- الخدمات المنفذة: ${listText}%0A- تاريخ التنفيذ: ${s.date}%0A- طريقة الدفع: ${s.payMethod}%0A- المبلغ الإجمالي: ${Number(s.cost).toLocaleString()} ريال%0A%0Aشكراً لتعاملكم معنا!`;
+      window.open(`https://wa.me/${phoneClean}?text=${msg}`, '_blank');
+    }
+
+    // الفلترة والبحث
+    function filterData() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const statusF = document.getElementById('filterStatus').value;
+      const payF = document.getElementById('filterPay').value;
+
+      const filtered = salesData.filter(s => {
+        const matchQ = s.client.toLowerCase().includes(query) || s.code.toLowerCase().includes(query) || (s.phone && s.phone.includes(query));
+        const matchS = statusF === 'all' || s.status === statusF;
+        const matchP = payF === 'all' || s.payMethod === payF;
+        return matchQ && matchS && matchP;
+      });
+
+      const table = document.getElementById('searchTableBody');
+      table.innerHTML = '';
+      filtered.forEach((s, index) => {
+        const listText = Array.isArray(s.servicesList) ? s.servicesList.join('، ') : s.service;
+        table.innerHTML += `
+          <tr>
+            <td><strong>${s.code}</strong></td>
+            <td>${s.client}</td>
+            <td>${s.phone || '-'}</td>
+            <td>${listText}</td>
+            <td>${Number(s.cost).toLocaleString()} ر.س</td>
+            <td>${s.status || 'مكتمل'} | ${s.payMethod}</td>
+            <td>
+              <button class="btn-action btn-whatsapp" onclick="sendWhatsapp(${index})"><i class="fa-brands fa-whatsapp"></i> إرسال واتساب</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    // تنبيهات الصيانة الدورية (6 شهور)
+    function renderMaintenance() {
+      const table = document.getElementById('maintenanceTableBody');
+      table.innerHTML = '';
+      const sixMonthsAgo = new Date();
+      sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
+      salesData.forEach((s, index) => {
+        const serviceDate = new Date(s.date);
+        if (serviceDate <= sixMonthsAgo) {
+          const listText = Array.isArray(s.servicesList) ? s.servicesList.join('، ') : s.service;
+          table.innerHTML += `
+            <tr>
+              <td><strong>${s.code}</strong></td>
+              <td>${s.client}</td>
+              <td>${s.phone || '-'}</td>
+              <td style="color:#dc2626; font-weight:bold;">${s.date}</td>
+              <td>${listText}</td>
+              <td>
+                <button class="btn-action btn-whatsapp" onclick="sendWhatsapp(${index})"><i class="fa-brands fa-whatsapp"></i> تذكير بالصيانة</button>
+              </td>
+            </tr>
+          `;
+        }
+      });
+
+      if (table.innerHTML === '') {
+        table.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">لا يوجد عملاء يستحقون الصيانة الدورية حالياً.</td></tr>';
+      }
+    }
+
+    // إدارة الموظفين والعمال
+    function renderEmployees() {
+      const table = document.getElementById('empTableBody');
+      table.innerHTML = '';
+      empData.forEach(e => {
+        table.innerHTML += `<tr><td>${e.name}</td><td>${e.role}</td><td>${e.phone}</td></tr>`;
+      });
+      localStorage.setItem('tc24_emps', JSON.stringify(empData));
+    }
+
+    document.getElementById('empForm').onsubmit = (e) => {
+      e.preventDefault();
+      empData.push({
+        name: document.getElementById('empName').value,
+        role: document.getElementById('empRole').value,
+        phone: document.getElementById('empPhone').value
+      });
+      document.getElementById('empForm').reset();
+      renderEmployees();
+    };
+
+    // تصدير Excel / CSV
+    function exportToExcel() {
+      if (salesData.length === 0) {
+        alert('لا توجد بيانات للتصدير!');
+        return;
+      }
+      let csv = '\uFEFFكود العميل,اسم العميل,رقم الجوال,التاريخ,الخدمات,الحالة,طريقة الدفع,التكلفة\n';
+      salesData.forEach(s => {
+        const listText = Array.isArray(s.servicesList) ? s.servicesList.join(' - ') : s.service;
+        csv += `"${s.code}","${s.client}","${s.phone || ''}","${s.date}","${listText}","${s.status || 'مكتمل'}","${s.payMethod}","${s.cost}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `سجل_عملاء_تكنيكال24_${new Date().toISOString().slice(0,10)}.csv`;
+      link.click();
+    }
+
+    // النسخ الاحتياطي واستعادته
+    function backupData() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(salesData));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `TC24_Backup_${new Date().toISOString().slice(0,10)}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    function restoreData(event) {
+      const fileReader = new FileReader();
+      fileReader.onload = function () {
+        try {
+          const parsed = JSON.parse(fileReader.result);
+          if (Array.isArray(parsed)) {
+            salesData = parsed;
+            renderSales();
+            alert('تم استعادة النسخة الاحتياطية بنجاح!');
+          }
+        } catch (e) {
+          alert('ملف غير صالح!');
+        }
+      };
+      fileReader.readAsText(event.target.files[0]);
+    }
+
+    // الطباعة الشاملة المعتمدة
     function printInvoice(index) {
       const s = salesData[index];
       const listText = Array.isArray(s.servicesList) ? s.servicesList.join(' - ') : s.service;
@@ -426,21 +755,28 @@
             .row { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px dashed #eee; padding-bottom: 6px; }
             .label { font-weight: bold; color: #4b5563; }
             .total { background: #fef3c7; padding: 12px; border-radius: 8px; text-align: center; font-size: 1.3rem; font-weight: bold; color: #78350f; margin-top: 20px; }
+            .footer-sign { margin-top: 40px; border-top: 2px solid #78350f; padding-top: 15px; display: flex; justify-content: space-between; font-weight: bold; color: #78350f; }
           </style>
         </head>
         <body>
           <div class="card">
             <div class="header">
               <h2>شركة تكنيكال 24 - Technical 24</h2>
-              <p>إيصال خدمة قسم صيانة المكيفات (SP3)</p>
+              <p>إيصال خدمة قسم صيانة ونظافة المكيفات والتهوية (SP3)</p>
             </div>
             <div class="row"><span class="label">كود العميل:</span><span>${s.code}</span></div>
             <div class="row"><span class="label">اسم العميل:</span><span>${s.client}</span></div>
             <div class="row"><span class="label">رقم الجوال:</span><span>${s.phone || '-'}</span></div>
             <div class="row"><span class="label">تاريخ التنفيذ:</span><span>${s.date}</span></div>
+            <div class="row"><span class="label">حالة الخدمة:</span><span>${s.status || 'مكتمل'}</span></div>
             <div class="row"><span class="label">طريقة التحصيل:</span><span>${s.payMethod}</span></div>
             <div class="row"><span class="label">الأقسام والخدمات:</span><span>${listText}</span></div>
             <div class="total">المبلغ الإجمالي: ${Number(s.cost).toLocaleString()} ريال سعودي</div>
+            
+            <div class="footer-sign">
+              <div>المشرف / إسلام مرزوق أحمد</div>
+              <div>قسم المكيفات SP3</div>
+            </div>
           </div>
         </body>
         </html>
