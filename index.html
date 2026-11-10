@@ -38,10 +38,33 @@ th{background:#fef3c7;color:#78350f}
 .badge{padding:4px 8px;border-radius:6px;font-size:.8rem;font-weight:800}
 .ok{background:#dcfce7;color:#166534}.wait{background:#fef9c3;color:#854d0e}.run{background:#e0f2fe;color:#075985}
 .act{border:none;padding:6px 9px;border-radius:6px;color:#fff;cursor:pointer}
-.edit{background:#d97706}.del{background:#dc2626}.wa{background:#25d366}.pr{background:#059669}
+.edit{background:#d97706}.del{background:#dc2626}.pr{background:#059669}
 .search{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
 .search input,.search select{flex:1;min-width:180px}
 @media print{header,nav,.no-print{display:none!important}}
+
+/* تصميم الشريط المتحرك المحترف */
+.ticker-container {
+    background: linear-gradient(135deg, #78350f, #d97706);
+    color: #fff;
+    padding: 10px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+    margin-bottom: 20px;
+}
+.ticker-text {
+    display: inline-block;
+    padding-left: 100%;
+    animation: ticker 25s linear infinite;
+    font-weight: bold;
+    font-size: 1.05rem;
+}
+@keyframes ticker {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-100%, 0, 0); }
+}
 
 /* تصميم واجهة تسجيل الدخول للأدمن */
 #loginOverlay {
@@ -116,9 +139,14 @@ th{background:#fef3c7;color:#78350f}
   </div>
 </header>
 
+<!-- الشريط المتحرك الاحترافي -->
+<div class="ticker-container">
+  <div class="ticker-text">✨ شركة تكنيكال 24 لتنظيف وصيانة المكيفات - الراحة والجودة عنواننا دائمًا ✨ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🛠️ نعمل بدقة واحترافية لخدمتكم على مدار الساعة 🛠️</div>
+</div>
+
 <nav>
   <button class="nav-btn active" onclick="goPage('p1',this)">1. العملاء والمبيعات</button>
-  <button class="nav-btn" onclick="goPage('p2',this)">2. البحث والواتساب</button>
+  <button class="nav-btn" onclick="goPage('p2',this)">2. البحث</button>
   <button class="nav-btn" onclick="goPage('p3',this)">3. التقارير الشهرية</button>
   <button class="nav-btn" onclick="goPage('p4',this)">4. الصيانة الدورية</button>
   <button class="nav-btn" onclick="goPage('p5',this)">5. الإعدادات والنسخ</button>
@@ -169,7 +197,7 @@ th{background:#fef3c7;color:#78350f}
 
 <!-- صفحة 2 -->
 <section id="p2" class="page">
-  <div class="banner">صفحة البحث والواتساب - ابحث وابعت الفاتورة على طول</div>
+  <div class="banner">صفحة البحث الذكي</div>
   <div class="card">
     <h3>البحث والفلترة الذكية</h3>
     <div class="search">
@@ -178,7 +206,7 @@ th{background:#fef3c7;color:#78350f}
       <select id="filterPay" onchange="filterData()"><option value="all">جميع طرق الدفع</option><option>كاش / نقدي</option><option>شبكة</option><option>تحويل بنكي</option></select>
     </div>
     <div style="overflow-x:auto"><table>
-      <thead><tr><th>الكود</th><th>العميل</th><th>الجوال</th><th>الخدمات</th><th>المبلغ</th><th>واتساب</th></tr></thead>
+      <thead><tr><th>الكود</th><th>العميل</th><th>الجوال</th><th>الخدمات</th><th>المبلغ</th></tr></thead>
       <tbody id="searchBody"></tbody>
     </table></div>
   </div>
@@ -217,7 +245,7 @@ th{background:#fef3c7;color:#78350f}
   <div class="banner">صفحة الصيانة الدورية - العملاء اللي عدى عليهم 6 شهور أو أكثر</div>
   <div class="card"><h3>تنبيهات الصيانة الدورية</h3>
     <div style="overflow-x:auto"><table>
-      <thead><tr><th>الكود</th><th>العميل</th><th>الجوال</th><th>آخر صيانة</th><th>الخدمات</th><th>تذكير</th></tr></thead>
+      <thead><tr><th>الكود</th><th>العميل</th><th>الجوال</th><th>آخر صيانة</th><th>الخدمات</th></tr></thead>
       <tbody id="maintBody"></tbody>
     </table></div>
   </div>
@@ -309,7 +337,7 @@ function renderSales(){
     total += cost;
     if(s.payMethod==='كاش / نقدي') cash += cost; else card += cost;
     let services = Array.isArray(s.servicesList) ? s.servicesList.join('، ') : (s.service || '');
-    html += '<tr><td><b>'+s.code+'</b><br><small>'+s.date+'</small></td><td><b>'+s.client+'</b><br><small>'+(s.phone||'')+'</small></td><td>'+services+'<br><span class="badge '+statusClass(s.status)+'">'+(s.status||'مكتمل')+'</span></td><td><b>'+cost.toLocaleString()+' ر.س</b><br><small>['+s.payMethod+']</small></td><td class="no-print"><button class="act pr" onclick="printInvoice('+i+')">طباعة</button> <button class="act wa" onclick="sendWA('+i+')">واتساب</button> <button class="act edit" onclick="editSale('+i+')">تعديل</button> <button class="act del" onclick="deleteSale('+i+')">حذف</button></td></tr>';
+    html += '<tr><td><b>'+s.code+'</b><br><small>'+s.date+'</small></td><td><b>'+s.client+'</b><br><small>'+(s.phone||'')+'</small></td><td>'+services+'<br><span class="badge '+statusClass(s.status)+'">'+(s.status||'مكتمل')+'</span></td><td><b>'+cost.toLocaleString()+' ر.س</b><br><small>['+s.payMethod+']</small></td><td class="no-print"><button class="act pr" onclick="printInvoice('+i+')">طباعة</button> <button class="act edit" onclick="editSale('+i+')">تعديل</button> <button class="act del" onclick="deleteSale('+i+')">حذف</button></td></tr>';
   });
   if($('salesBody')) $('salesBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا توجد بيانات بعد، سجّل أول عميل</td></tr>';
   if($('sTotal')) $('sTotal').innerText = total.toLocaleString() + ' ر.س';
@@ -372,44 +400,34 @@ function deleteSale(i){
   }
 }
 
-function sendWA(i){
-  let s = salesData[i];
-  if(!s) return;
-  let phone = (s.phone || '').replace(/[^0-9]/g,'');
-  if(!phone){ alert('رقم الجوال غير موجود'); return; }
-  let services = Array.isArray(s.servicesList) ? s.servicesList.join(' - ') : '';
-  let msg = 'مرحباً بك يا ' + s.client + '، إليك تفاصيل خدمة الصيانة من تكنيكال 24: كود العميل ' + s.code + '، الخدمات: ' + services + '، التاريخ: ' + s.date + '، طريقة الدفع: ' + s.payMethod + '، المبلغ: ' + (Number(s.cost)||0).toLocaleString() + ' ريال. شكراً لتعاملكم معنا!';
-  window.open('https://wa.me/' + phone + '?text=' + encodeURIComponent(msg), '_blank');
-}
-
 function filterData(){
   let q = $('searchInput').value.toLowerCase();
   let st = $('filterStatus').value;
   let pay = $('filterPay').value;
   let html = '';
-  salesData.forEach((s, origIndex)=>{
+  salesData.forEach((s)=>{
     let matchQ = s.client.toLowerCase().includes(q) || s.code.toLowerCase().includes(q) || (s.phone||'').includes(q);
     let matchS = st==='all' || s.status===st;
     let matchP = pay==='all' || s.payMethod===pay;
     if(matchQ && matchS && matchP){
       let services = Array.isArray(s.servicesList) ? s.servicesList.join('، ') : '';
-      html += '<tr><td>'+s.code+'</td><td>'+s.client+'</td><td>'+(s.phone||'-')+'</td><td>'+services+'</td><td>'+(Number(s.cost)||0).toLocaleString()+' ر.س</td><td><button class="act wa" onclick="sendWA('+origIndex+')">إرسال واتساب</button></td></tr>';
+      html += '<tr><td>'+s.code+'</td><td>'+s.client+'</td><td>'+(s.phone||'-')+'</td><td>'+services+'</td><td>'+(Number(s.cost)||0).toLocaleString()+' ر.س</td></tr>';
     }
   });
-  $('searchBody').innerHTML = html || '<tr><td colspan="6" style="text-align:center">لا توجد نتائج</td></tr>';
+  $('searchBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا توجد نتائج</td></tr>';
 }
 
 function renderMaint(){
   let ago = new Date();
   ago.setMonth(ago.getMonth()-6);
   let html = '';
-  salesData.forEach((s,i)=>{
+  salesData.forEach((s)=>{
     if(s.date && new Date(s.date) <= ago){
       let services = Array.isArray(s.servicesList) ? s.servicesList.join('، ') : '';
-      html += '<tr><td>'+s.code+'</td><td>'+s.client+'</td><td>'+(s.phone||'-')+'</td><td style="color:#dc2626;font-weight:800">'+s.date+'</td><td>'+services+'</td><td><button class="act wa" onclick="sendWA('+i+')">تذكير بالصيانة</button></td></tr>';
+      html += '<tr><td>'+s.code+'</td><td>'+s.client+'</td><td>'+(s.phone||'-')+'</td><td style="color:#dc2626;font-weight:800">'+s.date+'</td><td>'+services+'</td></tr>';
     }
   });
-  $('maintBody').innerHTML = html || '<tr><td colspan="6" style="text-align:center">لا يوجد عملاء يستحقون الصيانة حالياً</td></tr>';
+  $('maintBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا يوجد عملاء يستحقون الصيانة حالياً</td></tr>';
 }
 
 function renderEmps(){
@@ -497,7 +515,7 @@ function printSingleMonth(){
         </table>
         <h3 style="text-align:left;background:#fef3c7;padding:10px;border-radius:8px;">إجمالي مبيعات الشهر: ${totalMonth.toLocaleString()} ريال</h3>
         <div style="margin-top:40px;text-align:left;font-weight:bold;font-size:1.1rem;border-top:1px dashed #78350f;padding-top:15px;">
-          المشرف الفني العام: إسلام مرزوق أحمد
+          المشرف: إسلام مرزوق أحمد
         </div>
       </div>
     </body></html>
