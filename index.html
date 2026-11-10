@@ -3,183 +3,159 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TC24 - دخول الأدمن</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<title>TC24</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,sans-serif}
-body{background:#fdfbf7;color:#1f2937;line-height:1.6}
-header{background:linear-gradient(135deg,#78350f,#451a03);color:#fff;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-nav{background:#fff;border-bottom:1px solid #e5e7eb;padding:10px;display:flex;gap:8px;overflow-x:auto;position:sticky;top:0;z-index:10}
-.nav-btn{flex:1;white-space:nowrap;padding:11px;border:1px solid #e5e7eb;background:#f9fafb;border-radius:10px;font-weight:800;cursor:pointer;color:#6b7280}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Tahoma,sans-serif}
+body{background:#fdfbf7}
+header{background:#78350f;color:#fff;padding:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+nav{background:#fff;padding:10px;display:flex;gap:8px;overflow-x:auto;position:sticky;top:0}
+.nav-btn{flex:1;white-space:nowrap;padding:11px;border:1px solid #e5e7eb;background:#f9fafb;border-radius:10px;font-weight:800;cursor:pointer}
 .nav-btn.active{background:#78350f;color:#fff}
-.page{display:none;padding:20px;max-width:1200px;margin:auto}
+.page{display:none;padding:20px;max-width:1000px;margin:auto}
 .page.active{display:block}
-.banner{background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:12px;border-radius:12px;margin-bottom:16px;font-weight:700}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px}
-.stat{background:#fff;padding:18px;border-radius:14px;border:1px solid #e5e7eb;border-right:6px solid #78350f}
-.stat b{font-size:1.35rem;color:#78350f}
-.grid{display:grid;grid-template-columns:1fr 2fr;gap:20px}
-@media(max-width:900px){.grid{grid-template-columns:1fr}}
-.card{background:#fff;padding:22px;border-radius:16px;border:1px solid #e5e7eb;margin-bottom:20px}
-.card h3{color:#78350f;margin-bottom:14px;border-bottom:2px solid #fef3c7;padding-bottom:8px}
-label{display:block;font-weight:700;font-size:.9rem;margin:12px 0 5px}
+.banner{background:#fef3c7;padding:12px;border-radius:12px;margin-bottom:14px;font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:16px}
+.stat{background:#fff;padding:16px;border-radius:12px;border:1px solid #e5e7eb;border-right:6px solid #78350f}
+.stat b{color:#78350f;font-size:1.3rem}
+.card{background:#fff;padding:20px;border-radius:14px;border:1px solid #e5e7eb;margin-bottom:16px}
+label{display:block;font-weight:700;margin:10px 0 4px;font-size:.9rem}
 input,select{width:100%;padding:11px;border:1px solid #e5e7eb;border-radius:10px;background:#fafafa}
-.services{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#fffbeb;padding:12px;border:1px solid #fde68a;border-radius:10px}
-.services label{display:flex;gap:8px;margin:0}
-.btn{width:100%;padding:12px;background:#78350f;color:#fff;border:none;border-radius:10px;font-weight:800;cursor:pointer;margin-top:14px}
-.btn2{padding:9px 14px;background:#fff;color:#78350f;border:2px solid #fde68a;border-radius:10px;font-weight:800;cursor:pointer}
+.btn{width:100%;padding:12px;background:#78350f;color:#fff;border:none;border-radius:10px;font-weight:800;cursor:pointer;margin-top:12px}
+.btn2{padding:8px 12px;background:#fff;color:#78350f;border:2px solid #fde68a;border-radius:10px;font-weight:800;cursor:pointer}
 table{width:100%;border-collapse:collapse}
-th,td{padding:11px;border-bottom:1px solid #e5e7eb;text-align:right;font-size:.9rem}
+th,td{padding:10px;border-bottom:1px solid #e5e7eb;text-align:right;font-size:.9rem}
 th{background:#fef3c7;color:#78350f}
-.badge{padding:4px 8px;border-radius:6px;font-size:.8rem;font-weight:800}
-.ok{background:#dcfce7;color:#166534}.wait{background:#fef9c3;color:#854d0e}.run{background:#e0f2fe;color:#075985}
 .act{border:none;padding:6px 9px;border-radius:6px;color:#fff;cursor:pointer}
-.edit{background:#d97706}.del{background:#dc2626}.wa{background:#25d366}.pr{background:#059669}
-.search{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-.search input,.search select{flex:1;min-width:180px}
+.del{background:#dc2626}.wa{background:#25d366}.edit{background:#d97706}
 </style>
 </head>
 <body>
 
-<!-- شاشة الدخول -->
-<div id="loginScreen" style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#78350f,#451a03);padding:20px;">
-  <div style="background:#fff;width:100%;max-width:400px;padding:28px;border-radius:20px;text-align:center;">
-    <div style="font-size:50px;">❄️</div>
+<div id="loginScreen" style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#78350f;padding:20px;">
+  <div style="background:#fff;width:100%;max-width:380px;padding:26px;border-radius:18px;text-align:center;">
+    <div style="font-size:45px;">❄️</div>
     <h1 style="color:#78350f;">TC24</h1>
-    <h2>دخول الأدمن</h2>
-    <p style="color:#6b7280;">أهلاً يا أبو ريان، سجّل دخولك</p>
-    <form id="loginForm" style="text-align:right;margin-top:14px;">
-      <label>اسم المستخدم</label><input id="loginUser" required placeholder="admin">
-      <label>كلمة المرور</label><input id="loginPass" type="password" required placeholder="••••••">
-      <p id="loginError" style="color:#dc2626;font-weight:700;display:none;margin-top:8px;">اليوزر أو الباسورد غلط</p>
-      <button class="btn" type="submit">دخول</button>
-    </form>
-    <div style="background:#fef3c7;padding:10px;border-radius:10px;margin-top:14px;font-size:.85rem;">تجريبي: <b>admin</b> / <b>123456</b></div>
-    <label style="display:flex;gap:6px;justify-content:center;margin-top:10px;font-size:.85rem;"><input type="checkbox" id="rememberMe" style="width:auto;"> تذكرني</label>
+    <h3>دخول الأدمن</h3>
+    <div style="text-align:right;margin-top:12px;">
+      <label>اسم المستخدم</label><input id="loginUser">
+      <label>كلمة المرور</label><input id="loginPass" type="password">
+      <p id="loginError" style="color:red;font-weight:700;display:none;">غلط، جرب تاني</p>
+      <button class="btn" onclick="doLogin()">دخول</button>
+    </div>
+    <p style="background:#fef3c7;padding:8px;border-radius:8px;margin-top:12px;font-size:.85rem;">admin / 123456</p>
   </div>
 </div>
 
-<!-- التطبيق كله جوه دي ومخفي لحد الدخول -->
 <div id="appScreen" style="display:none;">
-<header>
-  <h1>❄️ تكنيكال 24 - SP3</h1>
-  <div>
-    <button class="btn2" onclick="changePassword()">تغيير الباسورد</button>
-    <button class="btn2" onclick="logout()">خروج</button>
-  </div>
-</header>
+<header><h2>❄️ تكنيكال 24 - SP3</h2><button class="btn2" onclick="logout()">خروج</button></header>
 <nav>
-  <button class="nav-btn active" onclick="goPage('p1',this)">1. العملاء والمبيعات</button>
-  <button class="nav-btn" onclick="goPage('p2',this)">2. البحث والواتساب</button>
+  <button class="nav-btn active" onclick="goPage('p1',this)">1. العملاء</button>
+  <button class="nav-btn" onclick="goPage('p2',this)">2. البحث</button>
   <button class="nav-btn" onclick="goPage('p3',this)">3. التقارير</button>
-  <button class="nav-btn" onclick="goPage('p4',this)">4. الصيانة الدورية</button>
-  <button class="nav-btn" onclick="goPage('p5',this)">5. الإعدادات</button>
+  <button class="nav-btn" onclick="goPage('p4',this)">4. الصيانة</button>
 </nav>
-
 <section id="p1" class="page active">
-  <div class="banner">نسخة تجريبية جاهزة - 6 عملاء وهميين، جرّب من غير ما تدخل حاجة</div>
+  <div class="banner">نسخة تجريبية جاهزة - اكتب admin / 123456 ودخلت</div>
   <div class="stats">
-    <div class="stat">إجمالي المبيعات<br><b id="sTotal">0</b></div>
-    <div class="stat">كاش<br><b id="sCash">0</b></div>
-    <div class="stat">شبكة / تحويل<br><b id="sCard">0</b></div>
+    <div class="stat">إجمالي<br><b id="sTotal">0</b></div>
     <div class="stat">عدد العملاء<br><b id="sCount">0</b></div>
   </div>
-  <div class="grid">
-    <div class="card"><h3>تسجيل صيانة جديدة</h3>
-      <form id="serviceForm">
-        <input type="hidden" id="editIndex" value="-1">
-        <label>كود العميل</label><input id="clientCode" required>
-        <label>اسم العميل</label><input id="clientName" required>
-        <label>الجوال</label><input id="clientPhone" required>
-        <label>الخدمات</label>
-        <div class="services">
-          <label><input type="checkbox" name="servicePart" value="تنظيف الدكت"> تنظيف الدكت</label>
-          <label><input type="checkbox" name="servicePart" value="فلتر"> فلتر</label>
-          <label><input type="checkbox" name="servicePart" value="تنظيف الاسبلت"> تنظيف الاسبلت</label>
-          <label><input type="checkbox" name="servicePart" value="المكينة"> المكينة</label>
-        </div>
-        <label>الحالة</label><select id="serviceStatus"><option>مكتمل</option><option>قيد التنفيذ</option><option>معلق</option></select>
-        <label>الدفع</label><select id="payMethod"><option>كاش / نقدي</option><option>شبكة</option><option>تحويل بنكي</option></select>
-        <label>التكلفة</label><input type="number" id="serviceCost" required>
-        <label>التاريخ</label><input type="date" id="serviceDate" required>
-        <button class="btn" type="submit">حفظ</button>
-      </form>
-    </div>
-    <div class="card"><h3>سجل العملاء</h3><div style="overflow-x:auto"><table><thead><tr><th>الكود</th><th>العميل</th><th>الخدمات</th><th>المبلغ</th><th>إجراءات</th></tr></thead><tbody id="salesBody"></tbody></table></div></div>
+  <div class="card"><h3>سجل العملاء التجريبي</h3><table><thead><tr><th>الكود</th><th>العميل</th><th>المبلغ</th><th>إجراء</th></tr></thead><tbody id="salesBody"></tbody></table></div>
+  <div class="card"><h3>إضافة عميل</h3>
+    <label>الكود</label><input id="clientCode">
+    <label>الاسم</label><input id="clientName">
+    <label>الجوال</label><input id="clientPhone">
+    <label>التكلفة</label><input id="serviceCost" type="number">
+    <button class="btn" onclick="addSale()">حفظ العميل</button>
   </div>
 </section>
+<section id="p2" class="page"><div class="card"><h3>البحث</h3><input id="searchInput" placeholder="ابحث بالاسم..." oninput="filterData()"><div id="searchResult" style="margin-top:12px;"></div></div></section>
+<section id="p3" class="page"><div class="card"><h3>التقارير</h3><canvas id="monthlyChart" height="200"></canvas></div></section>
+<section id="p4" class="page"><div class="card"><h3>الصيانة الدورية</h3><div id="maintResult"></div></div></section>
+</div>
 
-<section id="p2" class="page">
-  <div class="card"><h3>البحث والواتساب</h3>
-    <div class="search"><input id="searchInput" placeholder="ابحث..." oninput="filterData()"><select id="filterStatus" onchange="filterData()"><option value="all">كل الحالات</option><option>مكتمل</option><option>قيد التنفيذ</option><option>معلق</option></select><select id="filterPay" onchange="filterData()"><option value="all">كل الدفع</option><option>كاش / نقدي</option><option>شبكة</option><option>تحويل بنكي</option></select></div>
-    <div style="overflow-x:auto"><table><thead><tr><th>الكود</th><th>العميل</th><th>الجوال</th><th>الخدمات</th><th>المبلغ</th><th>واتساب</th></tr></thead><tbody id="searchBody"></tbody></table></div>
-  </div>
-</section>
-
-<section id="p3" class="page"><div class="card"><h3>مبيعات الشهور</h3><div style="height:380px"><canvas id="monthlyChart"></canvas></div></div></section>
-
-<section id="p4" class="page"><div class="card"><h3>الصيانة الدورية - 6 شهور</h3><div style="overflow-x:auto"><table><thead><tr><th>الكود</th><th>العميل</th><th>الجوال</th><th>آخر صيانة</th><th>الخدمات</th><th>تذكير</th></tr></thead><tbody id="maintBody"></tbody></table></div></div></section>
-
-<section id="p5" class="page">
-  <div class="grid">
-    <div class="card"><h3>إضافة فني</h3><form id="empForm"><label>الاسم</label><input id="empName" required><label>الوظيفة</label><input id="empRole" required><label>الجوال</label><input id="empPhone"><button class="btn" type="submit">حفظ</button></form><table style="margin-top:14px"><thead><tr><th>الاسم</th><th>الوظيفة</th><th>الجوال</th></tr></thead><tbody id="empBody"></tbody></table></div>
-    <div class="card"><h3>النسخ الاحتياطي</h3><button class="btn" type="button" onclick="exportExcel()">تصدير Excel</button><button class="btn" type="button" style="background:#0284c7" onclick="backupData()">نسخة احتياطية JSON</button><label>استعادة:</label><input type="file" accept=".json" onchange="restoreData(event)"><button class="btn" type="button" style="background:#dc2626" onclick="clearDemo()">مسح البيانات التجريبية</button></div>
-  </div>
-</section>
-</div><!-- نهاية appScreen -->
-
+<!-- سكربت الدخول لوحده، قبل أي حاجة تانية -->
 <script>
-const $ = id => document.getElementById(id);
-const demoData = [
-  {code:"TC-1001",client:"محمد العمري",phone:"0551234567",servicesList:["تنظيف الدكت","فلتر"],status:"مكتمل",payMethod:"كاش / نقدي",cost:"1200",date:"2026-11-02"},
-  {code:"TC-1002",client:"سارة الأحمد",phone:"0559876543",servicesList:["تنظيف الاسبلت"],status:"قيد التنفيذ",payMethod:"شبكة",cost:"850",date:"2026-10-15"},
-  {code:"TC-1003",client:"خالد العتيبي",phone:"0509876543",servicesList:["تنظيف الدكت","المكينة"],status:"مكتمل",payMethod:"تحويل بنكي",cost:"2400",date:"2026-09-20"},
-  {code:"TC-1004",client:"نورة الجهني",phone:"0562221133",servicesList:["فلتر"],status:"معلق",payMethod:"كاش / نقدي",cost:"600",date:"2026-11-05"},
-  {code:"TC-1005",client:"فهد القحطاني",phone:"0534447711",servicesList:["تنظيف الدكت","فلتر"],status:"مكتمل",payMethod:"كاش / نقدي",cost:"2800",date:"2026-08-10"},
-  {code:"TC-1006",client:"عميل قديم",phone:"0555551234",servicesList:["تنظيف الدكت"],status:"مكتمل",payMethod:"شبكة",cost:"1500",date:"2026-04-10"}
+function doLogin(){
+  var u = document.getElementById('loginUser').value.trim();
+  var p = document.getElementById('loginPass').value.trim();
+  if(u === 'admin' && p === '123456'){
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('appScreen').style.display = 'block';
+    renderSales();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+function logout(){ location.reload(); }
+function goPage(id,btn){
+  var pages = document.querySelectorAll('.page');
+  for(var i=0;i<pages.length;i++){ pages[i].classList.remove('active'); }
+  document.getElementById(id).classList.add('active');
+  var btns = document.querySelectorAll('.nav-btn');
+  for(var j=0;j<btns.length;j++){ btns[j].classList.remove('active'); }
+  btn.classList.add('active');
+  if(id==='p3'){ renderChart(); }
+  if(id==='p4'){ renderMaint(); }
+}
+</script>
+
+<!-- سكربت البيانات لوحده -->
+<script>
+var salesData = [
+  {code:"TC-1001",client:"محمد العمري",phone:"0551234567",cost:1200,date:"2026-11-02"},
+  {code:"TC-1002",client:"سارة الأحمد",phone:"0559876543",cost:850,date:"2026-10-15"},
+  {code:"TC-1006",client:"عميل قديم",phone:"0555551234",cost:1500,date:"2026-04-10"}
 ];
-let salesData = JSON.parse(localStorage.getItem('tc24_demo_sales')) || demoData;
-let empData = JSON.parse(localStorage.getItem('tc24_demo_emps')) || [{name:"إسلام مرزوق أحمد",role:"المشرف الفني العام",phone:"-"}];
-let adminAccount = JSON.parse(localStorage.getItem('tc24_admin')) || {user:"admin", pass:"123456"};
-
-function saveAll(){ localStorage.setItem('tc24_demo_sales',JSON.stringify(salesData)); localStorage.setItem('tc24_demo_emps',JSON.stringify(empData)); }
-function showApp(){ $('loginScreen').style.display='none'; $('appScreen').style.display='block'; renderSales(); }
-if(localStorage.getItem('tc24_logged_in')==='yes'){ showApp(); }
-
-$('loginForm').addEventListener('submit',function(e){
-  e.preventDefault();
-  if($('loginUser').value.trim()===adminAccount.user && $('loginPass').value.trim()===adminAccount.pass){
-    if($('rememberMe').checked) localStorage.setItem('tc24_logged_in','yes');
-    showApp();
-  } else { $('loginError').style.display='block'; }
-});
-function logout(){ localStorage.removeItem('tc24_logged_in'); location.reload(); }
-function changePassword(){
-  let oldP = prompt('الباسورد القديم:');
-  if(oldP !== adminAccount.pass){ alert('القديم غلط'); return; }
-  let newP = prompt('الباسورد الجديد (4 أحرف على الأقل):');
-  if(!newP || newP.length < 4){ alert('قصير جداً'); return; }
-  adminAccount.pass = newP; localStorage.setItem('tc24_admin',JSON.stringify(adminAccount)); alert('تم التغيير');
-}
-
-$('serviceDate').valueAsDate = new Date();
-function goPage(id,btn){ document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); btn.classList.add('active'); $(id).classList.add('active'); if(id==='p3')renderChart(); if(id==='p2')filterData(); if(id==='p4')renderMaint(); if(id==='p5')renderEmps(); }
-function cls(s){ return s==='مكتمل'?'ok':s==='قيد التنفيذ'?'run':'wait'; }
 function renderSales(){
-  let total=0,cash=0,card=0,html='';
-  salesData.forEach((s,i)=>{ let c=Number(s.cost)||0; total+=c; if(s.payMethod==='كاش / نقدي')cash+=c; else card+=c;
-    html+='<tr><td><b>'+s.code+'</b><br><small>'+s.date+'</small></td><td><b>'+s.client+'</b><br><small>'+s.phone+'</small></td><td>'+s.servicesList.join('، ')+'<br><span class="badge '+cls(s.status)+'">'+s.status+'</span></td><td><b>'+c.toLocaleString()+' ر.س</b></td><td><button class="act pr" onclick="printInvoice('+i+')">طباعة</button> <button class="act wa" onclick="sendWA('+i+')">واتساب</button> <button class="act edit" onclick="editSale('+i+')">تعديل</button> <button class="act del" onclick="deleteSale('+i+')">حذف</button></td></tr>'; });
-  $('salesBody').innerHTML=html;
-  $('sTotal').innerText=total.toLocaleString()+' ر.س'; $('sCash').innerText=cash.toLocaleString()+' ر.س'; $('sCard').innerText=card.toLocaleString()+' ر.س'; $('sCount').innerText=salesData.length;
-  saveAll();
+  var total = 0, html = '';
+  for(var i=0;i<salesData.length;i++){
+    total = total + Number(salesData[i].cost);
+    html += '<tr><td>'+salesData[i].code+'</td><td>'+salesData[i].client+'</td><td>'+salesData[i].cost+' ر.س</td><td><button class="act wa" onclick="sendWA('+i+')">واتساب</button> <button class="act del" onclick="deleteSale('+i+')">حذف</button></td></tr>';
+  }
+  document.getElementById('salesBody').innerHTML = html;
+  document.getElementById('sTotal').innerText = total + ' ر.س';
+  document.getElementById('sCount').innerText = salesData.length;
 }
-$('serviceForm').addEventListener('submit',function(e){ e.preventDefault(); let list=Array.from(document.querySelectorAll('input[name="servicePart"]:checked')).map(c=>c.value); if(!list.length){alert('اختر خدمة');return;}
-  let obj={code:$('clientCode').value.trim(),client:$('clientName').value.trim(),phone:$('clientPhone').value.trim(),servicesList:list,status:$('serviceStatus').value,payMethod:$('payMethod').value,cost:$('serviceCost').value,date:$('serviceDate').value};
-  let idx=parseInt($('editIndex').value,10); if(idx>-1){salesData[idx]=obj;$('editIndex').value="-1";} else salesData.unshift(obj);
-  e.target.reset(); $('serviceDate').valueAsDate=new Date(); renderSales(); });
-function editSale(i){ let s=salesData[i]; $('clientCode').value=s.code; $('clientName').value=s.client; $('clientPhone').value=s.phone; $('serviceStatus').value=s.status; $('payMethod').value=s.payMethod; $('serviceCost').value=s.cost; $('serviceDate').value=s.date; document.querySelectorAll('input[name="servicePart"]').forEach(c=>c.checked=s.servicesList.includes(c.value)); $('editIndex').value=i; goPage('p1',document.querySelectorAll('.nav-btn')[0]); }
-function deleteSale(i){ if(confirm('حذف؟')){salesData.splice(i,1);renderSales();} }
-function sendWA(i){ let s=salesData[i]; let phone=(s.phone||'').replace(/[^0-9]/g,''); let msg='مرحباً '+s.client+'، فاتورة تكنيكال 24: '+s.code+'، '+s.servicesList.join(' - ')+'، '+(Number(s.cost)||0).toLocaleString()+' ريال'; window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(msg),'_blank'); }
-function filterData(){ let q=$('searchInput').value.toLowerCase(),st=$('filterStatus').value,pay=$('filterPay').value,html='';
-  salesData.forEach((s,idx
+function addSale(){
+  var code = document.getElementById('clientCode').value;
+  var name = document.getElementById('clientName').value;
+  var phone = document.getElementById('clientPhone').value;
+  var cost = document.getElementById('serviceCost').value;
+  if(!name || !cost){ alert('اكتب الاسم والتكلفة'); return; }
+  salesData.unshift({code:code,client:name,phone:phone,cost:cost,date:"2026-11-10"});
+  renderSales();
+}
+function deleteSale(i){ salesData.splice(i,1); renderSales(); }
+function sendWA(i){
+  var s = salesData[i];
+  var msg = 'مرحبا ' + s.client + '، فاتورتك ' + s.cost + ' ريال من تكنيكال 24';
+  window.open('https://wa.me/' + s.phone + '?text=' + encodeURIComponent(msg), '_blank');
+}
+function filterData(){
+  var q = document.getElementById('searchInput').value;
+  var out = '';
+  for(var i=0;i<salesData.length;i++){
+    if(salesData[i].client.indexOf(q) !== -1){ out += '<p>✅ ' + salesData[i].client + ' - ' + salesData[i].cost + ' ر.س</p>'; }
+  }
+  document.getElementById('searchResult').innerHTML = out || 'لا توجد نتائج';
+}
+function renderMaint(){
+  document.getElementById('maintResult').innerHTML = '<p>⚠️ عميل قديم: TC-1006 - آخر صيانة 2026-04-10 - عدى عليه أكتر من 6 شهور</p><button class="btn" onclick="sendWA(2)">إرسال تذكير واتساب</button>';
+}
+function renderChart(){
+  var ctx = document.getElementById('monthlyChart');
+  if(!ctx) return;
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['ابريل','اكتوبر','نوفمبر'],
+      datasets: [{ label: 'المبيعات', data: [1500,850,1200] }]
+    }
+  });
+}
+renderSales();
+</script>
+</body>
+</html>
