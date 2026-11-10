@@ -245,34 +245,34 @@ th{background:#fef3c7;color:#78350f}
         <label id="lblName">اسم العميل</label><input id="clientName" required placeholder="محمد العمري">
         <label id="lblPhone">رقم الجوال</label><input id="clientPhone" required placeholder="05xxxxxxxx">
         
-        <label id="lblServ">حدد الكمية والسعر لكل خدمة</label>
+        <label id="lblServ">حدد الكمية والسعر لكل خدمة (يقبل الهللَات والكسور)</label>
         <div class="services-grid">
           <div class="service-item">
             <label>الدكت (العدد / السعر)</label>
             <div class="service-inputs">
-              <input type="number" id="qtyDuct" min="0" value="0" placeholder="العدد" oninput="calcTotalCost()">
-              <input type="number" id="priceDuct" min="0" value="0" placeholder="السعر" oninput="calcTotalCost()">
+              <input type="number" id="qtyDuct" min="0" step="1" value="0" placeholder="العدد" oninput="calcTotalCost()">
+              <input type="number" id="priceDuct" min="0" step="0.01" value="0" placeholder="السعر" oninput="calcTotalCost()">
             </div>
           </div>
           <div class="service-item">
             <label>الاسبلت (العدد / السعر)</label>
             <div class="service-inputs">
-              <input type="number" id="qtySplit" min="0" value="0" placeholder="العدد" oninput="calcTotalCost()">
-              <input type="number" id="priceSplit" min="0" value="0" placeholder="السعر" oninput="calcTotalCost()">
+              <input type="number" id="qtySplit" min="0" step="1" value="0" placeholder="العدد" oninput="calcTotalCost()">
+              <input type="number" id="priceSplit" min="0" step="0.01" value="0" placeholder="السعر" oninput="calcTotalCost()">
             </div>
           </div>
           <div class="service-item">
             <label>الفلتر (العدد / السعر)</label>
             <div class="service-inputs">
-              <input type="number" id="qtyFilter" min="0" value="0" placeholder="العدد" oninput="calcTotalCost()">
-              <input type="number" id="priceFilter" min="0" value="0" placeholder="السعر" oninput="calcTotalCost()">
+              <input type="number" id="qtyFilter" min="0" step="1" value="0" placeholder="العدد" oninput="calcTotalCost()">
+              <input type="number" id="priceFilter" min="0" step="0.01" value="0" placeholder="السعر" oninput="calcTotalCost()">
             </div>
           </div>
           <div class="service-item">
             <label>الماكينة (العدد / السعر)</label>
             <div class="service-inputs">
-              <input type="number" id="qtyMachine" min="0" value="0" placeholder="العدد" oninput="calcTotalCost()">
-              <input type="number" id="priceMachine" min="0" value="0" placeholder="السعر" oninput="calcTotalCost()">
+              <input type="number" id="qtyMachine" min="0" step="1" value="0" placeholder="العدد" oninput="calcTotalCost()">
+              <input type="number" id="priceMachine" min="0" step="0.01" value="0" placeholder="السعر" oninput="calcTotalCost()">
             </div>
           </div>
         </div>
@@ -281,7 +281,7 @@ th{background:#fef3c7;color:#78350f}
         <select id="serviceStatus"><option id="optComplete">مكتمل</option><option id="optProgress">قيد التنفيذ</option><option id="optPending">معلق</option></select>
         <label id="lblPay">طريقة الدفع</label>
         <select id="payMethod"><option id="payCash">كاش / نقدي</option><option id="payCard">شبكة</option><option id="payTransfer">تحويل بنكي</option></select>
-        <label id="lblCost">إجمالي التكلفة (ر.س - محسوب تلقائياً)</label><input type="number" id="serviceCost" required>
+        <label id="lblCost">إجمالي التكلفة (ر.س - قابل للتعديل اليدوي أو الحساب التلقائي)</label><input type="number" id="serviceCost" step="0.01" required>
         <label id="lblDate">التاريخ</label><input type="date" id="serviceDate" required>
         <button class="btn" type="submit" id="btnSave">حفظ البيانات</button>
       </form>
@@ -395,7 +395,7 @@ const translations = {
     banner1: "أهلاً وسهلاً بك يا أبو ريان 🤚 - صفحة العملاء والمبيعات",
     st1Title: "إجمالي المبيعات", st2Title: "المحصل كاش", st3Title: "المحصل شبكة / تحويل", st4Title: "عدد العملاء",
     formTitle: "تسجيل عملية صيانة جديدة", lblCode: "رقم كود العميل (أرقام إنجليزية فقط)", lblName: "اسم العميل", lblPhone: "رقم الجوال",
-    lblServ: "حدد الكمية والسعر لكل خدمة", lblStatus: "حالة الخدمة", lblPay: "طريقة الدفع", lblCost: "إجمالي التكلفة (ر.س - محسوب تلقائياً)", lblDate: "التاريخ", btnSave: "حفظ البيانات",
+    lblServ: "حدد الكمية والسعر لكل خدمة (يقبل الهللَات والكسور)", lblStatus: "حالة الخدمة", lblPay: "طريقة الدفع", lblCost: "إجمالي التكلفة (ر.س - قابل للتعديل اليدوي)", lblDate: "التاريخ", btnSave: "حفظ البيانات",
     tableTitle: "سجل العملاء والمبيعات", thCode: "الكود", thClient: "العميل", thServ: "الخدمات والأعداد والأسعار والحالة", thAmount: "المبلغ", thAction: "إجراءات",
     banner2: "صفحة البحث الذكي", searchCardTitle: "البحث والفلترة الذكية", sthCode: "الكود", sthClient: "العميل", sthPhone: "الجوال", sthServ: "الخدمات والأعداد والأسعار", sthAmount: "المبلغ",
     banner3: "صفحة التقارير - مبيعات الشهور والرسوم البيانية وتقارير الشهر المنفصل", repCardTitle: "استخراج تقارير شهر محدد (Excel أو طباعة)",
@@ -459,7 +459,7 @@ const translations = {
     ethName: "नाम", ethRole: "भूमिका", ethPhone: "फ़ोन", backupCardTitle: "बैकअप और पुनर्स्थापना", btnExportAll: "सभी एक्सेल निर्यात करें", btnBackupJson: "JSON बैकअप डाउनलोड", lblRestore: "बैकअप पुनर्स्थापित करें:"
   },
   bn: {
-    nav1: "1. গ্রাহক এবং বিক্রয়", nav2: "2. অনুসন্ধান", nav3: "3. মাসিক প্রতিবেদন", nav4: "4. নিয়মিত রক্ষণাবেক্ষণ", nav5: "5. সেটিংস এবং ব্যাকআপ",
+    nav1: "1. গ্রাহک এবং বিক্রয়", nav2: "2. অনুসন্ধান", nav3: "3. মাসিক প্রতিবেদন", nav4: "4. নিয়মিত রক্ষণাবেক্ষণ", nav5: "5. সেটিংস এবং ব্যাকআপ",
     banner1: "স্বাগতম আবু রায়ান 🤚 - গ্রাহক এবং বিক্রয় পৃষ্ঠা",
     st1Title: "মোট বিক্রয়", st2Title: "নগদ সংগ্রহ", st3Title: "কার্ড / ট্রান্সফার", st4Title: "মোট গ্রাহক",
     formTitle: "নতুন রক্ষণাবেক্ষণ নিবন্ধন করুন", lblCode: "গ্রাহক কোড", lblName: "গ্রাহকের নাম", lblPhone: "ফোন নম্বর",
@@ -473,7 +473,7 @@ const translations = {
     mthCode: "কোড", mthClient: "গ্রাহক", mthPhone: "ফোন", mthDate: "শেষ রক্ষণাবেক্ষণ", mthServ: "সেবাসমূহ",
     banner5: "সেটিংস - টেকনিশিয়ান এবং ব্যাকআপ", langSettingTitle: "🌐 ভাষা সেটিংস (Language)", lblSelectLang: "ভাষা নির্বাচন করুন:",
     empCardTitle: "টেকনিশিয়ান যোগ করুন", lblEmpName: "নাম", lblEmpRole: "পদবী", lblEmpPhone: "ফোন", btnSaveEmp: "কর্মী সংরক্ষণ করুন",
-    ethName: "নাম", ethRole: "পদবী", ethPhone: "ফোন", backupCardTitle: "ব্যাকআপ এবং পুনরুদ্ধার", btnExportAll: "সব এক্সেল রপ্তানি করুন", btnBackupJson: "JSON ব্যাকআপ ডাউনলোড", lblRestore: "ব্যাকআপ পুনরুদ্ধার করুন:"
+    ethName: "নাম", ethRole: "পদবী", ethফোন: "ফোন", backupCardTitle: "ব্যাকআপ এবং পুনরুদ্ধার", btnExportAll: "সব এক্সেল রপ্তানি করুন", btnBackupJson: "JSON ব্যাকআপ ডাউনলোড", lblRestore: "ব্যাকআপ পুনরুদ্ধার করুন:"
   },
   fr: {
     nav1: "1. Clients & Ventes", nav2: "2. Recherche", nav3: "3. Rapports Mensuels", nav4: "4. Maintenance Périodique", nav5: "5. Paramètres & Sauvegarde",
@@ -565,22 +565,24 @@ function statusClass(s){
   return s==='مكتمل' ? 'ok' : s==='قيد التنفيذ' ? 'run' : 'wait';
 }
 
-// دالة لحساب التكلفة الإجمالية تلقائياً بناءً على (العدد × السعر) لكل خدمة
+// دالة لحساب التكلفة الإجمالية (اختيارية ويمكن التعديل اليدوي عليها بالكامل)
 function calcTotalCost() {
-  let dQty = parseInt($('qtyDuct').value) || 0;
+  let dQty = parseFloat($('qtyDuct').value) || 0;
   let dPrice = parseFloat($('priceDuct').value) || 0;
 
-  let sQty = parseInt($('qtySplit').value) || 0;
+  let sQty = parseFloat($('qtySplit').value) || 0;
   let sPrice = parseFloat($('priceSplit').value) || 0;
 
-  let fQty = parseInt($('qtyFilter').value) || 0;
+  let fQty = parseFloat($('qtyFilter').value) || 0;
   let fPrice = parseFloat($('priceFilter').value) || 0;
 
-  let mQty = parseInt($('qtyMachine').value) || 0;
+  let mQty = parseFloat($('qtyMachine').value) || 0;
   let mPrice = parseFloat($('priceMachine').value) || 0;
 
   let total = (dQty * dPrice) + (sQty * sPrice) + (fQty * fPrice) + (mQty * mPrice);
-  $('serviceCost').value = total > 0 ? total : '';
+  if(total > 0) {
+    $('serviceCost').value = total.toFixed(2);
+  }
 }
 
 // دالة لتنسيق وعرض الخدمات والأعداد والأسعار
@@ -603,12 +605,12 @@ function renderSales(){
     total += cost;
     if(s.payMethod==='كاش / نقدي') cash += cost; else card += cost;
     let servText = formatServicesText(s);
-    html += '<tr><td><b>'+s.code+'</b><br><small>'+s.date+'</small></td><td><b>'+s.client+'</b><br><small>'+(s.phone||'')+'</small></td><td>'+servText+'<br><span class="badge '+statusClass(s.status)+'">'+(s.status||'مكتمل')+'</span></td><td><b>'+cost.toLocaleString()+' ر.س</b><br><small>['+s.payMethod+']</small></td><td class="no-print"><button class="act pr" onclick="printInvoice('+i+')">طباعة</button> <button class="act edit" onclick="editSale('+i+')">تعديل</button> <button class="act del" onclick="deleteSale('+i+')">حذف</button></td></tr>';
+    html += '<tr><td><b>'+s.code+'</b><br><small>'+s.date+'</small></td><td><b>'+s.client+'</b><br><small>'+(s.phone||'')+'</small></td><td>'+servText+'<br><span class="badge '+statusClass(s.status)+'">'+(s.status||'مكتمل')+'</span></td><td><b>'+cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ر.س</b><br><small>['+s.payMethod+']</small></td><td class="no-print"><button class="act pr" onclick="printInvoice('+i+')">طباعة</button> <button class="act edit" onclick="editSale('+i+')">تعديل</button> <button class="act del" onclick="deleteSale('+i+')">حذف</button></td></tr>';
   });
   if($('salesBody')) $('salesBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا توجد بيانات بعد، سجّل أول عميل</td></tr>';
-  if($('sTotal')) $('sTotal').innerText = total.toLocaleString() + ' ر.س';
-  if($('sCash')) $('sCash').innerText = cash.toLocaleString() + ' ر.س';
-  if($('sCard')) $('sCard').innerText = card.toLocaleString() + ' ر.س';
+  if($('sTotal')) $('sTotal').innerText = total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ر.س';
+  if($('sCash')) $('sCash').innerText = cash.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ر.س';
+  if($('sCard')) $('sCard').innerText = card.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ر.س';
   if($('sCount')) $('sCount').innerText = salesData.length;
   localStorage.setItem('tc24_sales', JSON.stringify(salesData));
 }
@@ -616,21 +618,17 @@ function renderSales(){
 if($('serviceForm')) {
   $('serviceForm').addEventListener('submit', function(e){
     e.preventDefault();
-    let d = parseInt($('qtyDuct').value) || 0;
+    let d = parseFloat($('qtyDuct').value) || 0;
     let pd = parseFloat($('priceDuct').value) || 0;
 
-    let sp = parseInt($('qtySplit').value) || 0;
+    let sp = parseFloat($('qtySplit').value) || 0;
     let psp = parseFloat($('priceSplit').value) || 0;
 
-    let f = parseInt($('qtyFilter').value) || 0;
+    let f = parseFloat($('qtyFilter').value) || 0;
     let pf = parseFloat($('priceFilter').value) || 0;
 
-    let m = parseInt($('qtyMachine').value) || 0;
+    let m = parseFloat($('qtyMachine').value) || 0;
     let pm = parseFloat($('priceMachine').value) || 0;
-
-    if((d === 0 || pd === 0) && (sp === 0 || psp === 0) && (f === 0 || pf === 0) && (m === 0 || pm === 0)){
-      // السماح بالحفظ لو تم إدخال كمية وسعر لخدمة واحدة على الأقل
-    }
 
     let obj = {
       code: $('clientCode').value.trim(),
@@ -714,7 +712,7 @@ function filterData(){
     let matchP = pay==='all' || s.payMethod===pay;
     if(matchQ && matchS && matchP){
       let servText = formatServicesText(s);
-      html += '<tr><td>'+s.code+'</td><td>'+s.client+'</td><td>'+(s.phone||'-')+'</td><td>'+servText+'</td><td>'+(Number(s.cost)||0).toLocaleString()+' ر.س</td></tr>';
+      html += '<tr><td>'+s.code+'</td><td>'+s.client+'</td><td>'+(s.phone||'-')+'</td><td>'+servText+'</td><td>'+(Number(s.cost)||0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ر.س</td></tr>';
     }
   });
   $('searchBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا توجد نتائج</td></tr>';
@@ -791,7 +789,7 @@ function printSingleMonth(){
     let cost = Number(s.cost) || 0;
     totalMonth += cost;
     let servText = formatServicesText(s);
-    rowsHtml += '<tr><td>'+(idx+1)+'</td><td>'+s.code+'</td><td>'+s.client+'</td><td>'+s.date+'</td><td>'+servText+'</td><td>'+s.payMethod+'</td><td>'+cost.toLocaleString()+' ر.س</td></tr>';
+    rowsHtml += '<tr><td>'+(idx+1)+'</td><td>'+s.code+'</td><td>'+s.client+'</td><td>'+s.date+'</td><td>'+servText+'</td><td>'+s.payMethod+'</td><td>'+cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ر.س</td></tr>';
   });
 
   let w = window.open('', '_blank', 'width=800,height=700');
@@ -816,9 +814,9 @@ function printSingleMonth(){
           </thead>
           <tbody>${rowsHtml}</tbody>
         </table>
-        <h3 style="text-align:left;background:#fef3c7;padding:10px;border-radius:8px;">إجمالي مبيعات الشهر: ${totalMonth.toLocaleString()} ريال</h3>
+        <h3 style="text-align:left;background:#fef3c7;padding:10px;border-radius:8px;">إجمالي مبيعات الشهر: ${totalMonth.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</h3>
         <div style="margin-top:40px;text-align:left;font-weight:bold;font-size:1.1rem;border-top:1px dashed #78350f;padding-top:15px;">
-          المشرف: إسلام مرزوق أحمد
+          المشرف الفني العام: إسلام مرزوق أحمد
         </div>
       </div>
     </body></html>
@@ -868,10 +866,10 @@ function printInvoice(i){
   let rowsPrint = '';
   if (s.servicesObj) {
     let so = s.servicesObj;
-    if(so.duct > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">تنظيف دكت</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.duct}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.priceDuct} ر.س</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:left;font-weight:bold;">${so.duct * so.priceDuct} ر.س</td></tr>`;
-    if(so.split > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">تنظيف مكيف اسبلت</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.split}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.priceSplit} ر.س</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:left;font-weight:bold;">${so.split * so.priceSplit} ر.س</td></tr>`;
-    if(so.filter > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">فلتر</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.filter}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.priceFilter} ر.س</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:left;font-weight:bold;">${so.filter * so.priceFilter} ر.س</td></tr>`;
-    if(so.machine > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">ماكينة</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.machine}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.priceMachine} ر.س</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:left;font-weight:bold;">${so.machine * so.priceMachine} ر.س</td></tr>`;
+    if(so.duct > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">تنظيف دكت</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.duct}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${Number(so.priceDuct).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:left;font-weight:bold;">${(so.duct * so.priceDuct).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</td></tr>`;
+    if(so.split > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">تنظيف مكيف اسبلت</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.split}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${Number(so.priceSplit).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:left;font-weight:bold;">${(so.split * so.priceSplit).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</td></tr>`;
+    if(so.filter > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">فلتر</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.filter}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${Number(so.priceFilter).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:left;font-weight:bold;">${(so.filter * so.priceFilter).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</td></tr>`;
+    if(so.machine > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">ماكينة</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.machine}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${Number(so.priceMachine).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:left;font-weight:bold;">${(so.machine * so.priceMachine).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</td></tr>`;
   }
 
   let w = window.open('', '_blank', 'width=750,height=700');
@@ -912,11 +910,11 @@ function printInvoice(i){
         </table>
 
         <div style="text-align:left;background:#fef3c7;padding:14px;border-radius:10px;font-size:1.2rem;font-weight:bold;color:#78350f;margin-bottom:30px;">
-          إجمالي المبلغ: ${(Number(s.cost)||0).toLocaleString()} ريال
+          إجمالي المبلغ: ${(Number(s.cost)||0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال
         </div>
 
         <div style="text-align:left;font-weight:bold;font-size:1.05rem;border-top:1px dashed #78350f;padding-top:15px;color:#451a03;">
-          المشرف: إسلام مرزوق أحمد
+          المشرف الفني العام: إسلام مرزوق أحمد
         </div>
       </div>
     </body></html>
