@@ -28,8 +28,10 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:10px;display:f
 .card h3{color:var(--brown);margin-bottom:16px;border-bottom:2px solid #fef3c7;padding-bottom:8px}
 label{display:block;font-weight:700;font-size:.9rem;margin:12px 0 5px}
 input,select{width:100%;padding:11px;border:1px solid var(--border);border-radius:10px;background:#fafafa;font-size:.95rem}
-.services{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#fffbeb;padding:12px;border:1px solid #fde68a;border-radius:10px}
-.services label{display:flex;gap:8px;align-items:center;margin:0}
+.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;background:#fffbeb;padding:14px;border:1px solid #fde68a;border-radius:12px}
+.service-item{display:flex;flex-direction:column;gap:4px}
+.service-item label{font-size:0.85rem;color:#78350f;margin:0}
+.service-item input{padding:7px;text-align:center;font-weight:bold}
 .btn{width:100%;padding:12px;background:var(--brown);color:#fff;border:none;border-radius:10px;font-weight:800;cursor:pointer;margin-top:14px}
 .btn2{width:auto;padding:9px 14px;background:#fff;color:var(--brown);border:2px solid #fde68a;border-radius:10px;font-weight:800;cursor:pointer}
 table{width:100%;border-collapse:collapse}
@@ -236,16 +238,32 @@ th{background:#fef3c7;color:#78350f}
       <h3 id="formTitle">تسجيل عملية صيانة جديدة</h3>
       <form id="serviceForm">
         <input type="hidden" id="editIndex" value="-1">
-        <label id="lblCode">رقم كود العميل</label><input id="clientCode" required placeholder="TC-1001">
+        <label id="lblCode">رقم كود العميل (أرقام إنجليزية فقط)</label>
+        <input id="clientCode" required placeholder="1001" style="direction: ltr; text-align: right;" oninput="this.value = this.value.replace(/[^0-9A-Za-z]/g, '')">
+        
         <label id="lblName">اسم العميل</label><input id="clientName" required placeholder="محمد العمري">
         <label id="lblPhone">رقم الجوال</label><input id="clientPhone" required placeholder="05xxxxxxxx">
-        <label id="lblServ">الأقسام والخدمات</label>
-        <div class="services">
-          <label><input type="checkbox" name="servicePart" value="تنظيف الدكت"> تنظيف الدكت</label>
-          <label><input type="checkbox" name="servicePart" value="فلتر"> فلتر</label>
-          <label><input type="checkbox" name="servicePart" value="تنظيف الاسبلت"> تنظيف الاسبلت</label>
-          <label><input type="checkbox" name="servicePart" value="المكينة"> المكينة</label>
+        
+        <label id="lblServ">حدد كمية الخدمات المطلوبة</label>
+        <div class="services-grid">
+          <div class="service-item">
+            <label>عدد الدكت</label>
+            <input type="number" id="qtyDuct" min="0" value="0">
+          </div>
+          <div class="service-item">
+            <label>عدد الاسبلت</label>
+            <input type="number" id="qtySplit" min="0" value="0">
+          </div>
+          <div class="service-item">
+            <label>عدد الفلتر</label>
+            <input type="number" id="qtyFilter" min="0" value="0">
+          </div>
+          <div class="service-item">
+            <label>عدد الماكينة</label>
+            <input type="number" id="qtyMachine" min="0" value="0">
+          </div>
         </div>
+
         <label id="lblStatus">حالة الخدمة</label>
         <select id="serviceStatus"><option id="optComplete">مكتمل</option><option id="optProgress">قيد التنفيذ</option><option id="optPending">معلق</option></select>
         <label id="lblPay">طريقة الدفع</label>
@@ -258,7 +276,7 @@ th{background:#fef3c7;color:#78350f}
     <div class="card">
       <h3 id="tableTitle">سجل العملاء والمبيعات</h3>
       <div style="overflow-x:auto"><table>
-        <thead><tr><th id="thCode">الكود</th><th id="thClient">العميل</th><th id="thServ">الخدمات والحالة</th><th id="thAmount">المبلغ</th><th class="no-print" id="thAction">إجراءات</th></tr></thead>
+        <thead><tr><th id="thCode">الكود</th><th id="thClient">العميل</th><th id="thServ">الخدمات والأعداد والحالة</th><th id="thAmount">المبلغ</th><th class="no-print" id="thAction">إجراءات</th></tr></thead>
         <tbody id="salesBody"></tbody>
       </table></div>
     </div>
@@ -276,7 +294,7 @@ th{background:#fef3c7;color:#78350f}
       <select id="filterPay" onchange="filterData()"><option value="all" id="fAllPay">جميع طرق الدفع</option><option>كاش / نقدي</option><option>شبكة</option><option>تحويل بنكي</option></select>
     </div>
     <div style="overflow-x:auto"><table>
-      <thead><tr><th id="sthCode">الكود</th><th id="sthClient">العميل</th><th id="sthPhone">الجوال</th><th id="sthServ">الخدمات</th><th id="sthAmount">المبلغ</th></tr></thead>
+      <thead><tr><th id="sthCode">الكود</th><th id="sthClient">العميل</th><th id="sthPhone">الجوال</th><th id="sthServ">الخدمات والأعداد</th><th id="sthAmount">المبلغ</th></tr></thead>
       <tbody id="searchBody"></tbody>
     </table></div>
   </div>
@@ -315,7 +333,7 @@ th{background:#fef3c7;color:#78350f}
   <div class="banner" id="banner4">صفحة الصيانة الدورية - العملاء اللي عدى عليهم 6 شهور أو أكثر</div>
   <div class="card"><h3 id="maintCardTitle">تنبيهات الصيانة الدورية</h3>
     <div style="overflow-x:auto"><table>
-      <thead><tr><th id="mthCode">الكود</th><th id="mthClient">العميل</th><th id="mthPhone">الجوال</th><th id="mthDate">آخر صيانة</th><th id="mthServ">الخدمات</th></tr></thead>
+      <thead><tr><th id="mthCode">الكود</th><th id="mthClient">العميل</th><th id="mthPhone">الجوال</th><th id="mthDate">آخر صيانة</th><th id="mthServ">الخدمات والأعداد</th></tr></thead>
       <tbody id="maintBody"></tbody>
     </table></div>
   </div>
@@ -363,15 +381,15 @@ const translations = {
     nav1: "1. العملاء والمبيعات", nav2: "2. البحث", nav3: "3. التقارير الشهرية", nav4: "4. الصيانة الدورية", nav5: "5. الإعدادات والنسخ",
     banner1: "أهلاً وسهلاً بك يا أبو ريان 🤚 - صفحة العملاء والمبيعات",
     st1Title: "إجمالي المبيعات", st2Title: "المحصل كاش", st3Title: "المحصل شبكة / تحويل", st4Title: "عدد العملاء",
-    formTitle: "تسجيل عملية صيانة جديدة", lblCode: "رقم كود العميل", lblName: "اسم العميل", lblPhone: "رقم الجوال",
-    lblServ: "الأقسام والخدمات", lblStatus: "حالة الخدمة", lblPay: "طريقة الدفع", lblCost: "التكلفة (ر.س)", lblDate: "التاريخ", btnSave: "حفظ البيانات",
-    tableTitle: "سجل العملاء والمبيعات", thCode: "الكود", thClient: "العميل", thServ: "الخدمات والحالة", thAmount: "المبلغ", thAction: "إجراءات",
-    banner2: "صفحة البحث الذكي", searchCardTitle: "البحث والفلترة الذكية", sthCode: "الكود", sthClient: "العميل", sthPhone: "الجوال", sthServ: "الخدمات", sthAmount: "المبلغ",
+    formTitle: "تسجيل عملية صيانة جديدة", lblCode: "رقم كود العميل (أرقام إنجليزية فقط)", lblName: "اسم العميل", lblPhone: "رقم الجوال",
+    lblServ: "حدد كمية الخدمات المطلوبة", lblStatus: "حالة الخدمة", lblPay: "طريقة الدفع", lblCost: "التكلفة (ر.س)", lblDate: "التاريخ", btnSave: "حفظ البيانات",
+    tableTitle: "سجل العملاء والمبيعات", thCode: "الكود", thClient: "العميل", thServ: "الخدمات والأعداد والحالة", thAmount: "المبلغ", thAction: "إجراءات",
+    banner2: "صفحة البحث الذكي", searchCardTitle: "البحث والفلترة الذكية", sthCode: "الكود", sthClient: "العميل", sthPhone: "الجوال", sthServ: "الخدمات والأعداد", sthAmount: "المبلغ",
     banner3: "صفحة التقارير - مبيعات الشهور والرسوم البيانية وتقارير الشهر المنفصل", repCardTitle: "استخراج تقارير شهر محدد (Excel أو طباعة)",
     lblPickMonth: "اختر الشهر والسنة المطلوبة:", btnExcelMonth: "إكسيل الشهر", btnPrintMonth: "طباعة تقرير الشهر",
     chartCardTitle: "الرسوم البيانية لمبيعات الشهور (أعمدة وخطوط ملونة)", btnBar: "عرض أعمدة", btnLine: "عرض خطوط",
     banner4: "صفحة الصيانة الدورية - العملاء اللي عدى عليهم 6 شهور أو أكثر", maintCardTitle: "تنبيهات الصيانة الدورية",
-    mthCode: "الكود", mthClient: "العميل", mthPhone: "الجوال", mthDate: "آخر صيانة", mthServ: "الخدمات",
+    mthCode: "الكود", mthClient: "العميل", mthPhone: "الجوال", mthDate: "آخر صيانة", mthServ: "الخدمات والأعداد",
     banner5: "صفحة الإعدادات - الفنيين والنسخ الاحتياطي", langSettingTitle: "🌐 تغيير لغة التطبيق / Language Settings", lblSelectLang: "اختر اللغة المفضلة:",
     empCardTitle: "إضافة فني / عامل", lblEmpName: "الاسم", lblEmpRole: "المسمى الوظيفي", lblEmpPhone: "الجوال", btnSaveEmp: "حفظ الموظف",
     ethName: "الاسم", ethRole: "الوظيفة", ethPhone: "الجوال", backupCardTitle: "النسخ الاحتياطي", btnExportAll: "تصدير كافة البيانات Excel", btnBackupJson: "تحميل نسخة احتياطية JSON", lblRestore: "استعادة نسخة احتياطية:"
@@ -380,26 +398,26 @@ const translations = {
     nav1: "1. Customers & Sales", nav2: "2. Search", nav3: "3. Monthly Reports", nav4: "4. Periodic Maintenance", nav5: "5. Settings & Backup",
     banner1: "Welcome Abu Rayan 🤚 - Customers & Sales Page",
     st1Title: "Total Sales", st2Title: "Cash Collected", st3Title: "Card / Transfer", st4Title: "Total Customers",
-    formTitle: "Register New Maintenance", lblCode: "Client Code", lblName: "Client Name", lblPhone: "Phone Number",
-    lblServ: "Departments & Services", lblStatus: "Service Status", lblPay: "Payment Method", lblCost: "Cost (SAR)", lblDate: "Date", btnSave: "Save Data",
-    tableTitle: "Customers & Sales Log", thCode: "Code", thClient: "Client", thServ: "Services & Status", thAmount: "Amount", thAction: "Actions",
-    banner2: "Smart Search Page", searchCardTitle: "Smart Search & Filter", sthCode: "Code", sthClient: "Client", sthPhone: "Phone", sthServ: "Services", sthAmount: "Amount",
+    formTitle: "Register New Maintenance", lblCode: "Client Code (English Numbers Only)", lblName: "Client Name", lblPhone: "Phone Number",
+    lblServ: "Select Quantities", lblStatus: "Service Status", lblPay: "Payment Method", lblCost: "Cost (SAR)", lblDate: "Date", btnSave: "Save Data",
+    tableTitle: "Customers & Sales Log", thCode: "Code", thClient: "Client", thServ: "Services & Quantities", thAmount: "Amount", thAction: "Actions",
+    banner2: "Smart Search Page", searchCardTitle: "Smart Search & Filter", sthCode: "Code", sthClient: "Client", sthPhone: "Phone", sthServ: "Services & Qty", sthAmount: "Amount",
     banner3: "Reports Page - Monthly Sales & Charts", repCardTitle: "Export Specific Month Report (Excel or Print)",
     lblPickMonth: "Select Month and Year:", btnExcelMonth: "Month Excel", btnPrintMonth: "Print Month Report",
     chartCardTitle: "Monthly Sales Charts", btnBar: "Bar Chart", btnLine: "Line Chart",
     banner4: "Periodic Maintenance - Clients after 6+ months", maintCardTitle: "Maintenance Alerts",
-    mthCode: "Code", mthClient: "Client", mthPhone: "Phone", mthDate: "Last Maintenance", mthServ: "Services",
+    mthCode: "Code", mthClient: "Client", mthPhone: "Phone", mthDate: "Last Maintenance", mthServ: "Services & Qty",
     banner5: "Settings Page - Technicians & Backup", langSettingTitle: "🌐 Language Settings", lblSelectLang: "Select Preferred Language:",
     empCardTitle: "Add Technician", lblEmpName: "Name", lblEmpRole: "Role", lblEmpPhone: "Phone", btnSaveEmp: "Save Employee",
     ethName: "Name", ethRole: "Role", ethPhone: "Phone", backupCardTitle: "Backup & Restore", btnExportAll: "Export All Excel", btnBackupJson: "Download JSON Backup", lblRestore: "Restore Backup:"
   },
   ur: {
     nav1: "1. گاہک اور فروخت", nav2: "2. تلاش", nav3: "3. ماہانہ رپورٹس", nav4: "4. دورانیہ کی دیکھ بھال", nav5: "5. ترتیبات اور بیک اپ",
-    banner1: "خوش آمدید ابو ریان 24 🤚 - گاہک اور فروخت کا صفحہ",
+    banner1: "خوش آمدید ابو ریان 24 ؒ - گاہک اور فروخت کا صفحہ",
     st1Title: "کل فروخت", st2Title: "نقد وصولی", st3Title: "کارڈ / ٹرانسفر", st4Title: "کل گاہک",
     formTitle: "نئی دیکھ بھال درج کریں", lblCode: "گاہک کا کوڈ", lblName: "گاہک کا نام", lblPhone: "فون نمبر",
-    lblServ: "خدمات", lblStatus: "حالت", lblPay: "ادائیگی کا طریقہ", lblCost: "لاگت (ریال)", lblDate: "تاریخ", btnSave: "ڈیٹا محفوظ کریں",
-    tableTitle: "گاہک اور فروخت کا ریکارڈ", thCode: "کوڈ", thClient: "گاہک", thServ: "خدمات اور حالت", thAmount: "رقم", thAction: "کارروائی",
+    lblServ: "خدمات کی مقدار", lblStatus: "حالت", lblPay: "ادائیگی کا طریقہ", lblCost: "لاگت (ریال)", lblDate: "تاریخ", btnSave: "ڈیٹا محفوظ کریں",
+    tableTitle: "گاہک اور فروخت کا ریکارڈ", thCode: "کوڈ", thClient: "گاہک", thServ: "خدمات اور تعداد", thAmount: "رقم", thAction: "کارروائی",
     banner2: "اسمارٹ تلاش", searchCardTitle: "تلاش اور فلٹر", sthCode: "کوڈ", sthClient: "گاہک", sthPhone: "فون", sthServ: "خدمات", sthAmount: "رقم",
     banner3: "رپورٹس صفحہ - ماہانہ فروخت", repCardTitle: "خصوصی ماہانہ رپورٹ نکالیں",
     lblPickMonth: "مہینہ اور سال منتخب کریں:", btnExcelMonth: "ماہانہ ایکسل", btnPrintMonth: "رپورٹ پرنٹ کریں",
@@ -415,8 +433,8 @@ const translations = {
     banner1: "स्वागत है अबू रयान 🤚 - ग्राहक और बिक्री पृष्ठ",
     st1Title: "कुल बिक्री", st2Title: "नकद प्राप्त", st3Title: "कार्ड / ट्रांसफर", st4Title: "कुल ग्राहक",
     formTitle: "नया रखरखाव दर्ज करें", lblCode: "ग्राहक कोड", lblName: "ग्राहक का नाम", lblPhone: "फ़ोन नंबर",
-    lblServ: "सेवाएं", lblStatus: "स्थिति", lblPay: "भुगतान विधि", lblCost: "लागत", lblDate: "दिनांक", btnSave: "डेटा सहेजें",
-    tableTitle: "ग्राहक और बिक्री लॉग", thCode: "कोड", thClient: "ग्राहक", thServ: "सेवाएं और स्थिति", thAmount: "राशि", thAction: "कार्रवाई",
+    lblServ: "सेवा मात्रा", lblStatus: "स्थिति", lblPay: "भुगतान विधि", lblCost: "लागत", lblDate: "दिनांक", btnSave: "डेटा सहेजें",
+    tableTitle: "ग्राहक और बिक्री लॉग", thCode: "कोड", thClient: "ग्राहक", thServ: "सेवाएं और मात्रा", thAmount: "राशि", thAction: "कार्रवाई",
     banner2: "स्मार्ट खोज पृष्ठ", searchCardTitle: "स्मार्ट खोज और फ़िल्टर", sthCode: "कोड", sthClient: "ग्राहक", sthPhone: "फ़ोन", sthServ: "सेवाएं", sthAmount: "राशि",
     banner3: "रिपोर्ट पृष्ठ - मासिक बिक्री", repCardTitle: "विशिष्ट माह रिपोर्ट निर्यात करें",
     lblPickMonth: "महीना और वर्ष चुनें:", btnExcelMonth: "माह एक्सेल", btnPrintMonth: "रिपोर्ट प्रिंट करें",
@@ -432,8 +450,8 @@ const translations = {
     banner1: "স্বাগতম আবু রায়ান 🤚 - গ্রাহক এবং বিক্রয় পৃষ্ঠা",
     st1Title: "মোট বিক্রয়", st2Title: "নগদ সংগ্রহ", st3Title: "কার্ড / ট্রান্সফার", st4Title: "মোট গ্রাহক",
     formTitle: "নতুন রক্ষণাবেক্ষণ নিবন্ধন করুন", lblCode: "গ্রাহক কোড", lblName: "গ্রাহকের নাম", lblPhone: "ফোন নম্বর",
-    lblServ: "সেবাসমূহ", lblStatus: "অবস্থা", lblPay: "পেমেন্ট পদ্ধতি", lblCost: "মূল্য", lblDate: "তারিখ", btnSave: "তথ্য সংরক্ষণ করুন",
-    tableTitle: "গ্রাহক এবং বিক্রয় লগ", thCode: "কোড", thClient: "গ্রাহক", thServ: "সেবা ও অবস্থা", thAmount: "পরিমাণ", thAction: "কার্যক্রম",
+    lblServ: "সেবা পরিমাণ", lblStatus: "অবস্থা", lblPay: "পেমেন্ট পদ্ধতি", lblCost: "মূল্য", lblDate: "তারিখ", btnSave: "তথ্য সংরক্ষণ করুন",
+    tableTitle: "গ্রাহক এবং বিক্রয় লগ", thCode: "কোড", thClient: "গ্রাহক", thServ: "সেবা ও পরিমাণ", thAmount: "পরিমাণ", thAction: "কার্যক্রম",
     banner2: "স্মার্ট অনুসন্ধান", searchCardTitle: "স্মার্ট অনুসন্ধান এবং ফিল্টার", sthCode: "কোড", sthClient: "গ্রাহক", sthPhone: "ফোন", sthServ: "সেবাসমূহ", sthAmount: "পরিমাণ",
     banner3: "প্রতিবেদন পৃষ্ঠা - মাসিক বিক্রয়", repCardTitle: "নির্দিষ্ট মাসের প্রতিবেদন রপ্তানি করুন",
     lblPickMonth: "মাস এবং বছর নির্বাচন করুন:", btnExcelMonth: "মাসের এক্সেল", btnPrintMonth: "প্রতিবেদন প্রিন্ট করুন",
@@ -449,8 +467,8 @@ const translations = {
     banner1: "Bienvenue Abu Rayan 🤚 - Page Clients et Ventes",
     st1Title: "Ventes Totales", st2Title: "Espèces Perçues", st3Title: "Carte / Virement", st4Title: "Total Clients",
     formTitle: "Enregistrer une maintenance", lblCode: "Code Client", lblName: "Nom du Client", lblPhone: "Numéro de Téléphone",
-    lblServ: "Services", lblStatus: "Statut", lblPay: "Mode de Paiement", lblCost: "Coût", lblDate: "Date", btnSave: "Enregistrer",
-    tableTitle: "Journal des Ventes", thCode: "Code", thClient: "Client", thServ: "Services & Statut", thAmount: "Montant", thAction: "Actions",
+    lblServ: "Quantités des Services", lblStatus: "Statut", lblPay: "Mode de Paiement", lblCost: "Coût", lblDate: "Date", btnSave: "Enregistrer",
+    tableTitle: "Journal des Ventes", thCode: "Code", thClient: "Client", thServ: "Services & Qté", thAmount: "Montant", thAction: "Actions",
     banner2: "Page de Recherche Intelligente", searchCardTitle: "Recherche et Filtre", sthCode: "Code", sthClient: "Client", sthPhone: "Téléphone", sthServ: "Services", sthAmount: "Montant",
     banner3: "Rapports Mensuels & Graphiques", repCardTitle: "Exporter le Rapport du Mois (Excel ou Imprimer)",
     lblPickMonth: "Sélectionner le Mois et l'Année :", btnExcelMonth: "Excel du Mois", btnPrintMonth: "Imprimer",
@@ -469,7 +487,6 @@ function changeLanguage(lang) {
   document.getElementById('htmlRoot').setAttribute('dir', (lang === 'ar' || lang === 'ur') ? 'rtl' : 'ltr');
   localStorage.setItem('tc24_lang', lang);
 
-  // تحديث النصوص ديناميكياً
   for (let key in t) {
     let el = document.getElementById(key);
     if (el) el.innerText = t[key];
@@ -535,14 +552,27 @@ function statusClass(s){
   return s==='مكتمل' ? 'ok' : s==='قيد التنفيذ' ? 'run' : 'wait';
 }
 
+// دالة لتنسيق وعرض الخدمات والأعداد
+function formatServicesText(s) {
+  if (s.servicesObj) {
+    let parts = [];
+    if(s.servicesObj.duct > 0) parts.push('دكت: ' + s.servicesObj.duct);
+    if(s.servicesObj.split > 0) parts.push('اسبلت: ' + s.servicesObj.split);
+    if(s.servicesObj.filter > 0) parts.push('فلتر: ' + s.servicesObj.filter);
+    if(s.servicesObj.machine > 0) parts.push('ماكينة: ' + s.servicesObj.machine);
+    return parts.length > 0 ? parts.join(' | ') : 'لا توجد خدمات محددة';
+  }
+  return Array.isArray(s.servicesList) ? s.servicesList.join('، ') : (s.service || '');
+}
+
 function renderSales(){
   let total=0, cash=0, card=0, html='';
   salesData.forEach((s,i)=>{
     let cost = Number(s.cost) || 0;
     total += cost;
     if(s.payMethod==='كاش / نقدي') cash += cost; else card += cost;
-    let services = Array.isArray(s.servicesList) ? s.servicesList.join('، ') : (s.service || '');
-    html += '<tr><td><b>'+s.code+'</b><br><small>'+s.date+'</small></td><td><b>'+s.client+'</b><br><small>'+(s.phone||'')+'</small></td><td>'+services+'<br><span class="badge '+statusClass(s.status)+'">'+(s.status||'مكتمل')+'</span></td><td><b>'+cost.toLocaleString()+' ر.س</b><br><small>['+s.payMethod+']</small></td><td class="no-print"><button class="act pr" onclick="printInvoice('+i+')">طباعة</button> <button class="act edit" onclick="editSale('+i+')">تعديل</button> <button class="act del" onclick="deleteSale('+i+')">حذف</button></td></tr>';
+    let servText = formatServicesText(s);
+    html += '<tr><td><b>'+s.code+'</b><br><small>'+s.date+'</small></td><td><b>'+s.client+'</b><br><small>'+(s.phone||'')+'</small></td><td>'+servText+'<br><span class="badge '+statusClass(s.status)+'">'+(s.status||'مكتمل')+'</span></td><td><b>'+cost.toLocaleString()+' ر.س</b><br><small>['+s.payMethod+']</small></td><td class="no-print"><button class="act pr" onclick="printInvoice('+i+')">طباعة</button> <button class="act edit" onclick="editSale('+i+')">تعديل</button> <button class="act del" onclick="deleteSale('+i+')">حذف</button></td></tr>';
   });
   if($('salesBody')) $('salesBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا توجد بيانات بعد، سجّل أول عميل</td></tr>';
   if($('sTotal')) $('sTotal').innerText = total.toLocaleString() + ' ر.س';
@@ -555,13 +585,21 @@ function renderSales(){
 if($('serviceForm')) {
   $('serviceForm').addEventListener('submit', function(e){
     e.preventDefault();
-    let list = Array.from(document.querySelectorAll('input[name="servicePart"]:checked')).map(c=>c.value);
-    if(list.length===0){ alert('اختر خدمة واحدة على الأقل'); return; }
+    let d = parseInt($('qtyDuct').value) || 0;
+    let sp = parseInt($('qtySplit').value) || 0;
+    let f = parseInt($('qtyFilter').value) || 0;
+    let m = parseInt($('qtyMachine').value) || 0;
+
+    if(d === 0 && sp === 0 && f === 0 && m === 0){
+      alert('الرجاء إدخال كمية لخدمة واحدة على الأقل');
+      return;
+    }
+
     let obj = {
       code: $('clientCode').value.trim(),
       client: $('clientName').value.trim(),
       phone: $('clientPhone').value.trim(),
-      servicesList: list,
+      servicesObj: { duct: d, split: sp, filter: f, machine: m },
       status: $('serviceStatus').value,
       payMethod: $('payMethod').value,
       cost: $('serviceCost').value,
@@ -576,6 +614,10 @@ if($('serviceForm')) {
       salesData.unshift(obj);
     }
     e.target.reset();
+    $('qtyDuct').value = 0;
+    $('qtySplit').value = 0;
+    $('qtyFilter').value = 0;
+    $('qtyMachine').value = 0;
     $('serviceDate').valueAsDate = new Date();
     renderSales();
   });
@@ -590,9 +632,16 @@ function editSale(i){
   $('payMethod').value = s.payMethod || 'كاش / نقدي';
   $('serviceCost').value = s.cost;
   $('serviceDate').value = s.date;
-  document.querySelectorAll('input[name="servicePart"]').forEach(c=>{
-    c.checked = Array.isArray(s.servicesList) && s.servicesList.includes(c.value);
-  });
+
+  if(s.servicesObj) {
+    $('qtyDuct').value = s.servicesObj.duct || 0;
+    $('qtySplit').value = s.servicesObj.split || 0;
+    $('qtyFilter').value = s.servicesObj.filter || 0;
+    $('qtyMachine').value = s.servicesObj.machine || 0;
+  } else {
+    $('qtyDuct').value = 0; $('qtySplit').value = 0; $('qtyFilter').value = 0; $('qtyMachine').value = 0;
+  }
+
   $('editIndex').value = i;
   $('formTitle').innerText = 'تعديل بيانات العميل';
   goPage('p1', document.querySelectorAll('.nav-btn')[0]);
@@ -615,8 +664,8 @@ function filterData(){
     let matchS = st==='all' || s.status===st;
     let matchP = pay==='all' || s.payMethod===pay;
     if(matchQ && matchS && matchP){
-      let services = Array.isArray(s.servicesList) ? s.servicesList.join('، ') : '';
-      html += '<tr><td>'+s.code+'</td><td>'+s.client+'</td><td>'+(s.phone||'-')+'</td><td>'+services+'</td><td>'+(Number(s.cost)||0).toLocaleString()+' ر.س</td></tr>';
+      let servText = formatServicesText(s);
+      html += '<tr><td>'+s.code+'</td><td>'+s.client+'</td><td>'+(s.phone||'-')+'</td><td>'+servText+'</td><td>'+(Number(s.cost)||0).toLocaleString()+' ر.س</td></tr>';
     }
   });
   $('searchBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا توجد نتائج</td></tr>';
@@ -628,8 +677,8 @@ function renderMaint(){
   let html = '';
   salesData.forEach((s)=>{
     if(s.date && new Date(s.date) <= ago){
-      let services = Array.isArray(s.servicesList) ? s.servicesList.join('، ') : '';
-      html += '<tr><td>'+s.code+'</td><td>'+s.client+'</td><td>'+(s.phone||'-')+'</td><td style="color:#dc2626;font-weight:800">'+s.date+'</td><td>'+services+'</td></tr>';
+      let servText = formatServicesText(s);
+      html += '<tr><td>'+s.code+'</td><td>'+s.client+'</td><td>'+(s.phone||'-')+'</td><td style="color:#dc2626;font-weight:800">'+s.date+'</td><td>'+servText+'</td></tr>';
     }
   });
   $('maintBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا يوجد عملاء يستحقون الصيانة حالياً</td></tr>';
@@ -653,10 +702,10 @@ if($('empForm')) {
 
 function exportExcel(){
   if(!salesData.length){ alert('لا توجد بيانات للتصدير!'); return; }
-  let csv = '\uFEFFكود العميل,اسم العميل,رقم الجوال,التاريخ,الخدمات,الحالة,طريقة الدفع,التكلفة\n';
+  let csv = '\uFEFFكود العميل,اسم العميل,رقم الجوال,التاريخ,الخدمات والأعداد,الحالة,طريقة الدفع,التكلفة\n';
   salesData.forEach(s=>{
-    let services = Array.isArray(s.servicesList) ? s.servicesList.join(' - ') : '';
-    csv += '"'+s.code+'","'+s.client+'","'+(s.phone||'')+'","'+s.date+'","'+services+'","'+(s.status||'مكتمل')+'","'+s.payMethod+'","'+s.cost+'"\n';
+    let servText = formatServicesText(s);
+    csv += '"'+s.code+'","'+s.client+'","'+(s.phone||'')+'","'+s.date+'","'+servText+'","'+(s.status||'مكتمل')+'","'+s.payMethod+'","'+s.cost+'"\n';
   });
   let link = document.createElement('a');
   link.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8;'}));
@@ -670,10 +719,10 @@ function exportSingleMonthExcel(){
   let filtered = salesData.filter(s => s.date && s.date.startsWith(m));
   if(!filtered.length){ alert('لا توجد بيانات مسجلة في هذا الشهر ('+m+')'); return; }
   
-  let csv = '\uFEFFكود العميل,اسم العميل,رقم الجوال,التاريخ,الخدمات,الحالة,طريقة الدفع,التكلفة\n';
+  let csv = '\uFEFFكود العميل,اسم العميل,رقم الجوال,التاريخ,الخدمات والأعداد,الحالة,طريقة الدفع,التكلفة\n';
   filtered.forEach(s=>{
-    let services = Array.isArray(s.servicesList) ? s.servicesList.join(' - ') : '';
-    csv += '"'+s.code+'","'+s.client+'","'+(s.phone||'')+'","'+s.date+'","'+services+'","'+(s.status||'مكتمل')+'","'+s.payMethod+'","'+s.cost+'"\n';
+    let servText = formatServicesText(s);
+    csv += '"'+s.code+'","'+s.client+'","'+(s.phone||'')+'","'+s.date+'","'+servText+'","'+(s.status||'مكتمل')+'","'+s.payMethod+'","'+s.cost+'"\n';
   });
   let link = document.createElement('a');
   link.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8;'}));
@@ -692,8 +741,8 @@ function printSingleMonth(){
   filtered.forEach((s, idx)=>{
     let cost = Number(s.cost) || 0;
     totalMonth += cost;
-    let services = Array.isArray(s.servicesList) ? s.servicesList.join(' - ') : '';
-    rowsHtml += '<tr><td>'+(idx+1)+'</td><td>'+s.code+'</td><td>'+s.client+'</td><td>'+s.date+'</td><td>'+services+'</td><td>'+s.payMethod+'</td><td>'+cost.toLocaleString()+' ر.س</td></tr>';
+    let servText = formatServicesText(s);
+    rowsHtml += '<tr><td>'+(idx+1)+'</td><td>'+s.code+'</td><td>'+s.client+'</td><td>'+s.date+'</td><td>'+servText+'</td><td>'+s.payMethod+'</td><td>'+cost.toLocaleString()+' ر.س</td></tr>';
   });
 
   let w = window.open('', '_blank', 'width=800,height=700');
@@ -711,7 +760,7 @@ function printSingleMonth(){
               <th style="padding:8px;border:1px solid #ddd;">الكود</th>
               <th style="padding:8px;border:1px solid #ddd;">العميل</th>
               <th style="padding:8px;border:1px solid #ddd;">التاريخ</th>
-              <th style="padding:8px;border:1px solid #ddd;">الخدمات</th>
+              <th style="padding:8px;border:1px solid #ddd;">الخدمات والأعداد</th>
               <th style="padding:8px;border:1px solid #ddd;">الدفع</th>
               <th style="padding:8px;border:1px solid #ddd;">المبلغ</th>
             </tr>
@@ -720,7 +769,7 @@ function printSingleMonth(){
         </table>
         <h3 style="text-align:left;background:#fef3c7;padding:10px;border-radius:8px;">إجمالي مبيعات الشهر: ${totalMonth.toLocaleString()} ريال</h3>
         <div style="margin-top:40px;text-align:left;font-weight:bold;font-size:1.1rem;border-top:1px dashed #78350f;padding-top:15px;">
-          المشرف: إسلام مرزوق أحمد
+          المشرف الفني العام: إسلام مرزوق أحمد
         </div>
       </div>
     </body></html>
@@ -762,25 +811,59 @@ function restoreData(event){
   reader.readAsText(file);
 }
 
+// تصميم طباعة الفاتورة الأنيق والشيك جداً
 function printInvoice(i){
   let s = salesData[i];
   if(!s) return;
-  let services = Array.isArray(s.servicesList) ? s.servicesList.join(' - ') : '';
-  let w = window.open('', '_blank', 'width=750,height=600');
+  
+  let rowsPrint = '';
+  if (s.servicesObj) {
+    if(s.servicesObj.duct > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">تنظيف دكت</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${s.servicesObj.duct}</td></tr>`;
+    if(s.servicesObj.split > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">تنظيف مكيف اسبلت</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${s.servicesObj.split}</td></tr>`;
+    if(s.servicesObj.filter > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">فلتر</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${s.servicesObj.filter}</td></tr>`;
+    if(s.servicesObj.machine > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">ماكينة</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${s.servicesObj.machine}</td></tr>`;
+  }
+
+  let w = window.open('', '_blank', 'width=750,height=700');
   if(!w) return;
   w.document.write(`
-    <html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>فاتورة ${s.code}</title></head>
-    <body style="font-family:Tahoma;padding:30px">
-      <div style="max-width:600px;margin:auto;border:2px solid #78350f;border-radius:12px;padding:25px">
-        <h2 style="text-align:center;color:#78350f">تكنيكال 24 - فاتورة صيانة</h2>
-        <p><b>كود العميل:</b> ${s.code}</p>
-        <p><b>اسم العميل:</b> ${s.client}</p>
-        <p><b>رقم الجوال:</b> ${s.phone||'-'}</p>
-        <p><b>التاريخ:</b> ${s.date}</p>
-        <p><b>الخدمات:</b> ${services}</p>
-        <p><b>طريقة الدفع:</b> ${s.payMethod}</p>
-        <h3 style="text-align:center;background:#fef3c7;padding:12px;margin:15px 0;">الإجمالي: ${(Number(s.cost)||0).toLocaleString()} ريال</h3>
-        <div style="margin-top:30px;text-align:left;font-weight:bold;border-top:1px solid #78350f;padding-top:10px;">
+    <html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>فاتورة صيانة - ${s.code}</title></head>
+    <body style="font-family:Tahoma;background:#fdfbf7;padding:30px;color:#1f2937;">
+      <div style="max-width:650px;margin:auto;background:#fff;border:2px solid #78350f;border-radius:16px;padding:30px;box-shadow:0 10px 25px rgba(0,0,0,0.1);">
+        <div style="text-align:center;border-bottom:2px solid #fef3c7;padding-bottom:15px;margin-bottom:20px;">
+          <h2 style="color:#78350f;margin-bottom:5px;"> شركة تكنيكال 24 لتنظيف وصيانة المكيفات</h2>
+          <p style="color:#6b7280;font-size:0.9rem;">الراحة والجودة عنواننا دائمًا</p>
+        </div>
+        
+        <div style="display:flex;justify-content:space-between;margin-bottom:20px;font-size:0.95rem;background:#fef3c7;padding:12px;border-radius:10px;">
+          <div><b>كود العميل:</b> ${s.code}</div>
+          <div><b>التاريخ:</b> ${s.date}</div>
+        </div>
+
+        <div style="margin-bottom:20px;font-size:0.95rem;">
+          <p style="margin-bottom:6px;"><b>اسم العميل:</b> ${s.client}</p>
+          <p style="margin-bottom:6px;"><b>رقم الجوال:</b> ${s.phone||'-'}</p>
+          <p style="margin-bottom:6px;"><b>طريقة الدفع:</b> ${s.payMethod}</p>
+          <p style="margin-bottom:6px;"><b>حالة الخدمة:</b> ${s.status||'مكتمل'}</p>
+        </div>
+
+        <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
+          <thead>
+            <tr style="background:#78350f;color:#fff;">
+              <th style="padding:10px;text-align:right;border-top-right-radius:8px;">الخدمة المطلوبة</th>
+              <th style="padding:10px;text-align:center;border-top-left-radius:8px;">العدد / الكمية</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowsPrint}
+          </tbody>
+        </table>
+
+        <div style="text-align:left;background:#fef3c7;padding:14px;border-radius:10px;font-size:1.2rem;font-weight:bold;color:#78350f;margin-bottom:30px;">
+          إجمالي المبلغ: ${(Number(s.cost)||0).toLocaleString()} ريال
+        </div>
+
+        <div style="text-align:left;font-weight:bold;font-size:1.05rem;border-top:1px dashed #78350f;padding-top:15px;color:#451a03;">
           المشرف الفني العام: إسلام مرزوق أحمد
         </div>
       </div>
@@ -788,7 +871,7 @@ function printInvoice(i){
   `);
   w.document.close();
   w.focus();
-  setTimeout(function(){ w.print(); w.close(); }, 300);
+  setTimeout(function(){ w.print(); w.close(); }, 400);
 }
 
 let chartInstance = null;
