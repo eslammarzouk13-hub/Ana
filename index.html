@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="htmlRoot">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TC24 | نظام الصيانة والمبيعات</title>
+<title id="appTitle">TC24 | نظام الصيانة والمبيعات</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
@@ -215,50 +215,50 @@ th{background:#fef3c7;color:#78350f}
 </div>
 
 <nav>
-  <button class="nav-btn active" onclick="goPage('p1',this)">1. العملاء والمبيعات</button>
-  <button class="nav-btn" onclick="goPage('p2',this)">2. البحث</button>
-  <button class="nav-btn" onclick="goPage('p3',this)">3. التقارير الشهرية</button>
-  <button class="nav-btn" onclick="goPage('p4',this)">4. الصيانة الدورية</button>
-  <button class="nav-btn" onclick="goPage('p5',this)">5. الإعدادات والنسخ</button>
+  <button class="nav-btn active" onclick="goPage('p1',this)" id="nav1">1. العملاء والمبيعات</button>
+  <button class="nav-btn" onclick="goPage('p2',this)" id="nav2">2. البحث</button>
+  <button class="nav-btn" onclick="goPage('p3',this)" id="nav3">3. التقارير الشهرية</button>
+  <button class="nav-btn" onclick="goPage('p4',this)" id="nav4">4. الصيانة الدورية</button>
+  <button class="nav-btn" onclick="goPage('p5',this)" id="nav5">5. الإعدادات والنسخ</button>
 </nav>
 
 <!-- صفحة 1 -->
 <section id="p1" class="page active">
-  <div class="banner">أهلاً وسهلاً بك يا أبو ريان 🤚 - صفحة العملاء والمبيعات</div>
+  <div class="banner" id="banner1">أهلاً وسهلاً بك يا أبو ريان 🤚 - صفحة العملاء والمبيعات</div>
   <div class="stats">
-    <div class="stat">إجمالي المبيعات<br><b id="sTotal">0 ر.س</b></div>
-    <div class="stat">المحصل كاش<br><b id="sCash">0 ر.س</b></div>
-    <div class="stat">المحصل شبكة / تحويل<br><b id="sCard">0 ر.س</b></div>
-    <div class="stat">عدد العملاء<br><b id="sCount">0</b></div>
+    <div class="stat"><span id="st1Title">إجمالي المبيعات</span><br><b id="sTotal">0 ر.س</b></div>
+    <div class="stat"><span id="st2Title">المحصل كاش</span><br><b id="sCash">0 ر.س</b></div>
+    <div class="stat"><span id="st3Title">المحصل شبكة / تحويل</span><br><b id="sCard">0 ر.س</b></div>
+    <div class="stat"><span id="st4Title">عدد العملاء</span><br><b id="sCount">0</b></div>
   </div>
   <div class="grid">
     <div class="card">
       <h3 id="formTitle">تسجيل عملية صيانة جديدة</h3>
       <form id="serviceForm">
         <input type="hidden" id="editIndex" value="-1">
-        <label>رقم كود العميل</label><input id="clientCode" required placeholder="TC-1001">
-        <label>اسم العميل</label><input id="clientName" required placeholder="محمد العمري">
-        <label>رقم الجوال</label><input id="clientPhone" required placeholder="05xxxxxxxx">
-        <label>الأقسام والخدمات</label>
+        <label id="lblCode">رقم كود العميل</label><input id="clientCode" required placeholder="TC-1001">
+        <label id="lblName">اسم العميل</label><input id="clientName" required placeholder="محمد العمري">
+        <label id="lblPhone">رقم الجوال</label><input id="clientPhone" required placeholder="05xxxxxxxx">
+        <label id="lblServ">الأقسام والخدمات</label>
         <div class="services">
           <label><input type="checkbox" name="servicePart" value="تنظيف الدكت"> تنظيف الدكت</label>
           <label><input type="checkbox" name="servicePart" value="فلتر"> فلتر</label>
           <label><input type="checkbox" name="servicePart" value="تنظيف الاسبلت"> تنظيف الاسبلت</label>
           <label><input type="checkbox" name="servicePart" value="المكينة"> المكينة</label>
         </div>
-        <label>حالة الخدمة</label>
-        <select id="serviceStatus"><option>مكتمل</option><option>قيد التنفيذ</option><option>معلق</option></select>
-        <label>طريقة الدفع</label>
-        <select id="payMethod"><option>كاش / نقدي</option><option>شبكة</option><option>تحويل بنكي</option></select>
-        <label>التكلفة (ر.س)</label><input type="number" id="serviceCost" required>
-        <label>التاريخ</label><input type="date" id="serviceDate" required>
-        <button class="btn" type="submit">حفظ البيانات</button>
+        <label id="lblStatus">حالة الخدمة</label>
+        <select id="serviceStatus"><option id="optComplete">مكتمل</option><option id="optProgress">قيد التنفيذ</option><option id="optPending">معلق</option></select>
+        <label id="lblPay">طريقة الدفع</label>
+        <select id="payMethod"><option id="payCash">كاش / نقدي</option><option id="payCard">شبكة</option><option id="payTransfer">تحويل بنكي</option></select>
+        <label id="lblCost">التكلفة (ر.س)</label><input type="number" id="serviceCost" required>
+        <label id="lblDate">التاريخ</label><input type="date" id="serviceDate" required>
+        <button class="btn" type="submit" id="btnSave">حفظ البيانات</button>
       </form>
     </div>
     <div class="card">
-      <h3>سجل العملاء والمبيعات</h3>
+      <h3 id="tableTitle">سجل العملاء والمبيعات</h3>
       <div style="overflow-x:auto"><table>
-        <thead><tr><th>الكود</th><th>العميل</th><th>الخدمات والحالة</th><th>المبلغ</th><th class="no-print">إجراءات</th></tr></thead>
+        <thead><tr><th id="thCode">الكود</th><th id="thClient">العميل</th><th id="thServ">الخدمات والحالة</th><th id="thAmount">المبلغ</th><th class="no-print" id="thAction">إجراءات</th></tr></thead>
         <tbody id="salesBody"></tbody>
       </table></div>
     </div>
@@ -267,16 +267,16 @@ th{background:#fef3c7;color:#78350f}
 
 <!-- صفحة 2 -->
 <section id="p2" class="page">
-  <div class="banner">صفحة البحث الذكي</div>
+  <div class="banner" id="banner2">صفحة البحث الذكي</div>
   <div class="card">
-    <h3>البحث والفلترة الذكية</h3>
+    <h3 id="searchCardTitle">البحث والفلترة الذكية</h3>
     <div class="search">
       <input id="searchInput" placeholder="ابحث بالاسم أو الكود أو الجوال..." oninput="filterData()">
-      <select id="filterStatus" onchange="filterData()"><option value="all">جميع الحالات</option><option>مكتمل</option><option>قيد التنفيذ</option><option>معلق</option></select>
-      <select id="filterPay" onchange="filterData()"><option value="all">جميع طرق الدفع</option><option>كاش / نقدي</option><option>شبكة</option><option>تحويل بنكي</option></select>
+      <select id="filterStatus" onchange="filterData()"><option value="all" id="fAllStatus">جميع الحالات</option><option>مكتمل</option><option>قيد التنفيذ</option><option>معلق</option></select>
+      <select id="filterPay" onchange="filterData()"><option value="all" id="fAllPay">جميع طرق الدفع</option><option>كاش / نقدي</option><option>شبكة</option><option>تحويل بنكي</option></select>
     </div>
     <div style="overflow-x:auto"><table>
-      <thead><tr><th>الكود</th><th>العميل</th><th>الجوال</th><th>الخدمات</th><th>المبلغ</th></tr></thead>
+      <thead><tr><th id="sthCode">الكود</th><th id="sthClient">العميل</th><th id="sthPhone">الجوال</th><th id="sthServ">الخدمات</th><th id="sthAmount">المبلغ</th></tr></thead>
       <tbody id="searchBody"></tbody>
     </table></div>
   </div>
@@ -284,27 +284,27 @@ th{background:#fef3c7;color:#78350f}
 
 <!-- صفحة 3: التقارير والشهر المنفصل -->
 <section id="p3" class="page">
-  <div class="banner">صفحة التقارير - مبيعات الشهور والرسوم البيانية وتقارير الشهر المنفصل</div>
+  <div class="banner" id="banner3">صفحة التقارير - مبيعات الشهور والرسوم البيانية وتقارير الشهر المنفصل</div>
   
   <div class="card no-print">
-    <h3>استخراج تقارير شهر محدد (Excel أو طباعة)</h3>
+    <h3 id="repCardTitle">استخراج تقارير شهر محدد (Excel أو طباعة)</h3>
     <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
       <div style="flex:1; min-width:200px;">
-        <label>اختر الشهر والسنة المطلوبة:</label>
+        <label id="lblPickMonth">اختر الشهر والسنة المطلوبة:</label>
         <input type="month" id="reportMonthPicker" style="padding:10px; border-radius:10px; border:1px solid var(--border);">
       </div>
       <div style="display:flex; gap:8px; margin-top:24px;">
-        <button class="btn2" style="background:#059669; color:#fff; border:none;" onclick="exportSingleMonthExcel()"><i class="fa-solid fa-file-excel"></i> إكسيل الشهر</button>
-        <button class="btn2" style="background:#78350f; color:#fff; border:none;" onclick="printSingleMonth()"><i class="fa-solid fa-print"></i> طباعة تقرير الشهر</button>
+        <button class="btn2" style="background:#059669; color:#fff; border:none;" onclick="exportSingleMonthExcel()" id="btnExcelMonth"><i class="fa-solid fa-file-excel"></i> إكسيل الشهر</button>
+        <button class="btn2" style="background:#78350f; color:#fff; border:none;" onclick="printSingleMonth()" id="btnPrintMonth"><i class="fa-solid fa-print"></i> طباعة تقرير الشهر</button>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <h3>الرسوم البيانية لمبيعات الشهور (أعمدة وخطوط ملونة)</h3>
+    <h3 id="chartCardTitle">الرسوم البيانية لمبيعات الشهور (أعمدة وخطوط ملونة)</h3>
     <div style="display:flex; gap:10px; margin-bottom:12px;" class="no-print">
-      <button class="btn2" onclick="switchChartType('bar')">عرض أعمدة</button>
-      <button class="btn2" onclick="switchChartType('line')">عرض خطوط</button>
+      <button class="btn2" onclick="switchChartType('bar')" id="btnBar">عرض أعمدة</button>
+      <button class="btn2" onclick="switchChartType('line')" id="btnLine">عرض خطوط</button>
     </div>
     <div style="height:380px"><canvas id="monthlyChart"></canvas></div>
   </div>
@@ -312,10 +312,10 @@ th{background:#fef3c7;color:#78350f}
 
 <!-- صفحة 4 -->
 <section id="p4" class="page">
-  <div class="banner">صفحة الصيانة الدورية - العملاء اللي عدى عليهم 6 شهور أو أكثر</div>
-  <div class="card"><h3>تنبيهات الصيانة الدورية</h3>
+  <div class="banner" id="banner4">صفحة الصيانة الدورية - العملاء اللي عدى عليهم 6 شهور أو أكثر</div>
+  <div class="card"><h3 id="maintCardTitle">تنبيهات الصيانة الدورية</h3>
     <div style="overflow-x:auto"><table>
-      <thead><tr><th>الكود</th><th>العميل</th><th>الجوال</th><th>آخر صيانة</th><th>الخدمات</th></tr></thead>
+      <thead><tr><th id="mthCode">الكود</th><th id="mthClient">العميل</th><th id="mthPhone">الجوال</th><th id="mthDate">آخر صيانة</th><th id="mthServ">الخدمات</th></tr></thead>
       <tbody id="maintBody"></tbody>
     </table></div>
   </div>
@@ -323,21 +323,33 @@ th{background:#fef3c7;color:#78350f}
 
 <!-- صفحة 5 -->
 <section id="p5" class="page">
-  <div class="banner">صفحة الإعدادات - الفنيين والنسخ الاحتياطي</div>
+  <div class="banner" id="banner5">صفحة الإعدادات - الفنيين والنسخ الاحتياطي</div>
   <div class="grid">
-    <div class="card"><h3>إضافة فني / عامل</h3>
+    <div class="card">
+      <h3 id="langSettingTitle">🌐 تغيير لغة التطبيق / Language Settings</h3>
+      <label id="lblSelectLang">اختر اللغة المفضلة:</label>
+      <select id="appLangSelect" onchange="changeLanguage(this.value)" style="margin-bottom: 20px;">
+        <option value="ar">العربية (Arabic)</option>
+        <option value="en">English (الإنجليزية)</option>
+        <option value="ur">اردو (Urdu)</option>
+        <option value="hi">हिन्दी (Hindi)</option>
+        <option value="bn">বাংলা (Bengali)</option>
+        <option value="fr">Français (French)</option>
+      </select>
+
+      <h3 id="empCardTitle">إضافة فني / عامل</h3>
       <form id="empForm">
-        <label>الاسم</label><input id="empName" required>
-        <label>المسمى الوظيفي</label><input id="empRole" required>
-        <label>الجوال</label><input id="empPhone">
-        <button class="btn" type="submit">حفظ الموظف</button>
+        <label id="lblEmpName">الاسم</label><input id="empName" required>
+        <label id="lblEmpRole">المسمى الوظيفي</label><input id="empRole" required>
+        <label id="lblEmpPhone">الجوال</label><input id="empPhone">
+        <button class="btn" type="submit" id="btnSaveEmp">حفظ الموظف</button>
       </form>
-      <table style="margin-top:14px"><thead><tr><th>الاسم</th><th>الوظيفة</th><th>الجوال</th></tr></thead><tbody id="empBody"></tbody></table>
+      <table style="margin-top:14px"><thead><tr><th id="ethName">الاسم</th><th id="ethRole">الوظيفة</th><th id="ethPhone">الجوال</th></tr></thead><tbody id="empBody"></tbody></table>
     </div>
-    <div class="card"><h3>النسخ الاحتياطي</h3>
-      <button class="btn" type="button" onclick="exportExcel()">تصدير كافة البيانات Excel</button>
-      <button class="btn" type="button" style="background:#0284c7" onclick="backupData()">تحميل نسخة احتياطية JSON</button>
-      <label>استعادة نسخة احتياطية:</label>
+    <div class="card"><h3 id="backupCardTitle">النسخ الاحتياطي</h3>
+      <button class="btn" type="button" onclick="exportExcel()" id="btnExportAll">تصدير كافة البيانات Excel</button>
+      <button class="btn" type="button" style="background:#0284c7" onclick="backupData()" id="btnBackupJson">تحميل نسخة احتياطية JSON</button>
+      <label id="lblRestore">استعادة نسخة احتياطية:</label>
       <input type="file" accept=".json" onchange="restoreData(event)">
     </div>
   </div>
@@ -345,6 +357,125 @@ th{background:#fef3c7;color:#78350f}
 </div>
 
 <script>
+// ترجمات اللغات المختلفة
+const translations = {
+  ar: {
+    nav1: "1. العملاء والمبيعات", nav2: "2. البحث", nav3: "3. التقارير الشهرية", nav4: "4. الصيانة الدورية", nav5: "5. الإعدادات والنسخ",
+    banner1: "أهلاً وسهلاً بك يا أبو ريان 🤚 - صفحة العملاء والمبيعات",
+    st1Title: "إجمالي المبيعات", st2Title: "المحصل كاش", st3Title: "المحصل شبكة / تحويل", st4Title: "عدد العملاء",
+    formTitle: "تسجيل عملية صيانة جديدة", lblCode: "رقم كود العميل", lblName: "اسم العميل", lblPhone: "رقم الجوال",
+    lblServ: "الأقسام والخدمات", lblStatus: "حالة الخدمة", lblPay: "طريقة الدفع", lblCost: "التكلفة (ر.س)", lblDate: "التاريخ", btnSave: "حفظ البيانات",
+    tableTitle: "سجل العملاء والمبيعات", thCode: "الكود", thClient: "العميل", thServ: "الخدمات والحالة", thAmount: "المبلغ", thAction: "إجراءات",
+    banner2: "صفحة البحث الذكي", searchCardTitle: "البحث والفلترة الذكية", sthCode: "الكود", sthClient: "العميل", sthPhone: "الجوال", sthServ: "الخدمات", sthAmount: "المبلغ",
+    banner3: "صفحة التقارير - مبيعات الشهور والرسوم البيانية وتقارير الشهر المنفصل", repCardTitle: "استخراج تقارير شهر محدد (Excel أو طباعة)",
+    lblPickMonth: "اختر الشهر والسنة المطلوبة:", btnExcelMonth: "إكسيل الشهر", btnPrintMonth: "طباعة تقرير الشهر",
+    chartCardTitle: "الرسوم البيانية لمبيعات الشهور (أعمدة وخطوط ملونة)", btnBar: "عرض أعمدة", btnLine: "عرض خطوط",
+    banner4: "صفحة الصيانة الدورية - العملاء اللي عدى عليهم 6 شهور أو أكثر", maintCardTitle: "تنبيهات الصيانة الدورية",
+    mthCode: "الكود", mthClient: "العميل", mthPhone: "الجوال", mthDate: "آخر صيانة", mthServ: "الخدمات",
+    banner5: "صفحة الإعدادات - الفنيين والنسخ الاحتياطي", langSettingTitle: "🌐 تغيير لغة التطبيق / Language Settings", lblSelectLang: "اختر اللغة المفضلة:",
+    empCardTitle: "إضافة فني / عامل", lblEmpName: "الاسم", lblEmpRole: "المسمى الوظيفي", lblEmpPhone: "الجوال", btnSaveEmp: "حفظ الموظف",
+    ethName: "الاسم", ethRole: "الوظيفة", ethPhone: "الجوال", backupCardTitle: "النسخ الاحتياطي", btnExportAll: "تصدير كافة البيانات Excel", btnBackupJson: "تحميل نسخة احتياطية JSON", lblRestore: "استعادة نسخة احتياطية:"
+  },
+  en: {
+    nav1: "1. Customers & Sales", nav2: "2. Search", nav3: "3. Monthly Reports", nav4: "4. Periodic Maintenance", nav5: "5. Settings & Backup",
+    banner1: "Welcome Abu Rayan 🤚 - Customers & Sales Page",
+    st1Title: "Total Sales", st2Title: "Cash Collected", st3Title: "Card / Transfer", st4Title: "Total Customers",
+    formTitle: "Register New Maintenance", lblCode: "Client Code", lblName: "Client Name", lblPhone: "Phone Number",
+    lblServ: "Departments & Services", lblStatus: "Service Status", lblPay: "Payment Method", lblCost: "Cost (SAR)", lblDate: "Date", btnSave: "Save Data",
+    tableTitle: "Customers & Sales Log", thCode: "Code", thClient: "Client", thServ: "Services & Status", thAmount: "Amount", thAction: "Actions",
+    banner2: "Smart Search Page", searchCardTitle: "Smart Search & Filter", sthCode: "Code", sthClient: "Client", sthPhone: "Phone", sthServ: "Services", sthAmount: "Amount",
+    banner3: "Reports Page - Monthly Sales & Charts", repCardTitle: "Export Specific Month Report (Excel or Print)",
+    lblPickMonth: "Select Month and Year:", btnExcelMonth: "Month Excel", btnPrintMonth: "Print Month Report",
+    chartCardTitle: "Monthly Sales Charts", btnBar: "Bar Chart", btnLine: "Line Chart",
+    banner4: "Periodic Maintenance - Clients after 6+ months", maintCardTitle: "Maintenance Alerts",
+    mthCode: "Code", mthClient: "Client", mthPhone: "Phone", mthDate: "Last Maintenance", mthServ: "Services",
+    banner5: "Settings Page - Technicians & Backup", langSettingTitle: "🌐 Language Settings", lblSelectLang: "Select Preferred Language:",
+    empCardTitle: "Add Technician", lblEmpName: "Name", lblEmpRole: "Role", lblEmpPhone: "Phone", btnSaveEmp: "Save Employee",
+    ethName: "Name", ethRole: "Role", ethPhone: "Phone", backupCardTitle: "Backup & Restore", btnExportAll: "Export All Excel", btnBackupJson: "Download JSON Backup", lblRestore: "Restore Backup:"
+  },
+  ur: {
+    nav1: "1. گاہک اور فروخت", nav2: "2. تلاش", nav3: "3. ماہانہ رپورٹس", nav4: "4. دورانیہ کی دیکھ بھال", nav5: "5. ترتیبات اور بیک اپ",
+    banner1: "خوش آمدید ابو ریان 24 🤚 - گاہک اور فروخت کا صفحہ",
+    st1Title: "کل فروخت", st2Title: "نقد وصولی", st3Title: "کارڈ / ٹرانسفر", st4Title: "کل گاہک",
+    formTitle: "نئی دیکھ بھال درج کریں", lblCode: "گاہک کا کوڈ", lblName: "گاہک کا نام", lblPhone: "فون نمبر",
+    lblServ: "خدمات", lblStatus: "حالت", lblPay: "ادائیگی کا طریقہ", lblCost: "لاگت (ریال)", lblDate: "تاریخ", btnSave: "ڈیٹا محفوظ کریں",
+    tableTitle: "گاہک اور فروخت کا ریکارڈ", thCode: "کوڈ", thClient: "گاہک", thServ: "خدمات اور حالت", thAmount: "رقم", thAction: "کارروائی",
+    banner2: "اسمارٹ تلاش", searchCardTitle: "تلاش اور فلٹر", sthCode: "کوڈ", sthClient: "گاہک", sthPhone: "فون", sthServ: "خدمات", sthAmount: "رقم",
+    banner3: "رپورٹس صفحہ - ماہانہ فروخت", repCardTitle: "خصوصی ماہانہ رپورٹ نکالیں",
+    lblPickMonth: "مہینہ اور سال منتخب کریں:", btnExcelMonth: "ماہانہ ایکسل", btnPrintMonth: "رپورٹ پرنٹ کریں",
+    chartCardTitle: "ماہانہ فروخت کے چارٹس", btnBar: "بار چارٹ", btnLine: "لائن چارٹ",
+    banner4: "موسمی دیکھ بھال - 6 ماہ یا اس سے زیادہ", maintCardTitle: "دیکھ بھال کے الرٹس",
+    mthCode: "کوڈ", mthClient: "گاہک", mthPhone: "فون", mthDate: "آخری دیکھ بھال", mthServ: "خدمات",
+    banner5: "ترتیبات - تکنیکی ماہرین اور بیک اپ", langSettingTitle: "🌐 زبان کی ترتیبات (Language)", lblSelectLang: "زبان منتخب کریں:",
+    empCardTitle: "ٹیکنیشین شامل کریں", lblEmpName: "نام", lblEmpRole: "عہدہ", lblEmpPhone: "فون", btnSaveEmp: "ملازم محفوظ کریں",
+    ethName: "نام", ethRole: "عہدہ", ethPhone: "فون", backupCardTitle: "بیک اپ اور ریسٹور", btnExportAll: "تمام ڈیٹا ایکسل کریں", btnBackupJson: "JSON بیک اپ ڈاؤن لوڈ", lblRestore: "بیک اپ بحال کریں:"
+  },
+  hi: {
+    nav1: "1. ग्राहक और बिक्री", nav2: "2. खोजें", nav3: "3. मासिक रिपोर्ट", nav4: "4. आवधिक रखरखाव", nav5: "5. सेटिंग्स और बैकअप",
+    banner1: "स्वागत है अबू रयान 🤚 - ग्राहक और बिक्री पृष्ठ",
+    st1Title: "कुल बिक्री", st2Title: "नकद प्राप्त", st3Title: "कार्ड / ट्रांसफर", st4Title: "कुल ग्राहक",
+    formTitle: "नया रखरखाव दर्ज करें", lblCode: "ग्राहक कोड", lblName: "ग्राहक का नाम", lblPhone: "फ़ोन नंबर",
+    lblServ: "सेवाएं", lblStatus: "स्थिति", lblPay: "भुगतान विधि", lblCost: "लागत", lblDate: "दिनांक", btnSave: "डेटा सहेजें",
+    tableTitle: "ग्राहक और बिक्री लॉग", thCode: "कोड", thClient: "ग्राहक", thServ: "सेवाएं और स्थिति", thAmount: "राशि", thAction: "कार्रवाई",
+    banner2: "स्मार्ट खोज पृष्ठ", searchCardTitle: "स्मार्ट खोज और फ़िल्टर", sthCode: "कोड", sthClient: "ग्राहक", sthPhone: "फ़ोन", sthServ: "सेवाएं", sthAmount: "राशि",
+    banner3: "रिपोर्ट पृष्ठ - मासिक बिक्री", repCardTitle: "विशिष्ट माह रिपोर्ट निर्यात करें",
+    lblPickMonth: "महीना और वर्ष चुनें:", btnExcelMonth: "माह एक्सेल", btnPrintMonth: "रिपोर्ट प्रिंट करें",
+    chartCardTitle: "मास बिक्री चार्ट", btnBar: "बार चार्ट", btnLine: "लाइन चार्ट",
+    banner4: "आवधिक रखरखाव - 6+ महीने", maintCardTitle: "रखरखाव अलर्ट",
+    mthCode: "कोड", mthClient: "ग्राहक", mthPhone: "फ़ोन", mthDate: "अंतिम रखरखाव", mthServ: "सेवाएं",
+    banner5: "सेटिंग्स - तकनीशियन और बैकअप", langSettingTitle: "🌐 भाषा सेटिंग्स (Language)", lblSelectLang: "भाषा चुनें:",
+    empCardTitle: "तकनीशियन जोड़ें", lblEmpName: "नाम", lblEmpRole: "भूमिका", lblEmpPhone: "फ़ोन", btnSaveEmp: "कर्मचारी सहेजें",
+    ethName: "नाम", ethRole: "भूमिका", ethPhone: "फ़ोन", backupCardTitle: "बैकअप और पुनर्स्थापना", btnExportAll: "सभी एक्सेल निर्यात करें", btnBackupJson: "JSON बैकअप डाउनलोड", lblRestore: "बैकअप पुनर्स्थापित करें:"
+  },
+  bn: {
+    nav1: "1. গ্রাহক এবং বিক্রয়", nav2: "2. অনুসন্ধান", nav3: "3. মাসিক প্রতিবেদন", nav4: "4. নিয়মিত রক্ষণাবেক্ষণ", nav5: "5. সেটিংস এবং ব্যাকআপ",
+    banner1: "স্বাগতম আবু রায়ান 🤚 - গ্রাহক এবং বিক্রয় পৃষ্ঠা",
+    st1Title: "মোট বিক্রয়", st2Title: "নগদ সংগ্রহ", st3Title: "কার্ড / ট্রান্সফার", st4Title: "মোট গ্রাহক",
+    formTitle: "নতুন রক্ষণাবেক্ষণ নিবন্ধন করুন", lblCode: "গ্রাহক কোড", lblName: "গ্রাহকের নাম", lblPhone: "ফোন নম্বর",
+    lblServ: "সেবাসমূহ", lblStatus: "অবস্থা", lblPay: "পেমেন্ট পদ্ধতি", lblCost: "মূল্য", lblDate: "তারিখ", btnSave: "তথ্য সংরক্ষণ করুন",
+    tableTitle: "গ্রাহক এবং বিক্রয় লগ", thCode: "কোড", thClient: "গ্রাহক", thServ: "সেবা ও অবস্থা", thAmount: "পরিমাণ", thAction: "কার্যক্রম",
+    banner2: "স্মার্ট অনুসন্ধান", searchCardTitle: "স্মার্ট অনুসন্ধান এবং ফিল্টার", sthCode: "কোড", sthClient: "গ্রাহক", sthPhone: "ফোন", sthServ: "সেবাসমূহ", sthAmount: "পরিমাণ",
+    banner3: "প্রতিবেদন পৃষ্ঠা - মাসিক বিক্রয়", repCardTitle: "নির্দিষ্ট মাসের প্রতিবেদন রপ্তানি করুন",
+    lblPickMonth: "মাস এবং বছর নির্বাচন করুন:", btnExcelMonth: "মাসের এক্সেল", btnPrintMonth: "প্রতিবেদন প্রিন্ট করুন",
+    chartCardTitle: "মাসিক বিক্রয় চার্ট", btnBar: "বার চার্ট", btnLine: "লাইন চার্ট",
+    banner4: "নিয়মিত রক্ষণাবেক্ষণ - ৬+ মাস", maintCardTitle: "রক্ষণাবেক্ষণ সতর্কতা",
+    mthCode: "কোড", mthClient: "গ্রাহক", mthPhone: "ফোন", mthDate: "শেষ রক্ষণাবেক্ষণ", mthServ: "সেবাসমূহ",
+    banner5: "সেটিংস - টেকনিশিয়ান এবং ব্যাকআপ", langSettingTitle: "🌐 ভাষা সেটিংস (Language)", lblSelectLang: "ভাষা নির্বাচন করুন:",
+    empCardTitle: "টেকনিশিয়ান যোগ করুন", lblEmpName: "নাম", lblEmpRole: "পদবী", lblEmpPhone: "ফোন", btnSaveEmp: "কর্মী সংরক্ষণ করুন",
+    ethName: "নাম", ethRole: "পদবী", ethPhone: "ফোন", backupCardTitle: "ব্যাকআপ এবং পুনরুদ্ধার", btnExportAll: "সব এক্সেল রপ্তানি করুন", btnBackupJson: "JSON ব্যাকআপ ডাউনলোড", lblRestore: "ব্যাকআপ পুনরুদ্ধার করুন:"
+  },
+  fr: {
+    nav1: "1. Clients & Ventes", nav2: "2. Recherche", nav3: "3. Rapports Mensuels", nav4: "4. Maintenance Périodique", nav5: "5. Paramètres & Sauvegarde",
+    banner1: "Bienvenue Abu Rayan 🤚 - Page Clients et Ventes",
+    st1Title: "Ventes Totales", st2Title: "Espèces Perçues", st3Title: "Carte / Virement", st4Title: "Total Clients",
+    formTitle: "Enregistrer une maintenance", lblCode: "Code Client", lblName: "Nom du Client", lblPhone: "Numéro de Téléphone",
+    lblServ: "Services", lblStatus: "Statut", lblPay: "Mode de Paiement", lblCost: "Coût", lblDate: "Date", btnSave: "Enregistrer",
+    tableTitle: "Journal des Ventes", thCode: "Code", thClient: "Client", thServ: "Services & Statut", thAmount: "Montant", thAction: "Actions",
+    banner2: "Page de Recherche Intelligente", searchCardTitle: "Recherche et Filtre", sthCode: "Code", sthClient: "Client", sthPhone: "Téléphone", sthServ: "Services", sthAmount: "Montant",
+    banner3: "Rapports Mensuels & Graphiques", repCardTitle: "Exporter le Rapport du Mois (Excel ou Imprimer)",
+    lblPickMonth: "Sélectionner le Mois et l'Année :", btnExcelMonth: "Excel du Mois", btnPrintMonth: "Imprimer",
+    chartCardTitle: "Graphiques des Ventes Mensuelles", btnBar: "Barres", btnLine: "Lignes",
+    banner4: "Maintenance Périodique - 6+ mois", maintCardTitle: "Alertes de Maintenance",
+    mthCode: "Code", mthClient: "Client", mthPhone: "Téléphone", mthDate: "Dernière Maintenance", mthServ: "Services",
+    banner5: "Paramètres - Techniciens & Sauvegarde", langSettingTitle: "🌐 Paramètres de Langue", lblSelectLang: "Sélectionner la Langue :",
+    empCardTitle: "Ajouter un Technicien", lblEmpName: "Nom", lblEmpRole: "Rôle", lblEmpPhone: "Téléphone", btnSaveEmp: "Enregistrer",
+    ethName: "Nom", ethRole: "Rôle", ethPhone: "Téléphone", backupCardTitle: "Sauvegarde & Restauration", btnExportAll: "Exporter Tout Excel", btnBackupJson: "Télécharger JSON", lblRestore: "Restaurer :"
+  }
+};
+
+function changeLanguage(lang) {
+  let t = translations[lang] || translations['ar'];
+  document.getElementById('htmlRoot').setAttribute('lang', lang);
+  document.getElementById('htmlRoot').setAttribute('dir', (lang === 'ar' || lang === 'ur') ? 'rtl' : 'ltr');
+  localStorage.setItem('tc24_lang', lang);
+
+  // تحديث النصوص ديناميكياً
+  for (let key in t) {
+    let el = document.getElementById(key);
+    if (el) el.innerText = t[key];
+  }
+}
+
 // التحقق من تسجيل الدخول عند بدء التشغيل
 function handleLogin(e) {
     e.preventDefault();
@@ -366,8 +497,12 @@ function logout() {
     location.reload();
 }
 
-// إذا كان مسجل دخول مسبقاً في الجلسة الحالية
 window.addEventListener('DOMContentLoaded', () => {
+    let savedLang = localStorage.getItem('tc24_lang') || 'ar';
+    if(document.getElementById('appLangSelect')) {
+        document.getElementById('appLangSelect').value = savedLang;
+        changeLanguage(savedLang);
+    }
     if (sessionStorage.getItem('tc24_logged') === 'true') {
         document.getElementById('loginOverlay').style.display = 'none';
         document.getElementById('appContainer').style.display = 'block';
@@ -646,7 +781,7 @@ function printInvoice(i){
         <p><b>طريقة الدفع:</b> ${s.payMethod}</p>
         <h3 style="text-align:center;background:#fef3c7;padding:12px;margin:15px 0;">الإجمالي: ${(Number(s.cost)||0).toLocaleString()} ريال</h3>
         <div style="margin-top:30px;text-align:left;font-weight:bold;border-top:1px solid #78350f;padding-top:10px;">
-          المشرف: إسلام مرزوق أحمد
+          المشرف الفني العام: إسلام مرزوق أحمد
         </div>
       </div>
     </body></html>
