@@ -66,63 +66,133 @@ th{background:#fef3c7;color:#78350f}
     100% { transform: translate3d(-100%, 0, 0); }
 }
 
-/* تصميم واجهة تسجيل الدخول للأدمن */
+/* تصميم واجهة تسجيل الدخول الفخمة المطابقة للصورة */
 #loginOverlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(135deg, #78350f, #451a03);
+    background: radial-gradient(circle at center, #d97706 0%, #78350f 50%, #3a1907 100%);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
     padding: 20px;
 }
+#loginOverlay::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+}
 .login-card {
-    background: #fff;
-    padding: 30px;
-    border-radius: 16px;
+    background: #f8fafc;
+    padding: 40px 32px;
+    border-radius: 28px;
     width: 100%;
-    max-width: 400px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    max-width: 420px;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.45);
     text-align: center;
-    border-top: 6px solid #d97706;
+    position: relative;
+    z-index: 2;
+}
+.login-icon-box {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-icon-box i {
+    font-size: 3.5rem;
+    color: #92400e;
 }
 .login-card h2 {
-    color: #78350f;
-    margin-bottom: 8px;
-    font-size: 1.5rem;
+    color: #0f172a;
+    margin-bottom: 6px;
+    font-size: 1.8rem;
+    font-weight: 800;
 }
 .login-card p {
-    color: #6b7280;
-    font-size: 0.9rem;
-    margin-bottom: 20px;
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+    font-weight: 600;
+}
+.input-group {
+    position: relative;
+    margin-bottom: 16px;
+}
+.input-group i {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    font-size: 1.1rem;
+}
+.input-group input {
+    width: 100%;
+    padding: 14px 16px 14px 46px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #ffffff;
+    font-size: 1rem;
+    color: #1e293b;
+    outline: none;
+    transition: all 0.2s ease;
+}
+.input-group input:focus {
+    border-color: #d97706;
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
+}
+.login-btn-main {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #78350f, #542307);
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 10px 20px rgba(120, 53, 15, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.login-btn-main:active {
+    transform: scale(0.98);
 }
 .login-error {
     color: #dc2626;
-    font-size: 0.85rem;
-    margin-top: 10px;
+    font-size: 0.9rem;
+    margin-top: 14px;
+    font-weight: 700;
     display: none;
 }
 </style>
 </head>
 <body>
 
-<!-- واجهة تسجيل دخول الأدمن قبل فتح التطبيق -->
+<!-- واجهة تسجيل دخول الأدمن الفخمة المطابقة للصورة -->
 <div id="loginOverlay">
     <div class="login-card">
-        <i class="fa-solid fa-snowflake" style="font-size: 3rem; color: #78350f; margin-bottom: 15px;"></i>
+        <div class="login-icon-box">
+            <i class="fa-solid fa-snowflake"></i>
+        </div>
         <h2>شركة تكنيكال 24</h2>
         <p>قسم المكيفات - بوابة المشرف</p>
         <form id="loginForm" onsubmit="handleLogin(event)">
-            <div style="text-align: right;">
-                <label>اسم المستخدم</label>
-                <input type="text" id="loginUser" required placeholder="أدخل اسم المستخدم" autocomplete="off">
+            <div class="input-group">
+                <input type="text" id="loginUser" required placeholder="اسم المستخدم" autocomplete="off">
+                <i class="fa-regular fa-user"></i>
             </div>
-            <div style="text-align: right; margin-top: 10px;">
-                <label>الرقم السري</label>
-                <input type="password" id="loginPass" required placeholder="••••">
+            <div class="input-group">
+                <input type="password" id="loginPass" required placeholder="الرقم السري">
+                <i class="fa-solid fa-lock"></i>
             </div>
-            <button type="submit" class="btn" style="margin-top: 20px;">تسجيل الدخول</button>
+            <button type="submit" class="login-btn-main">تسجيل الدخول</button>
             <div id="loginError" class="login-error">اسم المستخدم أو الرقم السري غير صحيح!</div>
         </form>
     </div>
