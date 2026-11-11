@@ -13,6 +13,24 @@ body{background:var(--bg);color:#1f2937;line-height:1.6}
 header{background:linear-gradient(135deg,#78350f,#451a03);color:#fff;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
 header h1{font-size:1.4rem}
 header h1 i{color:#fde68a}
+.header-left-area {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.live-clock {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border: 1px solid rgba(253, 230, 138, 0.4);
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
 nav{background:#fff;border-bottom:1px solid var(--border);padding:10px;display:flex;gap:8px;overflow-x:auto;position:sticky;top:0;z-index:10}
 .nav-btn{flex:1;white-space:nowrap;padding:11px 14px;border:1px solid var(--border);background:#f9fafb;border-radius:10px;font-weight:800;cursor:pointer;color:var(--muted)}
 .nav-btn.active{background:var(--brown);color:#fff;border-color:var(--brown)}
@@ -178,7 +196,7 @@ th{background:#fef3c7;color:#78350f}
 </head>
 <body>
 
-<!-- واجهة تسجيل دخول الأدمن الفخمة المطابقة للصورة -->
+<!-- واجهة تسجيل دخول الأدمن الفخمة -->
 <div id="loginOverlay">
     <div class="login-card">
         <div class="login-icon-box">
@@ -201,20 +219,26 @@ th{background:#fef3c7;color:#78350f}
     </div>
 </div>
 
-<!-- المحتوى الأصلي للتطبيق (مخفي حتى يتم تسجيل الدخول) -->
+<!-- المحتوى الأصلي للتطبيق -->
 <div id="appContainer" style="display: none;">
 <header>
   <h1><i class="fa-solid fa-snowflake"></i> تكنيكال 24 - صيانة المكيفات (SP3)</h1>
-  <div style="display: flex; gap: 8px; align-items: center;">
-    <button class="btn2" onclick="exportExcel()"><i class="fa-solid fa-file-excel"></i> تصدير الكل</button>
-    <button class="btn2" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة</button>
-    <button class="btn2" onclick="logout()" style="background:#dc2626; color:#fff; border:none;" title="تسجيل خروج"><i class="fa-solid fa-right-from-bracket"></i></button>
+  <div class="header-left-area">
+    <!-- عرض الساعة بتنسيق 12 ساعة -->
+    <div class="live-clock" id="liveClockDisplay">
+      <i class="fa-regular fa-clock"></i> <span id="clockText">12:00:00 ص</span>
+    </div>
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <button class="btn2" onclick="exportExcel()"><i class="fa-solid fa-file-excel"></i> تصدير الكل</button>
+      <button class="btn2" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة</button>
+      <button class="btn2" onclick="logout()" style="background:#dc2626; color:#fff; border:none;" title="تسجيل خروج"><i class="fa-solid fa-right-from-bracket"></i></button>
+    </div>
   </div>
 </header>
 
 <!-- الشريط المتحرك الاحترافي -->
 <div class="ticker-container">
-  <div class="ticker-text">✨ شركة تكنيكال 24 لتنظيف وصيانة المكيفات - الراحة والجودة عنواننا دائمًا ✨ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🛠️ نعمل بدقة واحترافية لخدمتكم على مدار الساعة 🛠️</div>
+  <div class="ticker-text">✨ شركة تكنيكال 24 لتنظيف وصيانة المكيفات - الراحة والجودة عنواننا دائمًا ✨ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🛠️ نعمل بدقة واحترانية لخدمتكم على مدار الساعة 🛠️</div>
 </div>
 
 <nav>
@@ -460,12 +484,12 @@ const translations = {
   },
   bn: {
     nav1: "1. গ্রাহک এবং বিক্রয়", nav2: "2. অনুসন্ধান", nav3: "3. মাসিক প্রতিবেদন", nav4: "4. নিয়মিত রক্ষণাবেক্ষণ", nav5: "5. সেটিংস এবং ব্যাকআপ",
-    banner1: "স্বাগতম আবু রায়ান 🤚 - গ্রাহক এবং বিক্রয় পৃষ্ঠা",
+    banner1: "স্বাগতম আবু রায়ান ؒ - গ্রাহক এবং বিক্রয় পৃষ্ঠা",
     st1Title: "মোট বিক্রয়", st2Title: "নগদ সংগ্রহ", st3Title: "কার্ড / ট্রান্সফার", st4Title: "মোট গ্রাহক",
     formTitle: "নতুন রক্ষণাবেক্ষণ নিবন্ধন করুন", lblCode: "গ্রাহক কোড", lblName: "গ্রাহকের নাম", lblPhone: "ফোন নম্বর",
     lblServ: "পরিমাণ এবং মূল্য নির্বাচন করুন", lblStatus: "অবস্থা", lblPay: "পেমেন্ট পদ্ধতি", lblCost: "মোট খরচ", lblDate: "তারিখ", btnSave: "তথ্য সংরক্ষণ করুন",
-    tableTitle: "গ্রাহক এবং বিক্রয় লগ", thCode: "কোড", thClient: "গ্রাহক", thServ: "সেবা ও মূল্য", thAmount: "পরিমাণ", thAction: "কার্যক্রম",
-    banner2: "স্মার্ট অনুসন্ধান", searchCardTitle: "স্মার্ট অনুসন্ধান এবং ফিল্টার", sthCode: "কোড", sthClient: "গ্রাহک", sthPhone: "ফোন", sthServ: "সেবাসমূহ", sthAmount: "পরিমাণ",
+    tableTitle: "গ্রাহک এবং বিক্রয় লগ", thCode: "কোড", thClient: "গ্রাহক", thServ: "সেবা ও মূল্য", thAmount: "পরিমাণ", thAction: "কার্যক্রম",
+    banner2: "স্মার্ট অনুসন্ধান", searchCardTitle: "স্মার্ট অনুসন্ধান এবং ফিল্টার", sthCode: "কোড", sthClient: "গ্রাহক", sthPhone: "ফোন", sthServ: "সেবাসমূহ", sthAmount: "পরিমাণ",
     banner3: "প্রতিবেদন পৃষ্ঠা - মাসিক বিক্রয়", repCardTitle: "নির্দিষ্ট মাসের প্রতিবেদন রপ্তানি করুন",
     lblPickMonth: "মাস এবং বছর নির্বাচন করুন:", btnExcelMonth: "মাসের এক্সেল", btnPrintMonth: "প্রতিবেদন প্রিন্ট করুন",
     chartCardTitle: "মাসিক বিক্রয় চার্ট", btnBar: "বার চার্ট", btnLine: "লাইন চার্ট",
@@ -506,6 +530,28 @@ function changeLanguage(lang) {
   }
 }
 
+// دالة تحديث الساعة الحية بتنسيق 12 ساعة مع AM/PM بالعربية
+function updateLiveClock() {
+  let now = new Date();
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+  let seconds = now.getSeconds();
+  
+  let ampm = hours >= 12 ? 'مساءً' : 'صباحاً';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // الساعة 12 بدلاً من 0
+  
+  let hStr = String(hours).padStart(2, '0');
+  let mStr = String(minutes).padStart(2, '0');
+  let sStr = String(seconds).padStart(2, '0');
+  
+  let clockEl = document.getElementById('clockText');
+  if(clockEl) {
+    clockEl.innerText = `${hStr}:${mStr}:${sStr} ${ampm}`;
+  }
+}
+setInterval(updateLiveClock, 1000);
+
 // التحقق من تسجيل الدخول عند بدء التشغيل
 function handleLogin(e) {
     e.preventDefault();
@@ -533,6 +579,7 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('appLangSelect').value = savedLang;
         changeLanguage(savedLang);
     }
+    updateLiveClock();
     if (sessionStorage.getItem('tc24_logged') === 'true') {
         document.getElementById('loginOverlay').style.display = 'none';
         document.getElementById('appContainer').style.display = 'block';
@@ -565,7 +612,6 @@ function statusClass(s){
   return s==='مكتمل' ? 'ok' : s==='قيد التنفيذ' ? 'run' : 'wait';
 }
 
-// دالة لحساب التكلفة الإجمالية (اختيارية ويمكن التعديل اليدوي عليها بالكامل)
 function calcTotalCost() {
   let dQty = parseFloat($('qtyDuct').value) || 0;
   let dPrice = parseFloat($('priceDuct').value) || 0;
@@ -585,7 +631,6 @@ function calcTotalCost() {
   }
 }
 
-// دالة لتنسيق وعرض الخدمات والأعداد والأسعار
 function formatServicesText(s) {
   if (s.servicesObj) {
     let parts = [];
@@ -858,7 +903,6 @@ function restoreData(event){
   reader.readAsText(file);
 }
 
-// تصميم طباعة الفاتورة الأنيق والشيك جداً
 function printInvoice(i){
   let s = salesData[i];
   if(!s) return;
