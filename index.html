@@ -533,7 +533,21 @@ function updateLiveClock() {
 }
 setInterval(updateLiveClock, 1000);
 
-let salesData = JSON.parse(localStorage.getItem('tc24_sales')) || [];
+// دالة ذكية لضمان جلب البيانات من المصدر الأساسي بغض النظر عن الجهاز أو الحساب
+function getSharedSales() {
+    let data = localStorage.getItem('tc24_sales');
+    if (!data || data === "[]") {
+        // إذا لم تكن موجودة، نبحث في مفتاح بديل لضمان عدم ضياع البيانات
+        data = localStorage.getItem('tc24_sales_master') || "[]";
+    }
+    return JSON.parse(data) || [];
+}
+
+function saveSharedSales(data) {
+    localStorage.setItem('tc24_sales', JSON.stringify(data));
+    localStorage.setItem('tc24_sales_master', JSON.stringify(data));
+}
+
 let empData = JSON.parse(localStorage.getItem('tc24_emps')) || [
   { name: "TC24", pass: "0011", role: "فني تركيبات وصيانة", phone: "05xxxxxxxx" }
 ];
@@ -576,7 +590,7 @@ function initAppSession() {
     
     document.getElementById('userRoleBadge').innerText = isAdm ? '⭐ مشرف عام' : `👤 موظف (عرض و طباعة): ${roleName}`;
     
-    // إخفاء نموذج الإضافة للموظف فقط، ولكن جدول العملاء والبيانات ستظهر ليراها بشكل كامل
+    // إخفاء نموذج الإضافة للموظف تماماً، ليقتصر على العرض والاطلاع والطباعة فقط
     if (!isAdm) {
         if($('formCardContainer')) $('formCardContainer').style.display = 'none';
         if($('adminEmpSection')) $('adminEmpSection').style.display = 'none';
@@ -678,6 +692,7 @@ function formatServicesText(s) {
 }
 
 function renderSales(){
+  let salesData = getSharedSales();
   let total=0, cash=0, card=0, html='';
   let isAdm = (sessionStorage.getItem('tc24_role') === 'admin');
   
@@ -701,12 +716,12 @@ function renderSales(){
   if($('sCash')) $('sCash').innerText = cash.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ر.س';
   if($('sCard')) $('sCard').innerText = card.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ر.س';
   if($('sCount')) $('sCount').innerText = salesData.length;
-  localStorage.setItem('tc24_sales', JSON.stringify(salesData));
 }
 
 if($('serviceForm')) {
   $('serviceForm').addEventListener('submit', function(e){
     e.preventDefault();
+    let salesData = getSharedSales();
     let d = parseFloat($('qtyDuct').value) || 0;
     let pd = parseFloat($('priceDuct').value) || 0;
 
@@ -742,6 +757,7 @@ if($('serviceForm')) {
     } else {
       salesData.unshift(obj);
     }
+    saveSharedSales(salesData);
     e.target.reset();
     $('qtyDuct').value = 0; $('priceDuct').value = 0;
     $('qtySplit').value = 0; $('priceSplit').value = 0;
@@ -753,6 +769,7 @@ if($('serviceForm')) {
 }
 
 function editSale(i){
+  let salesData = getSharedSales();
   let s = salesData[i];
   $('clientCode').value = s.code;
   $('clientName').value = s.client;
@@ -785,12 +802,15 @@ function editSale(i){
 
 function deleteSale(i){
   if(confirm('هل أنت متأكد من حذف بيانات هذا العميل؟')){
+    let salesData = getSharedSales();
     salesData.splice(i,1);
+    saveSharedSales(salesData);
     renderSales();
   }
 }
 
 function filterData(){
+  let salesData = getSharedSales();
   let q = $('searchInput').value.toLowerCase();
   let st = $('filterStatus').value;
   let pay = $('filterPay').value;
@@ -808,6 +828,7 @@ function filterData(){
 }
 
 function renderMaint(){
+  let salesData = getSharedSales();
   let ago = new Date();
   ago.setMonth(ago.getMonth()-6);
   let html = '';
@@ -1012,6 +1033,7 @@ function shareMedia(id){
 }
 
 function exportExcel(){
+  let salesData = getSharedSales();
   if(!salesData.length){ alert('لا توجد بيانات للتصدير!'); return; }
   let csv = '\uFEFFكود العميل,اسم العميل,رقم الجوال,التاريخ,الخدمات والأعداد والأسعار,الحالة,طريقة الدفع,التكلفة\n';
   salesData.forEach(s=>{
@@ -1025,6 +1047,7 @@ function exportExcel(){
 }
 
 function exportSingleMonthExcel(){
+  let salesData = getSharedSales();
   let m = $('reportMonthPicker').value;
   if(!m){ alert('الرجاء اختيار الشهر أولاً'); return; }
   let filtered = salesData.filter(s => s.date && s.date.startsWith(m));
@@ -1042,6 +1065,7 @@ function exportSingleMonthExcel(){
 }
 
 function printSingleMonth(){
+  let salesData = getSharedSales();
   let m = $('reportMonthPicker').value;
   if(!m){ alert('الرجاء اختيار الشهر أولاً'); return; }
   let filtered = salesData.filter(s => s.date && s.date.startsWith(m));
@@ -1091,6 +1115,7 @@ function printSingleMonth(){
 }
 
 function backupData(){
+  let salesData = getSharedSales();
   let backupObj = {
     sales: salesData,
     emps: empData
@@ -1113,12 +1138,17 @@ function restoreData(event){
     try{
       let parsed = JSON.parse(reader.result);
       if(Array.isArray(parsed)){
-        salesData = parsed;
+        saveSharedSales(parsed);
         renderSales();
         alert('تم استعادة البيانات بنجاح!');
       } else if(parsed && typeof parsed === 'object') {
-        if(parsed.sales) salesData = parsed.sales;
-        if(parsed.emps) empData = parsed.emps;
+        if(parsed.sales) {
+          saveSharedSales(parsed.sales);
+        }
+        if(parsed.emps) {
+          empData = parsed.emps;
+          localStorage.setItem('tc24_emps', JSON.stringify(empData));
+        }
         renderSales();
         renderEmps();
         alert('تم استعادة البيانات والموظفين بنجاح!');
@@ -1133,6 +1163,7 @@ function restoreData(event){
 }
 
 function printInvoice(i){
+  let salesData = getSharedSales();
   let s = salesData[i];
   if(!s) return;
   
@@ -1199,6 +1230,7 @@ function printInvoice(i){
 
 let chartInstance = null;
 function renderChart(type = 'bar'){
+  let salesData = getSharedSales();
   let months = {};
   salesData.forEach(s=>{
     if(!s.date) return;
