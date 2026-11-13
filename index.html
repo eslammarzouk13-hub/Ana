@@ -14,7 +14,7 @@
 <style>
 :root{--bg:#fdfbf7;--card:#fff;--brown:#78350f;--gold:#d97706;--green:#059669;--blue:#0284c7;--muted:#6b7280;--border:#e5e7eb}
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,sans-serif}
-body{background:var(--bg);color:#1f2937;line-height:1.6}
+body{background:var(--bg);color:#1f2937;line-height:1.6;direction:rtl;text-align:right;}
 header{background:linear-gradient(135deg,#78350f,#451a03);color:#fff;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
 header h1{font-size:1.4rem}
 header h1 i{color:#fde68a}
@@ -37,20 +37,20 @@ header h1 i{color:#fde68a}
   gap: 6px;
 }
 nav{background:#fff;border-bottom:1px solid var(--border);padding:10px;display:flex;gap:8px;overflow-x:auto;position:sticky;top:0;z-index:10}
-.nav-btn{flex:1;white-space:nowrap;padding:11px 14px;border:1px solid var(--border);background:#f9fafb;border-radius:10px;font-weight:800;cursor:pointer;color:var(--muted)}
+.nav-btn{flex:1;white-space:nowrap;padding:11px 14px;border:1px solid var(--border);background:#f9fafb;border-radius:10px;font-weight:800;cursor:pointer;color:var(--muted);text-align:center;}
 .nav-btn.active{background:var(--brown);color:#fff;border-color:var(--brown)}
 .page{display:none;padding:20px;max-width:1200px;margin:auto}
 .page.active{display:block}
 .banner{background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:12px 16px;border-radius:12px;margin-bottom:16px;font-weight:700}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px}
-.stat{background:#fff;padding:18px;border-radius:14px;border:1px solid var(--border);border-right:6px solid var(--brown)}
+.stat{background:#fff;padding:18px;border-radius:14px;border:1px solid var(--border);border-right:6px solid var(--brown);text-align:right;}
 .stat b{font-size:1.35rem;color:var(--brown)}
 .grid{display:grid;grid-template-columns:1fr 2fr;gap:20px}
 @media(max-width:900px){.grid{grid-template-columns:1fr}}
-.card{background:#fff;padding:22px;border-radius:16px;border:1px solid var(--border);margin-bottom:20px}
+.card{background:#fff;padding:22px;border-radius:16px;border:1px solid var(--border);margin-bottom:20px;text-align:right;}
 .card h3{color:var(--brown);margin-bottom:16px;border-bottom:2px solid #fef3c7;padding-bottom:8px}
-label{display:block;font-weight:700;font-size:.9rem;margin:12px 0 5px}
-input,select{width:100%;padding:11px;border:1px solid var(--border);border-radius:10px;background:#fafafa;font-size:.95rem}
+label{display:block;font-weight:700;font-size:.9rem;margin:12px 0 5px;text-align:right;}
+input,select{width:100%;padding:11px;border:1px solid var(--border);border-radius:10px;background:#fafafa;font-size:.95rem;text-align:right;}
 .services-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#fffbeb;padding:14px;border:1px solid #fde68a;border-radius:12px}
 .service-item{display:flex;flex-direction:column;gap:4px;background:#fff;padding:8px;border-radius:8px;border:1px solid #fde68a}
 .service-item label{font-size:0.8rem;color:#78350f;margin:0}
@@ -58,7 +58,7 @@ input,select{width:100%;padding:11px;border:1px solid var(--border);border-radiu
 .service-inputs input{padding:7px;text-align:center;font-weight:bold;font-size:0.9rem}
 .btn{width:100%;padding:12px;background:var(--brown);color:#fff;border:none;border-radius:10px;font-weight:800;cursor:pointer;margin-top:14px}
 .btn2{width:auto;padding:9px 14px;background:#fff;color:var(--brown);border:2px solid #fde68a;border-radius:10px;font-weight:800;cursor:pointer}
-table{width:100%;border-collapse:collapse}
+table{width:100%;border-collapse:collapse;direction:rtl;}
 th,td{padding:11px;border-bottom:1px solid var(--border);text-align:right;font-size:.9rem}
 th{background:#fef3c7;color:#78350f}
 .badge{padding:4px 8px;border-radius:6px;font-size:.8rem;font-weight:800}
@@ -152,7 +152,8 @@ th{background:#fef3c7;color:#78350f}
 }
 .input-group i {
     position: absolute;
-    left: 16px;
+    right: 16px;
+    left: auto;
     top: 50%;
     transform: translateY(-50%);
     color: #64748b;
@@ -160,7 +161,7 @@ th{background:#fef3c7;color:#78350f}
 }
 .input-group input {
     width: 100%;
-    padding: 14px 16px 14px 46px;
+    padding: 14px 46px 14px 16px;
     border: 1px solid #e2e8f0;
     border-radius: 14px;
     background: #ffffff;
@@ -168,6 +169,7 @@ th{background:#fef3c7;color:#78350f}
     color: #1e293b;
     outline: none;
     transition: all 0.2s ease;
+    text-align: right;
 }
 .input-group input:focus {
     border-color: #d97706;
@@ -570,11 +572,11 @@ function initAppSession() {
     document.getElementById('appContainer').style.display = 'block';
     
     let roleName = sessionStorage.getItem('tc24_user') || 'المشرف العام';
-    let isAdm = sessionStorage.getItem('tc24_role') === 'admin';
+    let isAdm = (sessionStorage.getItem('tc24_role') === 'admin');
     
-    document.getElementById('userRoleBadge').innerText = isAdm ? '⭐ مشرف عام' : `👤 موظف (عرض فقط): ${roleName}`;
+    document.getElementById('userRoleBadge').innerText = isAdm ? '⭐ مشرف عام' : `👤 موظف (عرض و طباعة): ${roleName}`;
     
-    // إخفاء نماذج الإضافة والحذف للموظفين العاديين
+    // إخفاء نموذج الإضافة للموظف فقط، ولكن جدول العملاء والبيانات ستظهر ليراها بشكل كامل
     if (!isAdm) {
         if($('formCardContainer')) $('formCardContainer').style.display = 'none';
         if($('adminEmpSection')) $('adminEmpSection').style.display = 'none';
@@ -677,7 +679,7 @@ function formatServicesText(s) {
 
 function renderSales(){
   let total=0, cash=0, card=0, html='';
-  let isAdm = sessionStorage.getItem('tc24_role') === 'admin';
+  let isAdm = (sessionStorage.getItem('tc24_role') === 'admin');
   
   salesData.forEach((s,i)=>{
     let cost = Number(s.cost) || 0;
@@ -689,7 +691,7 @@ function renderSales(){
     if(isAdm) {
       actionButtons = `<button class="act pr" onclick="printInvoice(${i})">طباعة</button> <button class="act edit" onclick="editSale(${i})">تعديل</button> <button class="act del" onclick="deleteSale(${i})">حذف</button>`;
     } else {
-      actionButtons = `<button class="act pr" onclick="printInvoice(${i})">طباعة</button> <span style="font-size:0.8rem; color:var(--muted);">(عرض فقط)</span>`;
+      actionButtons = `<button class="act pr" onclick="printInvoice(${i})">طباعة الفاتورة</button>`;
     }
 
     html += '<tr><td><b>'+s.code+'</b><br><small>'+s.date+'</small></td><td><b>'+s.client+'</b><br><small>'+(s.phone||'')+'</small></td><td>'+servText+'<br><span class="badge '+statusClass(s.status)+'">'+(s.status||'مكتمل')+'</span></td><td><b>'+cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ر.س</b><br><small>['+s.payMethod+']</small></td><td class="no-print">'+actionButtons+'</td></tr>';
@@ -822,7 +824,7 @@ function renderMaint(){
 function renderEmps(){
   if($('empBody')) {
     let html = '';
-    let isAdm = sessionStorage.getItem('tc24_role') === 'admin';
+    let isAdm = (sessionStorage.getItem('tc24_role') === 'admin');
 
     empData.forEach((e, idx)=>{
       let actionButtons = isAdm ? `
@@ -892,7 +894,7 @@ function renderMedia(){
   let transaction = db.transaction(["mediaStore"], "readonly");
   let store = transaction.objectStore("mediaStore");
   let request = store.getAll();
-  let isAdm = sessionStorage.getItem('tc24_role') === 'admin';
+  let isAdm = (sessionStorage.getItem('tc24_role') === 'admin');
 
   request.onsuccess = function(event) {
     let items = event.target.result;
