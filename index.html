@@ -258,7 +258,7 @@ th{background:#fef3c7;color:#78350f}
 
 <!-- صفحة 1 -->
 <section id="p1" class="page active">
-  <div class="banner" id="banner1">أهلاً وسهلاً بك يا أبو ريان 🤚 - صفحة العملاء والمبيعات</div>
+  <div class="banner" id="banner1">أهلاً وسهلاً بك يا أبو ريان ؒ - صفحة العملاء والمبيعات</div>
   <div class="stats">
     <div class="stat"><span id="st1Title">إجمالي المبيعات</span><br><b id="sTotal">0 ر.س</b></div>
     <div class="stat"><span id="st2Title">المحصل كاش</span><br><b id="sCash">0 ر.س</b></div>
@@ -423,10 +423,10 @@ th{background:#fef3c7;color:#78350f}
         <tbody id="empBody"></tbody>
       </table>
     </div>
-    <div class="card"><h3 id="backupCardTitle">النسخ الاحتياطي</h3>
+    <div class="card"><h3 id="backupCardTitle">النسخ الاحتياطي ومزامنة البيانات</h3>
       <button class="btn" type="button" onclick="exportExcel()" id="btnExportAll">تصدير كافة البيانات Excel</button>
       <button class="btn" type="button" style="background:#0284c7" onclick="backupData()" id="btnBackupJson">تحميل نسخة احتياطية JSON</button>
-      <label id="lblRestore">استعادة نسخة احتياطية:</label>
+      <label id="lblRestore">مزامنة / استعادة بيانات الموظفين (ارفع ملف الـ JSON هنا لتحديث بيانات الموظفين عند أي جهاز):</label>
       <input type="file" accept=".json" onchange="restoreData(event)">
     </div>
   </div>
@@ -463,7 +463,7 @@ th{background:#fef3c7;color:#78350f}
 const translations = {
   ar: {
     nav1: "1. العملاء والمبيعات", nav2: "2. البحث", nav3: "3. التقارير الشهرية", nav4: "4. الصيانة الدورية", nav5: "5. الإعدادات والنسخ", nav6: "6. الصور والفيديوهات",
-    banner1: "أهلاً وسهلاً بك يا أبو ريان 🤚 - صفحة العملاء والمبيعات",
+    banner1: "أهلاً وسهلاً بك يا أبو ريان ؒ - صفحة العملاء والمبيعات",
     st1Title: "إجمالي المبيعات", st2Title: "المحصل كاش", st3Title: "المحصل شبكة / تحويل", st4Title: "عدد العملاء",
     formTitle: "تسجيل عملية صيانة جديدة", lblCode: "رقم كود العميل (أرقام إنجليزية فقط)", lblName: "اسم العميل", lblPhone: "رقم الجوال",
     lblServ: "حدد الكمية والسعر لكل خدمة (يقبل الهللَات والكسور)", lblStatus: "حالة الخدمة", lblPay: "طريقة الدفع", lblCost: "إجمالي التكلفة (ر.س - قابل للتعديل اليدوي)", lblDate: "التاريخ", btnSave: "حفظ البيانات",
@@ -476,16 +476,16 @@ const translations = {
     mthCode: "الكود", mthClient: "العميل", mthPhone: "الجوال", mthDate: "آخر صيانة", mthServ: "الخدمات والأعداد",
     banner5: "صفحة الإعدادات - الفنيين والنسخ الاحتياطي", langSettingTitle: "🌐 تغيير لغة التطبيق / Language Settings", lblSelectLang: "اختر اللغة المفضلة:",
     empCardTitle: "إضافة فني وعامل (مع تعيين اسم مستخدم وكلمة مرور خاصة به)", lblEmpName: "اسم الموظف / اسم الدخول", lblEmpRole: "المسمى الوظيفي", lblEmpPhone: "الجوال", btnSaveEmp: "حفظ الموظف",
-    ethName: "الاسم", ethRole: "الوظيفة", ethPhone: "الجوال", ethAction: "إجراءات", backupCardTitle: "النسخ الاحتياطي", btnExportAll: "تصدير كافة البيانات Excel", btnBackupJson: "تحميل نسخة احتياطية JSON", lblRestore: "استعادة نسخة احتياطية:"
+    ethName: "الاسم", ethRole: "الوظيفة", ethPhone: "الجوال", ethAction: "إجراءات", backupCardTitle: "النسخ الاحتياطي ومزامنة البيانات", btnExportAll: "تصدير كافة البيانات Excel", btnBackupJson: "تحميل نسخة احتياطية JSON", lblRestore: "مزامنة / استعادة بيانات الموظفين:"
   },
   en: {
     nav1: "1. Customers & Sales", nav2: "2. Search", nav3: "3. Monthly Reports", nav4: "4. Periodic Maintenance", nav5: "5. Settings & Backup", nav6: "6. Media Archive",
-    banner1: "Welcome Abu Rayan 🤚 - Customers & Sales Page",
+    banner1: "Welcome Abu Rayan ؒ - Customers & Sales Page",
     st1Title: "Total Sales", st2Title: "Cash Collected", st3Title: "Card / Transfer", st4Title: "Total Customers",
     formTitle: "Register New Maintenance", lblCode: "Client Code (English Numbers Only)", lblName: "Client Name", lblPhone: "Phone Number",
     lblServ: "Select Quantities and Prices", lblStatus: "Service Status", lblPay: "Payment Method", lblCost: "Total Cost (SAR)", lblDate: "Date", btnSave: "Save Data",
     tableTitle: "Customers & Sales Log", thCode: "Code", thClient: "Client", thServ: "Services, Qty & Prices", thAmount: "Amount", thAction: "Actions",
-    banner2: "Smart Search Page", searchCardTitle: "Smart Search & Filter", sthCode: "Code", sthClient: "Client", sthPhone: "Phone", sthServ: "Services & Prices", sthAmount: "Amount",
+    banner2: "Smart Search Page", searchCardTitle: "Smart Search & Filter", thCode: "Code", sthClient: "Client", sthPhone: "Phone", sthServ: "Services & Prices", sthAmount: "Amount",
     banner3: "Reports Page - Monthly Sales & Charts", repCardTitle: "Export Specific Month Report (Excel or Print)",
     lblPickMonth: "Select Month and Year:", btnExcelMonth: "Month Excel", btnPrintMonth: "Print Month Report",
     chartCardTitle: "Monthly Sales Charts", btnBar: "Bar Chart", btnLine: "Line Chart",
@@ -531,6 +531,14 @@ function updateLiveClock() {
 }
 setInterval(updateLiveClock, 1000);
 
+// قاعدة بيانات الموظفين الافتراضية لضمان عمل حسابات الموظفين فوراً على أي جهاز
+let defaultEmps = [
+  { name: "ahmad", pass: "123", role: "فني تركيبات", phone: "0500000000" }
+];
+
+let salesData = JSON.parse(localStorage.getItem('tc24_sales')) || [];
+let empData = JSON.parse(localStorage.getItem('tc24_emps')) || defaultEmps;
+
 // إدارة تسجيل الدخول الآمن والتحقق من حسابات الموظفين والأدمن
 function handleLogin(e) {
     e.preventDefault();
@@ -546,7 +554,7 @@ function handleLogin(e) {
         return;
     }
     
-    // التحقق من حسابات الموظفين المضافة في الإعدادات (اسم المستخدم والرقم السري الخاص به)
+    // التحقق من حسابات الموظفين
     let foundEmp = empData.find(emp => emp.name.toLowerCase() === u.toLowerCase() && emp.pass === p);
     if (foundEmp) {
         sessionStorage.setItem('tc24_logged', 'true');
@@ -595,9 +603,6 @@ window.addEventListener('DOMContentLoaded', () => {
         initAppSession();
     }
 });
-
-let salesData = JSON.parse(localStorage.getItem('tc24_sales')) || [];
-let empData = JSON.parse(localStorage.getItem('tc24_emps')) || [];
 
 // نظام التخزين المتطور IndexedDB للصور والفيديوهات الكبيرة
 let db = null;
@@ -845,12 +850,12 @@ if($('empForm')) {
     empData.push({ name, pass, role, phone });
     e.target.reset();
     renderEmps();
-    alert('تم إضافة الموظف بنجاح! يمكنه الآن تسجيل الدخول باسم المستخدم والرقم السري الذي حددته له.');
+    alert('تم إضافة الموظف بنجاح! حمل النسخة الاحتياطية JSON وارفعها عند الموظف لكي يتزامن معه.');
   });
 }
 
 function deleteEmp(idx){
-  if(confirm('هل أنت متأكد من حذف هذا الموظف؟ لن يتمكن من تسجيل الدخول بعد الآن.')){
+  if(confirm('هل أنت متأكد من حذف هذا الموظف؟')){
     empData.splice(idx, 1);
     renderEmps();
   }
@@ -1092,7 +1097,7 @@ function restoreData(event){
         if(parsed.emps) empData = parsed.emps;
         renderSales();
         renderEmps();
-        alert('تم استعادة النسخة الاحتياطية بنجاح!');
+        alert('تم مزامنة واستعادة البيانات بنجاح!');
       } else {
         alert('ملف غير صالح!');
       }
