@@ -64,7 +64,7 @@ th{background:#fef3c7;color:#78350f}
 .badge{padding:4px 8px;border-radius:6px;font-size:.8rem;font-weight:800}
 .ok{background:#dcfce7;color:#166534}.wait{background:#fef9c3;color:#854d0e}.run{background:#e0f2fe;color:#075985}
 .act{border:none;padding:6px 9px;border-radius:6px;color:#fff;cursor:pointer}
-.edit{background:#d97706}.del{background:#dc2626}.pr{background:#059669}
+.edit{background:#d97706}.del{background:#dc2626}.pr{background:#059669}.wa{background:#25D366}
 .search{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
 .search input,.search select{flex:1;min-width:180px}
 @media print{header,nav,.no-print{display:none!important}}
@@ -427,23 +427,23 @@ th{background:#fef3c7;color:#78350f}
   </div>
 </section>
 
-<!-- صفحة 6: الصور والفيديوهات الجديدة -->
+<!-- صفحة 6: الصور والفيديوهات المحسنة -->
 <section id="p6" class="page">
-  <div class="banner">قسم أرشيف الصور والفيديوهات - توثيق الأعمال والصيانة (كاميرا أو مستودع)</div>
+  <div class="banner">قسم أرشيف الصور والفيديوهات - مساحة تخزين عالية ومشاركة عبر الواتساب</div>
   <div class="grid">
     <div class="card">
       <h3 id="mediaFormTitle">إضافة صورة أو فيديو جديد</h3>
       <form id="mediaForm" onsubmit="handleMediaSubmit(event)">
-        <input type="hidden" id="editMediaIndex" value="-1">
-        <label>اختر الوسائط (صورة أو فيديو من الكاميرا أو المستودع)</label>
-        <input type="file" id="mediaFile" accept="image/*,video/*" required style="padding:8px;">
-        <label style="margin-top:12px;">كود العميل أو الوصف (مثال: عميل 1001 - قبل الصيانة)</label>
+        <input type="hidden" id="editMediaId" value="">
+        <label>اختر الوسائط (صورة أو فيديو بحجم كبير من الكاميرا أو المستودع)</label>
+        <input type="file" id="mediaFile" accept="image/*,video/*" style="padding:8px;">
+        <label style="margin-top:12px;">كود العميل أو الوصف (مثال: عميل 1001 - توثيق قبل وبعد)</label>
         <input type="text" id="mediaDesc" required placeholder="أدخل وصفاً توضيحياً للوسائط...">
-        <button class="btn" type="submit" id="btnSaveMedia">حفظ في الأرشيف</button>
+        <button class="btn" type="submit" id="btnSaveMedia">حفظ دائم في الأرشيف</button>
       </form>
     </div>
     <div class="card">
-      <h3>أرشيف الوسائط المحفوظة</h3>
+      <h3>أرشيف الوسائط المحفوظة محلياً</h3>
       <div id="mediaGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; margin-top: 10px;">
         <!-- سيتم تعبئة الوسائط هنا برمجياً -->
       </div>
@@ -605,7 +605,7 @@ function handleLogin(e) {
         sessionStorage.setItem('tc24_logged', 'true');
         renderSales();
         renderEmps();
-        renderMedia();
+        initDB();
     } else {
         document.getElementById('loginError').style.display = 'block';
     }
@@ -628,13 +628,31 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('appContainer').style.display = 'block';
         renderSales();
         renderEmps();
-        renderMedia();
+        initDB();
     }
 });
 
 let salesData = JSON.parse(localStorage.getItem('tc24_sales')) || [];
 let empData = JSON.parse(localStorage.getItem('tc24_emps')) || [{name:"إسلام مرزوق أحمد",role:"المشرف الفني العام",phone:"-"}];
-let mediaData = JSON.parse(localStorage.getItem('tc24_media')) || [];
+
+// نظام التخزين المتطور IndexedDB للصور والفيديوهات الكبيرة وضمان عدم الحذف عند الـ Refresh
+let db = null;
+function initDB() {
+    let request = indexedDB.open("TC24_MediaDB", 1);
+    request.onerror = function(event) {
+        console.error("خطأ في فتح قاعدة البيانات للوسائط");
+    };
+    request.onsuccess = function(event) {
+        db = event.target.result;
+        renderMedia();
+    };
+    request.onupgradeneeded = function(event) {
+        let dbInstance = event.target.result;
+        if (!dbInstance.objectStoreNames.contains("mediaStore")) {
+            dbInstance.createObjectStore("mediaStore", { keyPath: "id", autoIncrement: true });
+        }
+    };
+}
 
 const $ = id => document.getElementById(id);
 if($('serviceDate')) $('serviceDate').valueAsDate = new Date();
@@ -880,81 +898,125 @@ function deleteEmp(idx){
   }
 }
 
-// دوال إدارة الصور والفيديوهات الجديدة
+// دوال إدارة الأرشيف الذكي للصور والفيديوهات عبر IndexedDB
 function renderMedia(){
+  if(!db) return;
   let grid = $('mediaGrid');
   if(!grid) return;
-  let html = '';
-  mediaData.forEach((m, idx)=>{
-    let isVideo = m.type && m.type.startsWith('video');
-    html += `
-      <div style="background:#f9fafb; border:1px solid var(--border); border-radius:12px; padding:10px; display:flex; flexDirection:column; gap:8px;">
-        <div style="width:100%; height:150px; background:#000; border-radius:8px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
-          ${isVideo ? `<video src="${m.url}" controls style="width:100%; height:100%; object-fit:cover;"></video>` : `<img src="${m.url}" style="width:100%; height:100%; object-fit:cover;">`}
+  
+  let transaction = db.transaction(["mediaStore"], "readonly");
+  let store = transaction.objectStore("mediaStore");
+  let request = store.getAll();
+
+  request.onsuccess = function(event) {
+    let items = event.target.result;
+    let html = '';
+    items.forEach((m)=>{
+      let isVideo = m.type && m.type.startsWith('video');
+      let blobUrl = URL.createObjectURL(m.blob);
+      let safeDesc = m.desc.replace(/'/g, "\\'");
+      html += `
+        <div style="background:#f9fafb; border:1px solid var(--border); border-radius:12px; padding:10px; display:flex; flex-direction:column; gap:8px;">
+          <div style="width:100%; height:150px; background:#000; border-radius:8px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+            ${isVideo ? `<video src="${blobUrl}" controls style="width:100%; height:100%; object-fit:cover;"></video>` : `<img src="${blobUrl}" style="width:100%; height:100%; object-fit:cover;">`}
+          </div>
+          <p style="font-size:0.85rem; font-weight:bold; color:#1f2937; margin:0; word-break:break-word;">${m.desc}</p>
+          <small style="color:var(--muted);">${m.date}</small>
+          <div style="display:flex; gap:6px; margin-top:4px;">
+            <button class="act wa" style="flex:1;" onclick="shareMedia(${m.id})"><i class="fa-brands fa-whatsapp"></i> واتساب</button>
+            <button class="act edit" style="flex:1;" onclick="editMedia(${m.id}, '${safeDesc}')">تعديل</button>
+            <button class="act del" style="flex:1;" onclick="deleteMedia(${m.id})">حذف</button>
+          </div>
         </div>
-        <p style="font-size:0.85rem; font-weight:bold; color:#1f2937; margin:0; word-break:break-word;">${m.desc}</p>
-        <small style="color:var(--muted);">${m.date}</small>
-        <div style="display:flex; gap:6px; margin-top:4px;">
-          <button class="act edit" style="flex:1;" onclick="editMedia(${idx})">تعديل</button>
-          <button class="act del" style="flex:1;" onclick="deleteMedia(${idx})">حذف</button>
-        </div>
-      </div>
-    `;
-  });
-  grid.innerHTML = html || '<p style="grid-column: 1/-1; text-align:center; color:var(--muted);">لا توجد صور أو فيديوهات محفوظة في الأرشيف</p>';
-  localStorage.setItem('tc24_media', JSON.stringify(mediaData));
+      `;
+    });
+    grid.innerHTML = html || '<p style="grid-column: 1/-1; text-align:center; color:var(--muted);">لا توجد صور أو فيديوهات محفوظة في الأرشيف</p>';
+  };
 }
 
 function handleMediaSubmit(e){
   e.preventDefault();
+  if(!db) return;
   let fileInput = $('mediaFile');
   let desc = $('mediaDesc').value.trim();
-  let idx = parseInt($('editMediaIndex').value, 10);
+  let editId = $('editMediaId').value;
 
-  if(fileInput.files && fileInput.files[0]) {
-    let file = fileInput.files[0];
-    let reader = new FileReader();
-    reader.onload = function(evt){
+  if(editId) {
+    // تعديل الوصف فقط
+    let transaction = db.transaction(["mediaStore"], "readwrite");
+    let store = transaction.objectStore("mediaStore");
+    let req = store.get(Number(editId));
+    req.onsuccess = function(event) {
+      let data = event.target.result;
+      if(data) {
+        data.desc = desc;
+        store.put(data).onsuccess = function() {
+          $('editMediaId').value = "";
+          $('mediaFormTitle').innerText = "إضافة صورة أو فيديو جديد";
+          e.target.reset();
+          renderMedia();
+        };
+      }
+    };
+  } else {
+    if(fileInput.files && fileInput.files[0]) {
+      let file = fileInput.files[0];
+      let transaction = db.transaction(["mediaStore"], "readwrite");
+      let store = transaction.objectStore("mediaStore");
       let mediaObj = {
-        url: evt.target.result,
+        blob: file,
         type: file.type,
         desc: desc,
         date: new Date().toLocaleDateString('ar-SA')
       };
-      if(idx > -1){
-        mediaData[idx] = mediaObj;
-        $('editMediaIndex').value = "-1";
-        $('mediaFormTitle').innerText = "إضافة صورة أو فيديو جديد";
-      } else {
-        mediaData.unshift(mediaObj);
-      }
-      e.target.reset();
-      renderMedia();
-    };
-    reader.readAsDataURL(file);
-  } else if(idx > -1) {
-    // إذا كان تعديل الوصف فقط بدون تغيير الملف
-    mediaData[idx].desc = desc;
-    $('editMediaIndex').value = "-1";
-    $('mediaFormTitle').innerText = "إضافة صورة أو فيديو جديد";
-    e.target.reset();
-    renderMedia();
+      let req = store.add(mediaObj);
+      req.onsuccess = function() {
+        e.target.reset();
+        renderMedia();
+      };
+    } else {
+      alert('الرجاء اختيار ملف صورة أو فيديو!');
+    }
   }
 }
 
-function editMedia(idx){
-  let m = mediaData[idx];
-  $('mediaDesc').value = m.desc;
-  $('editMediaIndex').value = idx;
-  $('mediaFormTitle').innerText = "تعديل وصف الوسائط رقم " + (idx+1);
+function editMedia(id, currentDesc){
+  $('mediaDesc').value = currentDesc;
+  $('editMediaId').value = id;
+  $('mediaFormTitle').innerText = "تعديل وصف الوسائط";
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
-function deleteMedia(idx){
-  if(confirm('هل أنت متأكد من حذف هذه الوسائط من الأرشيف؟')){
-    mediaData.splice(idx, 1);
-    renderMedia();
+function deleteMedia(id){
+  if(confirm('هل أنت متأكد من حذف هذه الوسائط نهائياً؟')){
+    let transaction = db.transaction(["mediaStore"], "readwrite");
+    let store = transaction.objectStore("mediaStore");
+    store.delete(id).onsuccess = function() {
+      renderMedia();
+    };
   }
+}
+
+function shareMedia(id){
+  let transaction = db.transaction(["mediaStore"], "readonly");
+  let store = transaction.objectStore("mediaStore");
+  let req = store.get(id);
+  req.onsuccess = function(event) {
+    let m = event.target.result;
+    if(m) {
+      let text = `شركة تكنيكال 24 - توثيق صيانة:\n${m.desc}\nالتاريخ: ${m.date}`;
+      if (navigator.canShare && navigator.canShare({ files: [new File([m.blob], m.blob.name || 'media', { type: m.type })] })) {
+        navigator.share({
+          files: [new File([m.blob], m.blob.name || 'media', { type: m.type })],
+          title: 'تكنيكال 24',
+          text: text
+        }).catch(err => console.log('شارك عبر واتساب يدوياً'));
+      } else {
+        let whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+        window.open(whatsappUrl, '_blank');
+      }
+    }
+  };
 }
 
 function exportExcel(){
@@ -1039,8 +1101,7 @@ function printSingleMonth(){
 function backupData(){
   let backupObj = {
     sales: salesData,
-    emps: empData,
-    media: mediaData
+    emps: empData
   };
   let json = JSON.stringify(backupObj, null, 2);
   let blob = new Blob([json], {type:'application/json;charset=utf-8'});
@@ -1066,10 +1127,8 @@ function restoreData(event){
       } else if(parsed && typeof parsed === 'object') {
         if(parsed.sales) salesData = parsed.sales;
         if(parsed.emps) empData = parsed.emps;
-        if(parsed.media) mediaData = parsed.media;
         renderSales();
         renderEmps();
-        renderMedia();
         alert('تم استعادة النسخة الاحتياطية بنجاح!');
       } else {
         alert('ملف غير صالح!');
