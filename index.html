@@ -201,25 +201,25 @@ th{background:#fef3c7;color:#78350f}
 </head>
 <body>
 
-<!-- واجهة تسجيل دخول الأدمن الفخمة -->
+<!-- واجهة تسجيل دخول الأدمن والفنيين الفخمة -->
 <div id="loginOverlay">
     <div class="login-card">
         <div class="login-icon-box">
             <i class="fa-solid fa-snowflake"></i>
         </div>
         <h2>شركة تكنيكال 24</h2>
-        <p>قسم المكيفات - بوابة المشرف</p>
+        <p>نظام الصيانة والمبيعات الموحد</p>
         <form id="loginForm" onsubmit="handleLogin(event)">
             <div class="input-group">
-                <input type="text" id="loginUser" required placeholder="اسم المستخدم" autocomplete="off">
+                <input type="text" id="loginUser" required placeholder="اسم المستخدم (admin أو اسم الموظف)" autocomplete="off">
                 <i class="fa-regular fa-user"></i>
             </div>
             <div class="input-group">
-                <input type="password" id="loginPass" required placeholder="الرقم السري">
+                <input type="password" id="loginPass" required placeholder="الرقم السري (للمشرف: 1234)">
                 <i class="fa-solid fa-lock"></i>
             </div>
             <button type="submit" class="login-btn-main">تسجيل الدخول</button>
-            <div id="loginError" class="login-error">اسم المستخدم أو الرقم السري غير صحيح!</div>
+            <div id="loginError" class="login-error">بيانات الدخول غير صحيحة!</div>
         </form>
     </div>
 </div>
@@ -234,6 +234,7 @@ th{background:#fef3c7;color:#78350f}
       <i class="fa-regular fa-clock"></i> <span id="clockText">12:00:00 ص</span>
     </div>
     <div style="display: flex; gap: 8px; align-items: center;">
+      <span id="userRoleBadge" style="background:rgba(255,255,255,0.2); padding:5px 10px; border-radius:8px; font-size:0.85rem; font-weight:bold;"></span>
       <button class="btn2" onclick="exportExcel()"><i class="fa-solid fa-file-excel"></i> تصدير الكل</button>
       <button class="btn2" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة</button>
       <button class="btn2" onclick="logout()" style="background:#dc2626; color:#fff; border:none;" title="تسجيل خروج"><i class="fa-solid fa-right-from-bracket"></i></button>
@@ -265,7 +266,7 @@ th{background:#fef3c7;color:#78350f}
     <div class="stat"><span id="st4Title">عدد العملاء</span><br><b id="sCount">0</b></div>
   </div>
   <div class="grid">
-    <div class="card">
+    <div class="card" id="formCardContainer">
       <h3 id="formTitle">تسجيل عملية صيانة جديدة</h3>
       <form id="serviceForm">
         <input type="hidden" id="editIndex" value="-1">
@@ -398,14 +399,17 @@ th{background:#fef3c7;color:#78350f}
         <option value="fr">Français (French)</option>
       </select>
 
-      <h3 id="empCardTitle">إضافة / تعديل فني وعامل</h3>
-      <form id="empForm">
-        <input type="hidden" id="editEmpIndex" value="-1">
-        <label id="lblEmpName">الاسم</label><input id="empName" required>
-        <label id="lblEmpRole">المسمى الوظيفي</label><input id="empRole" required>
-        <label id="lblEmpPhone">الجوال</label><input id="empPhone">
-        <button class="btn" type="submit" id="btnSaveEmp">حفظ الموظف</button>
-      </form>
+      <div id="adminEmpSection">
+        <h3 id="empCardTitle">إضافة فني وعامل (للدخول بصلاحية عرض فقط)</h3>
+        <form id="empForm">
+          <input type="hidden" id="editEmpIndex" value="-1">
+          <label id="lblEmpName">اسم المستخدم (للدخول)</label><input id="empName" required placeholder="مثال: ahmad">
+          <label id="lblEmpRole">المسمى الوظيفي</label><input id="empRole" required placeholder="فني تركيبات">
+          <label id="lblEmpPhone">الجوال</label><input id="empPhone">
+          <button class="btn" type="submit" id="btnSaveEmp">حفظ الموظف</button>
+        </form>
+      </div>
+
       <table style="margin-top:14px">
         <thead>
           <tr>
@@ -431,7 +435,7 @@ th{background:#fef3c7;color:#78350f}
 <section id="p6" class="page">
   <div class="banner">قسم أرشيف الصور والفيديوهات - مساحة تخزين عالية ومشاركة عبر الواتساب</div>
   <div class="grid">
-    <div class="card">
+    <div class="card" id="mediaFormCard">
       <h3 id="mediaFormTitle">إضافة صورة أو فيديو جديد</h3>
       <form id="mediaForm" onsubmit="handleMediaSubmit(event)">
         <input type="hidden" id="editMediaId" value="">
@@ -470,7 +474,7 @@ const translations = {
     banner4: "صفحة الصيانة الدورية - العملاء اللي عدى عليهم 6 شهور أو أكثر", maintCardTitle: "تنبيهات الصيانة الدورية",
     mthCode: "الكود", mthClient: "العميل", mthPhone: "الجوال", mthDate: "آخر صيانة", mthServ: "الخدمات والأعداد",
     banner5: "صفحة الإعدادات - الفنيين والنسخ الاحتياطي", langSettingTitle: "🌐 تغيير لغة التطبيق / Language Settings", lblSelectLang: "اختر اللغة المفضلة:",
-    empCardTitle: "إضافة / تعديل فني وعامل", lblEmpName: "الاسم", lblEmpRole: "المسمى الوظيفي", lblEmpPhone: "الجوال", btnSaveEmp: "حفظ الموظف",
+    empCardTitle: "إضافة فني وعامل (للدخول بصلاحية عرض فقط)", lblEmpName: "اسم المستخدم (للدخول)", lblEmpRole: "المسمى الوظيفي", lblEmpPhone: "الجوال", btnSaveEmp: "حفظ الموظف",
     ethName: "الاسم", ethRole: "الوظيفة", ethPhone: "الجوال", ethAction: "إجراءات", backupCardTitle: "النسخ الاحتياطي", btnExportAll: "تصدير كافة البيانات Excel", btnBackupJson: "تحميل نسخة احتياطية JSON", lblRestore: "استعادة نسخة احتياطية:"
   },
   en: {
@@ -487,76 +491,8 @@ const translations = {
     banner4: "Periodic Maintenance - Clients after 6+ months", maintCardTitle: "Maintenance Alerts",
     mthCode: "Code", mthClient: "Client", mthPhone: "Phone", mthDate: "Last Maintenance", mthServ: "Services & Qty",
     banner5: "Settings Page - Technicians & Backup", langSettingTitle: "🌐 Language Settings", lblSelectLang: "Select Preferred Language:",
-    empCardTitle: "Add / Edit Technician", lblEmpName: "Name", lblEmpRole: "Role", lblEmpPhone: "Phone", btnSaveEmp: "Save Employee",
+    empCardTitle: "Add Technician (View-Only Access)", lblEmpName: "Username", lblEmpRole: "Role", lblEmpPhone: "Phone", btnSaveEmp: "Save Employee",
     ethName: "Name", ethRole: "Role", ethPhone: "Phone", ethAction: "Actions", backupCardTitle: "Backup & Restore", btnExportAll: "Export All Excel", btnBackupJson: "Download JSON Backup", lblRestore: "Restore Backup:"
-  },
-  ur: {
-    nav1: "1. گاہک اور فروخت", nav2: "2. تلاش", nav3: "3. ماہانہ رپورٹس", nav4: "4. دورانیہ کی دیکھ بھال", nav5: "5. ترتیبات اور بیک اپ", nav6: "6. میڈیا آرکائیو",
-    banner1: "خوش آمدید ابو ریان 24 ؒ - گاہک اور فروخت کا صفحہ",
-    st1Title: "کل فروخت", st2Title: "نقد وصولی", st3Title: "کارڈ / ٹرانسفر", st4Title: "کل گاہک",
-    formTitle: "نئی دیکھ بھال درج کریں", lblCode: "گاہک کا کوڈ", lblName: "گاہک کا نام", lblPhone: "فون نمبر",
-    lblServ: "خدمات کی مقدار اور قیمت", lblStatus: "حالت", lblPay: "ادائیگی کا طریقہ", lblCost: "کل لاگت (ریال)", lblDate: "تاریخ", btnSave: "ڈیٹا محفوظ کریں",
-    tableTitle: "گاہک اور فروخت کا ریکارڈ", thCode: "کوڈ", thClient: "گاہک", thServ: "خدمات اور قیمت", thAmount: "رقم", thAction: "کارروائی",
-    banner2: "اسمارٹ تلاش", searchCardTitle: "تلاش اور فلٹر", sthCode: "کوڈ", sthClient: "گاہک", sthPhone: "فون", sthServ: "خدمات", sthAmount: "رقم",
-    banner3: "رپورٹس صفحہ - ماہانہ فروخت", repCardTitle: "خصوصی ماہانہ رپورٹ نکالیں",
-    lblPickMonth: "مہینہ اور سال منتخب کریں:", btnExcelMonth: "ماہانہ ایکسل", btnPrintMonth: "رپورٹ پرنٹ کریں",
-    chartCardTitle: "ماہانہ فروخت کے چارٹس", btnBar: "بار چارٹ", btnLine: "لائن چارٹ",
-    banner4: "موسمی دیکھ بھال - 6 ماہ یا اس سے زیادہ", maintCardTitle: "دیکھ بھال کے الرٹس",
-    mthCode: "کوڈ", mthClient: "گاہک", mthPhone: "فون", mthDate: "آخری دیکھ بھال", mthServ: "خدمات",
-    banner5: "ترتیبات - تکنیکی ماہرین اور بیک اپ", langSettingTitle: "🌐 زبان کی ترتیبات (Language)", lblSelectLang: "زبان منتخب کریں:",
-    empCardTitle: "ٹیکنیشین شامل کریں", lblEmpName: "نام", lblEmpRole: "عہدہ", lblEmpPhone: "فون", btnSaveEmp: "ملازم محفوظ کریں",
-    ethName: "نام", ethRole: "عہدہ", ethPhone: "فون", ethAction: "کارروائی", backupCardTitle: "بیک اپ اور ریسٹور", btnExportAll: "تمام ڈیٹا ایکسل کریں", btnBackupJson: "JSON بیک اپ ڈاؤن لوڈ", lblRestore: "بیک اپ بحال کریں:"
-  },
-  hi: {
-    nav1: "1. ग्राहक और बिक्री", nav2: "2. खोजें", nav3: "3. मासिक रिपोर्ट", nav4: "4. आवधिक रखरखाव", nav5: "5. सेटिंग्स और बैकअप", nav6: "6. मीडिया أرشيف",
-    banner1: "स्वागत है अबू रयान 🤚 - ग्राहक और बिक्री पृष्ठ",
-    st1Title: "कुल बिक्री", st2Title: "नकद प्राप्त", st3Title: "कार्ड / ट्रांसफर", st4Title: "कुल ग्राहक",
-    formTitle: "नया रखरखाव दर्ज करें", lblCode: "ग्राहक कोड", lblName: "ग्राहक का नाम", lblPhone: "फ़ोन नंबर",
-    lblServ: "सेवा मात्रा और मूल्य", lblStatus: "स्थिति", lblPay: "भुगतान विधि", lblCost: "कुल लागत", lblDate: "दिनांक", btnSave: "डेटा सहेजें",
-    tableTitle: "ग्राहक और बिक्री लॉग", thCode: "कोड", thClient: "ग्राहक", thServ: "सेवाएं और मूल्य", thAmount: "राशि", thAction: "कार्रवाई",
-    banner2: "स्मार्ट खोज पृष्ठ", searchCardTitle: "स्मार्ट खोज और फ़िल्टर", sthCode: "कोड", sthClient: "ग्राहक", sthPhone: "फ़ोन", sthServ: "सेवाएं", sthAmount: "राशि",
-    banner3: "रिपोर्ट पृष्ठ - मासिक बिक्री", repCardTitle: "विशिष्ट माह रिपोर्ट निर्यात करें",
-    lblPickMonth: "महीना और वर्ष चुनें:", btnExcelMonth: "माह एक्सेल", btnPrintMonth: "रिपोर्ट प्रिंट करें",
-    chartCardTitle: "मास बिक्री चार्ट", btnBar: "बार चार्ट", btnLine: "लाइन चार्ट",
-    banner4: "आवधिक रखरखाव - 6+ महीने", maintCardTitle: "रखरखाव अलर्ट",
-    mthCode: "कोड", mthClient: "ग्राहक", mthPhone: "फ़ोन", mthDate: "अंतिम रखरखाव", mthServ: "सेवाएं",
-    banner5: "सेटिंग्स - तकनीशियन और बैकअप", langSettingTitle: "🌐 भाषा सेटिंग्स (Language)", lblSelectLang: "भाषा चुनें:",
-    empCardTitle: "तकनीशियन जोड़ें", lblEmpName: "नाम", lblEmpRole: "भूमिका", lblEmpPhone: "फ़ोन", btnSaveEmp: "कर्मचारी सहेजें",
-    ethName: "नाम", ethRole: "भूमिका", ethPhone: "फ़ोन", ethAction: "कार्रवाई", backupCardTitle: "बैकअप और पुनर्स्थापना", btnExportAll: "सभी एक्सेल निर्यात करें", btnBackupJson: "JSON बैकअप डाउनलोड", lblRestore: "बैकअप पुनर्स्थापित करें:"
-  },
-  bn: {
-    nav1: "1. গ্রাহক এবং বিক্রয়", nav2: "2. অনুসন্ধান", nav3: "3. মাসিক প্রতিবেদন", nav4: "4. নিয়মিত রক্ষণাবেক্ষণ", nav5: "5. সেটিংস এবং ব্যাকআপ", nav6: "6. মিডিয়া",
-    banner1: "স্বাগতম আবু রায়ান ؒ - গ্রাহক এবং বিক্রয় পৃষ্ঠা",
-    st1Title: "মোট বিক্রয়", st2Title: "নগদ সংগ্রহ", st3Title: "কার্ড / ট্রান্সফার", st4Title: "মোট গ্রাহک",
-    formTitle: "নতুন রক্ষণাবেক্ষণ নিবন্ধন করুন", lblCode: "গ্রাহক কোড", lblName: "গ্রাহকের নাম", lblPhone: "ফোন নম্বর",
-    lblServ: "পরিমাণ এবং মূল্য নির্বাচন করুন", lblStatus: "অবস্থা", lblPay: "পেমেন্ট পদ্ধতি", lblCost: "মোট খরচ", lblDate: "তারিখ", btnSave: "তথ্য সংরক্ষণ করুন",
-    tableTitle: "গ্রাহক এবং বিক্রয় লগ", thCode: "কোড", thClient: "গ্রাহک", thServ: "সেবা ও মূল্য", thAmount: "পরিমাণ", thAction: "কার্যক্রম",
-    banner2: "স্মার্ট অনুসন্ধান", searchCardTitle: "স্মার্ট অনুসন্ধান এবং ফিল্টার", sthCode: "কোড", sthClient: "গ্রাহক", sthPhone: "ফোন", sthServ: "সেবাসমূহ", sthAmount: "পরিমাণ",
-    banner3: "প্রতিবেদন পৃষ্ঠা - মাসিক বিক্রয়", repCardTitle: "নির্দিষ্ট মাসের প্রতিবেদন রপ্তানি করুন",
-    lblPickMonth: "মাস এবং বছর নির্বাচন করুন:", btnExcelMonth: "মাসের এক্সেল", btnPrintMonth: "প্রতিবেদন প্রিন্ট করুন",
-    chartCardTitle: "মাসিক বিক্রয় চার্ট", btnBar: "বার চার্ট", btnLine: "লাইন চার্ট",
-    banner4: "নিয়মিত রক্ষণাবেক্ষণ - ৬+ মাস", maintCardTitle: "রক্ষণাবেক্ষণ সতর্কতা",
-    mthCode: "কোড", mthClient: "গ্রাহক", mthPhone: "ফোন", mthDate: "শেষ রক্ষণাবেক্ষণ", mthServ: "সেবাসমূহ",
-    banner5: "সেটিংস - টেকনিশিয়ান এবং ব্যাকআপ", langSettingTitle: "🌐 ভাষা সেটিংস (Language)", lblSelectLang: "ভাষা নির্বাচন করুন:",
-    empCardTitle: "টেকনিশিয়ান যোগ করুন", lblEmpName: "নাম", lblEmpRole: "পদবী", lblEmpPhone: "ফোন", btnSaveEmp: "কর্মী সংরক্ষণ করুন",
-    ethName: "নাম", ethRole: "পদবী", ethPhone: "ফোন", ethAction: "কার্যক্রম", backupCardTitle: "ব্যাকআপ এবং পুনরুদ্ধার", btnExportAll: "সব এক্সেল রপ্তানি করুন", btnBackupJson: "JSON ব্যাকআপ ডাউনলোড", lblRestore: "ব্যাকআপ পুনরুদ্ধার করুন:"
-  },
-  fr: {
-    nav1: "1. Clients & Ventes", nav2: "2. Recherche", nav3: "3. Rapports Mensuels", nav4: "4. Maintenance Périodique", nav5: "5. Paramètres & Sauvegarde", nav6: "6. Médias",
-    banner1: "Bienvenue Abu Rayan 🤚 - Page Clients et Ventes",
-    st1Title: "Ventes Totales", st2Title: "Espèces Perçues", st3Title: "Carte / Virement", st4Title: "Total Clients",
-    formTitle: "Enregistrer une maintenance", lblCode: "Code Client", lblName: "Nom du Client", lblPhone: "Numéro de Téléphone",
-    lblServ: "Quantité et Prix des Services", lblStatus: "Statut", lblPay: "Mode de Paiement", lblCost: "Coût Total", lblDate: "Date", btnSave: "Enregistrer",
-    tableTitle: "Journal des Ventes", thCode: "Code", thClient: "Client", thServ: "Services, Qté & Prix", thAmount: "Montant", thAction: "Actions",
-    banner2: "Page de Recherche Intelligente", searchCardTitle: "Recherche et Filtre", sthCode: "Code", sthClient: "Client", sthPhone: "Téléphone", sthServ: "Services", sthAmount: "Montant",
-    banner3: "Rapports Mensuels & Graphiques", repCardTitle: "Exporter le Rapport du Mois (Excel ou Imprimer)",
-    lblPickMonth: "Sélectionner le Mois et l'Année :", btnExcelMonth: "Excel du Mois", btnPrintMonth: "Imprimer",
-    chartCardTitle: "Graphiques des Ventes Mensuelles", btnBar: "Barres", btnLine: "Lignes",
-    banner4: "Maintenance Périodique - 6+ mois", maintCardTitle: "Alertes de Maintenance",
-    mthCode: "Code", mthClient: "Client", mthPhone: "Téléphone", mthDate: "Dernière Maintenance", mthServ: "Services",
-    banner5: "Paramètres - Techniciens & Sauvegarde", langSettingTitle: "🌐 Paramètres de Langue", lblSelectLang: "Sélectionner la Langue :",
-    empCardTitle: "Ajouter un Technicien", lblEmpName: "Nom", lblEmpRole: "Rôle", lblEmpPhone: "Téléphone", btnSaveEmp: "Enregistrer",
-    ethName: "Nom", ethRole: "Rôle", ethPhone: "Téléphone", ethAction: "Actions", backupCardTitle: "Sauvegarde & Restauration", btnExportAll: "Exporter Tout Excel", btnBackupJson: "Télécharger JSON", lblRestore: "Restaurer :"
   }
 };
 
@@ -594,25 +530,58 @@ function updateLiveClock() {
 }
 setInterval(updateLiveClock, 1000);
 
-// التحقق من تسجيل الدخول عند بدء التشغيل
+let currentUserRole = 'admin'; // افتراضي
+
+// إدارة تسجيل الدخول والصلاحيات
 function handleLogin(e) {
     e.preventDefault();
     let u = document.getElementById('loginUser').value.trim();
     let p = document.getElementById('loginPass').value.trim();
+    
     if (u === 'admin' && p === '1234') {
-        document.getElementById('loginOverlay').style.display = 'none';
-        document.getElementById('appContainer').style.display = 'block';
+        currentUserRole = 'admin';
         sessionStorage.setItem('tc24_logged', 'true');
-        renderSales();
-        renderEmps();
-        initDB();
+        sessionStorage.setItem('tc24_role', 'admin');
+        sessionStorage.setItem('tc24_user', 'المشرف العام (أبو ريان)');
+        initAppSession();
     } else {
-        document.getElementById('loginError').style.display = 'block';
+        // التحقق إذا كان الموظف مسجل في قاعدة البيانات
+        let foundEmp = empData.find(emp => emp.name.toLowerCase() === u.toLowerCase());
+        if (foundEmp) {
+            currentUserRole = 'employee';
+            sessionStorage.setItem('tc24_logged', 'true');
+            sessionStorage.setItem('tc24_role', 'employee');
+            sessionStorage.setItem('tc24_user', foundEmp.name);
+            initAppSession();
+        } else {
+            document.getElementById('loginError').style.display = 'block';
+        }
     }
 }
 
+function initAppSession() {
+    document.getElementById('loginOverlay').style.display = 'none';
+    document.getElementById('appContainer').style.display = 'block';
+    
+    let roleName = sessionStorage.setItem ? sessionStorage.getItem('tc24_user') : 'المشرف العام';
+    let isAdm = sessionStorage.getItem('tc24_role') === 'admin';
+    
+    document.getElementById('userRoleBadge').innerText = isAdm ? '⭐ مشرف عام' : `👤 موظف (عرض فقط): ${roleName}`;
+    
+    // إخفاء نماذج الإضافة والحذف للموظفين العاديين
+    if (!isAdm) {
+        if($('formCardContainer')) $('formCardContainer').style.display = 'none';
+        if($('adminEmpSection')) $('adminEmpSection').style.display = 'none';
+        if($('mediaFormCard')) $('mediaFormCard').style.display = 'none';
+    }
+
+    renderSales();
+    renderEmps();
+    initDB();
+}
+
 function logout() {
-    sessionStorage.removeItem('tc24_logged');
+    sessionStorage.clear();
     location.reload();
 }
 
@@ -624,18 +593,14 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     updateLiveClock();
     if (sessionStorage.getItem('tc24_logged') === 'true') {
-        document.getElementById('loginOverlay').style.display = 'none';
-        document.getElementById('appContainer').style.display = 'block';
-        renderSales();
-        renderEmps();
-        initDB();
+        initAppSession();
     }
 });
 
 let salesData = JSON.parse(localStorage.getItem('tc24_sales')) || [];
-let empData = JSON.parse(localStorage.getItem('tc24_emps')) || [{name:"إسلام مرزوق أحمد",role:"المشرف الفني العام",phone:"-"}];
+let empData = JSON.parse(localStorage.getItem('tc24_emps')) || [];
 
-// نظام التخزين المتطور IndexedDB للصور والفيديوهات الكبيرة وضمان عدم الحذف عند الـ Refresh
+// نظام التخزين المتطور IndexedDB للصور والفيديوهات الكبيرة
 let db = null;
 function initDB() {
     let request = indexedDB.open("TC24_MediaDB", 1);
@@ -709,14 +674,24 @@ function formatServicesText(s) {
 
 function renderSales(){
   let total=0, cash=0, card=0, html='';
+  let isAdm = sessionStorage.getItem('tc24_role') === 'admin';
+  
   salesData.forEach((s,i)=>{
     let cost = Number(s.cost) || 0;
     total += cost;
     if(s.payMethod==='كاش / نقدي') cash += cost; else card += cost;
     let servText = formatServicesText(s);
-    html += '<tr><td><b>'+s.code+'</b><br><small>'+s.date+'</small></td><td><b>'+s.client+'</b><br><small>'+(s.phone||'')+'</small></td><td>'+servText+'<br><span class="badge '+statusClass(s.status)+'">'+(s.status||'مكتمل')+'</span></td><td><b>'+cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ر.س</b><br><small>['+s.payMethod+']</small></td><td class="no-print"><button class="act pr" onclick="printInvoice('+i+')">طباعة</button> <button class="act edit" onclick="editSale('+i+')">تعديل</button> <button class="act del" onclick="deleteSale('+i+')">حذف</button></td></tr>';
+    
+    let actionButtons = '';
+    if(isAdm) {
+      actionButtons = `<button class="act pr" onclick="printInvoice(${i})">طباعة</button> <button class="act edit" onclick="editSale(${i})">تعديل</button> <button class="act del" onclick="deleteSale(${i})">حذف</button>`;
+    } else {
+      actionButtons = `<button class="act pr" onclick="printInvoice(${i})">طباعة</button> <span style="font-size:0.8rem; color:var(--muted);">(عرض فقط)</span>`;
+    }
+
+    html += '<tr><td><b>'+s.code+'</b><br><small>'+s.date+'</small></td><td><b>'+s.client+'</b><br><small>'+(s.phone||'')+'</small></td><td>'+servText+'<br><span class="badge '+statusClass(s.status)+'">'+(s.status||'مكتمل')+'</span></td><td><b>'+cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ر.س</b><br><small>['+s.payMethod+']</small></td><td class="no-print">'+actionButtons+'</td></tr>';
   });
-  if($('salesBody')) $('salesBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا توجد بيانات بعد، سجّل أول عميل</td></tr>';
+  if($('salesBody')) $('salesBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا توجد بيانات بعد</td></tr>';
   if($('sTotal')) $('sTotal').innerText = total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ر.س';
   if($('sCash')) $('sCash').innerText = cash.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ر.س';
   if($('sCard')) $('sCard').innerText = card.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ر.س';
@@ -840,19 +815,19 @@ function renderMaint(){
   $('maintBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا يوجد عملاء يستحقون الصيانة حالياً</td></tr>';
 }
 
-// دوال إدارة الموظفين والفنيين (إضافة وتعديل وحذف)
+// دوال إدارة الموظفين والصلاحيات
 function renderEmps(){
   if($('empBody')) {
     let html = '';
+    let isAdm = sessionStorage.getItem('tc24_role') === 'admin';
+
     empData.forEach((e, idx)=>{
+      let delBtn = isAdm ? `<button class="act del" onclick="deleteEmp(${idx})">حذف</button>` : `<span style="color:var(--muted)">صلاحية عرض فقط</span>`;
       html += `<tr>
         <td><b>${e.name}</b></td>
         <td>${e.role}</td>
         <td>${e.phone || '-'}</td>
-        <td>
-          <button class="act edit" onclick="editEmp(${idx})">تعديل</button>
-          <button class="act del" onclick="deleteEmp(${idx})">حذف</button>
-        </td>
+        <td>${delBtn}</td>
       </tr>`;
     });
     $('empBody').innerHTML = html || '<tr><td colspan="4" style="text-align:center">لا توجد موظفين مسجلين</td></tr>';
@@ -866,33 +841,16 @@ if($('empForm')) {
     let name = $('empName').value.trim();
     let role = $('empRole').value.trim();
     let phone = $('empPhone').value.trim();
-    let idx = parseInt($('editEmpIndex').value, 10);
 
-    if(idx > -1){
-      empData[idx] = { name, role, phone };
-      $('editEmpIndex').value = "-1";
-      $('empCardTitle').innerText = "إضافة / تعديل فني وعامل";
-    } else {
-      empData.push({ name, role, phone });
-    }
-
+    empData.push({ name, role, phone });
     e.target.reset();
     renderEmps();
+    alert('تم إضافة الموظف بنجاح! يمكنه الآن تسجيل الدخول باسم المستخدم الخاص به.');
   });
 }
 
-function editEmp(idx){
-  let e = empData[idx];
-  $('empName').value = e.name;
-  $('empRole').value = e.role;
-  $('empPhone').value = e.phone || '';
-  $('editEmpIndex').value = idx;
-  $('empCardTitle').innerText = 'تعديل بيانات الموظف: ' + e.name;
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
 function deleteEmp(idx){
-  if(confirm('هل أنت متأكد من حذف هذا الموظف؟')){
+  if(confirm('هل أنت متأكد من حذف هذا الموظف؟ لن يتمكن من تسجيل الدخول بعد الآن.')){
     empData.splice(idx, 1);
     renderEmps();
   }
@@ -907,6 +865,7 @@ function renderMedia(){
   let transaction = db.transaction(["mediaStore"], "readonly");
   let store = transaction.objectStore("mediaStore");
   let request = store.getAll();
+  let isAdm = sessionStorage.getItem('tc24_role') === 'admin';
 
   request.onsuccess = function(event) {
     let items = event.target.result;
@@ -915,6 +874,12 @@ function renderMedia(){
       let isVideo = m.type && m.type.startsWith('video');
       let blobUrl = URL.createObjectURL(m.blob);
       let safeDesc = m.desc.replace(/'/g, "\\'");
+      
+      let adminButtons = isAdm ? `
+        <button class="act edit" style="flex:1;" onclick="editMedia(${m.id}, '${safeDesc}')">تعديل</button>
+        <button class="act del" style="flex:1;" onclick="deleteMedia(${m.id})">حذف</button>
+      ` : '';
+
       html += `
         <div style="background:#f9fafb; border:1px solid var(--border); border-radius:12px; padding:10px; display:flex; flex-direction:column; gap:8px;">
           <div style="width:100%; height:150px; background:#000; border-radius:8px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
@@ -924,8 +889,7 @@ function renderMedia(){
           <small style="color:var(--muted);">${m.date}</small>
           <div style="display:flex; gap:6px; margin-top:4px;">
             <button class="act wa" style="flex:1;" onclick="shareMedia(${m.id})"><i class="fa-brands fa-whatsapp"></i> واتساب</button>
-            <button class="act edit" style="flex:1;" onclick="editMedia(${m.id}, '${safeDesc}')">تعديل</button>
-            <button class="act del" style="flex:1;" onclick="deleteMedia(${m.id})">حذف</button>
+            ${adminButtons}
           </div>
         </div>
       `;
@@ -942,7 +906,6 @@ function handleMediaSubmit(e){
   let editId = $('editMediaId').value;
 
   if(editId) {
-    // تعديل الوصف فقط
     let transaction = db.transaction(["mediaStore"], "readwrite");
     let store = transaction.objectStore("mediaStore");
     let req = store.get(Number(editId));
