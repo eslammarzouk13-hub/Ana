@@ -531,15 +531,12 @@ function updateLiveClock() {
 }
 setInterval(updateLiveClock, 1000);
 
-// الموظف الافتراضي المحدث بالبيانات الجديدة (TC24 / 0011)
-let defaultEmployees = [
+let salesData = JSON.parse(localStorage.getItem('tc24_sales')) || [];
+let empData = JSON.parse(localStorage.getItem('tc24_emps')) || [
   { name: "TC24", pass: "0011", role: "فني تركيبات وصيانة", phone: "05xxxxxxxx" }
 ];
 
-let salesData = JSON.parse(localStorage.getItem('tc24_sales')) || [];
-let empData = JSON.parse(localStorage.getItem('tc24_emps')) || defaultEmployees;
-
-// إدارة تسجيل الدخول الآمن والتحقق من حسابات المشرف والموظفين
+// إدارة تسجيل الدخول الآمن والتحقق المباشر من حساب المشرف أو الموظف (TC24 / 0011)
 function handleLogin(e) {
     e.preventDefault();
     let u = document.getElementById('loginUser').value.trim();
@@ -554,12 +551,14 @@ function handleLogin(e) {
         return;
     }
     
-    // التحقق من حسابات الموظفين المسجلة
+    // التحقق المباشر من حساب الموظف (TC24 / 0011) أو أي موظف مضاف في النظام
+    let isDefaultEmp = (u.toUpperCase() === 'TC24' && p === '0011');
     let foundEmp = empData.find(emp => emp.name.toLowerCase() === u.toLowerCase() && emp.pass === p);
-    if (foundEmp) {
+    
+    if (isDefaultEmp || foundEmp) {
         sessionStorage.setItem('tc24_logged', 'true');
         sessionStorage.setItem('tc24_role', 'employee');
-        sessionStorage.setItem('tc24_user', foundEmp.name);
+        sessionStorage.setItem('tc24_user', isDefaultEmp ? 'TC24' : foundEmp.name);
         initAppSession();
     } else {
         document.getElementById('loginError').style.display = 'block';
@@ -819,7 +818,7 @@ function renderMaint(){
   $('maintBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا يوجد عملاء يستحقون الصيانة حالياً</td></tr>';
 }
 
-// إدارة الموظفين (إضافة، تعديل، حذف) مع حفظهم لتسجيل الدخول فوراً
+// إدارة الموظفين (إضافة، تعديل، حذف) مع حفظهم
 function renderEmps(){
   if($('empBody')) {
     let html = '';
