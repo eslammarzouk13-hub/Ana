@@ -252,6 +252,7 @@ th{background:#fef3c7;color:#78350f}
   <button class="nav-btn" onclick="goPage('p3',this)" id="nav3">3. التقارير الشهرية</button>
   <button class="nav-btn" onclick="goPage('p4',this)" id="nav4">4. الصيانة الدورية</button>
   <button class="nav-btn" onclick="goPage('p5',this)" id="nav5">5. الإعدادات والنسخ</button>
+  <button class="nav-btn" onclick="goPage('p6',this)" id="nav6">6. الصور والفيديوهات</button>
 </nav>
 
 <!-- صفحة 1 -->
@@ -425,13 +426,38 @@ th{background:#fef3c7;color:#78350f}
     </div>
   </div>
 </section>
+
+<!-- صفحة 6: الصور والفيديوهات الجديدة -->
+<section id="p6" class="page">
+  <div class="banner">قسم أرشيف الصور والفيديوهات - توثيق الأعمال والصيانة (كاميرا أو مستودع)</div>
+  <div class="grid">
+    <div class="card">
+      <h3 id="mediaFormTitle">إضافة صورة أو فيديو جديد</h3>
+      <form id="mediaForm" onsubmit="handleMediaSubmit(event)">
+        <input type="hidden" id="editMediaIndex" value="-1">
+        <label>اختر الوسائط (صورة أو فيديو من الكاميرا أو المستودع)</label>
+        <input type="file" id="mediaFile" accept="image/*,video/*" required style="padding:8px;">
+        <label style="margin-top:12px;">كود العميل أو الوصف (مثال: عميل 1001 - قبل الصيانة)</label>
+        <input type="text" id="mediaDesc" required placeholder="أدخل وصفاً توضيحياً للوسائط...">
+        <button class="btn" type="submit" id="btnSaveMedia">حفظ في الأرشيف</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3>أرشيف الوسائط المحفوظة</h3>
+      <div id="mediaGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; margin-top: 10px;">
+        <!-- سيتم تعبئة الوسائط هنا برمجياً -->
+      </div>
+    </div>
+  </div>
+</section>
+
 </div>
 
 <script>
 // ترجمات اللغات المختلفة
 const translations = {
   ar: {
-    nav1: "1. العملاء والمبيعات", nav2: "2. البحث", nav3: "3. التقارير الشهرية", nav4: "4. الصيانة الدورية", nav5: "5. الإعدادات والنسخ",
+    nav1: "1. العملاء والمبيعات", nav2: "2. البحث", nav3: "3. التقارير الشهرية", nav4: "4. الصيانة الدورية", nav5: "5. الإعدادات والنسخ", nav6: "6. الصور والفيديوهات",
     banner1: "أهلاً وسهلاً بك يا أبو ريان 🤚 - صفحة العملاء والمبيعات",
     st1Title: "إجمالي المبيعات", st2Title: "المحصل كاش", st3Title: "المحصل شبكة / تحويل", st4Title: "عدد العملاء",
     formTitle: "تسجيل عملية صيانة جديدة", lblCode: "رقم كود العميل (أرقام إنجليزية فقط)", lblName: "اسم العميل", lblPhone: "رقم الجوال",
@@ -448,7 +474,7 @@ const translations = {
     ethName: "الاسم", ethRole: "الوظيفة", ethPhone: "الجوال", ethAction: "إجراءات", backupCardTitle: "النسخ الاحتياطي", btnExportAll: "تصدير كافة البيانات Excel", btnBackupJson: "تحميل نسخة احتياطية JSON", lblRestore: "استعادة نسخة احتياطية:"
   },
   en: {
-    nav1: "1. Customers & Sales", nav2: "2. Search", nav3: "3. Monthly Reports", nav4: "4. Periodic Maintenance", nav5: "5. Settings & Backup",
+    nav1: "1. Customers & Sales", nav2: "2. Search", nav3: "3. Monthly Reports", nav4: "4. Periodic Maintenance", nav5: "5. Settings & Backup", nav6: "6. Media Archive",
     banner1: "Welcome Abu Rayan 🤚 - Customers & Sales Page",
     st1Title: "Total Sales", st2Title: "Cash Collected", st3Title: "Card / Transfer", st4Title: "Total Customers",
     formTitle: "Register New Maintenance", lblCode: "Client Code (English Numbers Only)", lblName: "Client Name", lblPhone: "Phone Number",
@@ -465,7 +491,7 @@ const translations = {
     ethName: "Name", ethRole: "Role", ethPhone: "Phone", ethAction: "Actions", backupCardTitle: "Backup & Restore", btnExportAll: "Export All Excel", btnBackupJson: "Download JSON Backup", lblRestore: "Restore Backup:"
   },
   ur: {
-    nav1: "1. گاہک اور فروخت", nav2: "2. تلاش", nav3: "3. ماہانہ رپورٹس", nav4: "4. دورانیہ کی دیکھ بھال", nav5: "5. ترتیبات اور بیک اپ",
+    nav1: "1. گاہک اور فروخت", nav2: "2. تلاش", nav3: "3. ماہانہ رپورٹس", nav4: "4. دورانیہ کی دیکھ بھال", nav5: "5. ترتیبات اور بیک اپ", nav6: "6. میڈیا آرکائیو",
     banner1: "خوش آمدید ابو ریان 24 ؒ - گاہک اور فروخت کا صفحہ",
     st1Title: "کل فروخت", st2Title: "نقد وصولی", st3Title: "کارڈ / ٹرانسفر", st4Title: "کل گاہک",
     formTitle: "نئی دیکھ بھال درج کریں", lblCode: "گاہک کا کوڈ", lblName: "گاہک کا نام", lblPhone: "فون نمبر",
@@ -482,7 +508,7 @@ const translations = {
     ethName: "نام", ethRole: "عہدہ", ethPhone: "فون", ethAction: "کارروائی", backupCardTitle: "بیک اپ اور ریسٹور", btnExportAll: "تمام ڈیٹا ایکسل کریں", btnBackupJson: "JSON بیک اپ ڈاؤن لوڈ", lblRestore: "بیک اپ بحال کریں:"
   },
   hi: {
-    nav1: "1. ग्राहक और बिक्री", nav2: "2. खोजें", nav3: "3. मासिक रिपोर्ट", nav4: "4. आवधिक रखरखाव", nav5: "5. सेटिंग्स और बैकअप",
+    nav1: "1. ग्राहक और बिक्री", nav2: "2. खोजें", nav3: "3. मासिक रिपोर्ट", nav4: "4. आवधिक रखरखाव", nav5: "5. सेटिंग्स और बैकअप", nav6: "6. मीडिया أرشيف",
     banner1: "स्वागत है अबू रयान 🤚 - ग्राहक और बिक्री पृष्ठ",
     st1Title: "कुल बिक्री", st2Title: "नकद प्राप्त", st3Title: "कार्ड / ट्रांसफर", st4Title: "कुल ग्राहक",
     formTitle: "नया रखरखाव दर्ज करें", lblCode: "ग्राहक कोड", lblName: "ग्राहक का नाम", lblPhone: "फ़ोन नंबर",
@@ -499,12 +525,12 @@ const translations = {
     ethName: "नाम", ethRole: "भूमिका", ethPhone: "फ़ोन", ethAction: "कार्रवाई", backupCardTitle: "बैकअप और पुनर्स्थापना", btnExportAll: "सभी एक्सेल निर्यात करें", btnBackupJson: "JSON बैकअप डाउनलोड", lblRestore: "बैकअप पुनर्स्थापित करें:"
   },
   bn: {
-    nav1: "1. গ্রাহক এবং বিক্রয়", nav2: "2. অনুসন্ধান", nav3: "3. মাসিক প্রতিবেদন", nav4: "4. নিয়মিত রক্ষণাবেক্ষণ", nav5: "5. সেটিংস এবং ব্যাকআপ",
+    nav1: "1. গ্রাহক এবং বিক্রয়", nav2: "2. অনুসন্ধান", nav3: "3. মাসিক প্রতিবেদন", nav4: "4. নিয়মিত রক্ষণাবেক্ষণ", nav5: "5. সেটিংস এবং ব্যাকআপ", nav6: "6. মিডিয়া",
     banner1: "স্বাগতম আবু রায়ান ؒ - গ্রাহক এবং বিক্রয় পৃষ্ঠা",
     st1Title: "মোট বিক্রয়", st2Title: "নগদ সংগ্রহ", st3Title: "কার্ড / ট্রান্সফার", st4Title: "মোট গ্রাহک",
     formTitle: "নতুন রক্ষণাবেক্ষণ নিবন্ধন করুন", lblCode: "গ্রাহক কোড", lblName: "গ্রাহকের নাম", lblPhone: "ফোন নম্বর",
     lblServ: "পরিমাণ এবং মূল্য নির্বাচন করুন", lblStatus: "অবস্থা", lblPay: "পেমেন্ট পদ্ধতি", lblCost: "মোট খরচ", lblDate: "তারিখ", btnSave: "তথ্য সংরক্ষণ করুন",
-    tableTitle: "গ্রাহক এবং বিক্রয় লগ", thCode: "কোড", thClient: "গ্রাহক", thServ: "সেবা ও মূল্য", thAmount: "পরিমাণ", thAction: "কার্যক্রম",
+    tableTitle: "গ্রাহক এবং বিক্রয় লগ", thCode: "কোড", thClient: "গ্রাহک", thServ: "সেবা ও মূল্য", thAmount: "পরিমাণ", thAction: "কার্যক্রম",
     banner2: "স্মার্ট অনুসন্ধান", searchCardTitle: "স্মার্ট অনুসন্ধান এবং ফিল্টার", sthCode: "কোড", sthClient: "গ্রাহক", sthPhone: "ফোন", sthServ: "সেবাসমূহ", sthAmount: "পরিমাণ",
     banner3: "প্রতিবেদন পৃষ্ঠা - মাসিক বিক্রয়", repCardTitle: "নির্দিষ্ট মাসের প্রতিবেদন রপ্তানি করুন",
     lblPickMonth: "মাস এবং বছর নির্বাচন করুন:", btnExcelMonth: "মাসের এক্সেল", btnPrintMonth: "প্রতিবেদন প্রিন্ট করুন",
@@ -516,7 +542,7 @@ const translations = {
     ethName: "নাম", ethRole: "পদবী", ethPhone: "ফোন", ethAction: "কার্যক্রম", backupCardTitle: "ব্যাকআপ এবং পুনরুদ্ধার", btnExportAll: "সব এক্সেল রপ্তানি করুন", btnBackupJson: "JSON ব্যাকআপ ডাউনলোড", lblRestore: "ব্যাকআপ পুনরুদ্ধার করুন:"
   },
   fr: {
-    nav1: "1. Clients & Ventes", nav2: "2. Recherche", nav3: "3. Rapports Mensuels", nav4: "4. Maintenance Périodique", nav5: "5. Paramètres & Sauvegarde",
+    nav1: "1. Clients & Ventes", nav2: "2. Recherche", nav3: "3. Rapports Mensuels", nav4: "4. Maintenance Périodique", nav5: "5. Paramètres & Sauvegarde", nav6: "6. Médias",
     banner1: "Bienvenue Abu Rayan 🤚 - Page Clients et Ventes",
     st1Title: "Ventes Totales", st2Title: "Espèces Perçues", st3Title: "Carte / Virement", st4Title: "Total Clients",
     formTitle: "Enregistrer une maintenance", lblCode: "Code Client", lblName: "Nom du Client", lblPhone: "Numéro de Téléphone",
@@ -579,6 +605,7 @@ function handleLogin(e) {
         sessionStorage.setItem('tc24_logged', 'true');
         renderSales();
         renderEmps();
+        renderMedia();
     } else {
         document.getElementById('loginError').style.display = 'block';
     }
@@ -601,11 +628,13 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('appContainer').style.display = 'block';
         renderSales();
         renderEmps();
+        renderMedia();
     }
 });
 
 let salesData = JSON.parse(localStorage.getItem('tc24_sales')) || [];
 let empData = JSON.parse(localStorage.getItem('tc24_emps')) || [{name:"إسلام مرزوق أحمد",role:"المشرف الفني العام",phone:"-"}];
+let mediaData = JSON.parse(localStorage.getItem('tc24_media')) || [];
 
 const $ = id => document.getElementById(id);
 if($('serviceDate')) $('serviceDate').valueAsDate = new Date();
@@ -621,6 +650,7 @@ function goPage(id, btn){
   if(id==='p2') filterData();
   if(id==='p4') renderMaint();
   if(id==='p5') renderEmps();
+  if(id==='p6') renderMedia();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -850,6 +880,83 @@ function deleteEmp(idx){
   }
 }
 
+// دوال إدارة الصور والفيديوهات الجديدة
+function renderMedia(){
+  let grid = $('mediaGrid');
+  if(!grid) return;
+  let html = '';
+  mediaData.forEach((m, idx)=>{
+    let isVideo = m.type && m.type.startsWith('video');
+    html += `
+      <div style="background:#f9fafb; border:1px solid var(--border); border-radius:12px; padding:10px; display:flex; flexDirection:column; gap:8px;">
+        <div style="width:100%; height:150px; background:#000; border-radius:8px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+          ${isVideo ? `<video src="${m.url}" controls style="width:100%; height:100%; object-fit:cover;"></video>` : `<img src="${m.url}" style="width:100%; height:100%; object-fit:cover;">`}
+        </div>
+        <p style="font-size:0.85rem; font-weight:bold; color:#1f2937; margin:0; word-break:break-word;">${m.desc}</p>
+        <small style="color:var(--muted);">${m.date}</small>
+        <div style="display:flex; gap:6px; margin-top:4px;">
+          <button class="act edit" style="flex:1;" onclick="editMedia(${idx})">تعديل</button>
+          <button class="act del" style="flex:1;" onclick="deleteMedia(${idx})">حذف</button>
+        </div>
+      </div>
+    `;
+  });
+  grid.innerHTML = html || '<p style="grid-column: 1/-1; text-align:center; color:var(--muted);">لا توجد صور أو فيديوهات محفوظة في الأرشيف</p>';
+  localStorage.setItem('tc24_media', JSON.stringify(mediaData));
+}
+
+function handleMediaSubmit(e){
+  e.preventDefault();
+  let fileInput = $('mediaFile');
+  let desc = $('mediaDesc').value.trim();
+  let idx = parseInt($('editMediaIndex').value, 10);
+
+  if(fileInput.files && fileInput.files[0]) {
+    let file = fileInput.files[0];
+    let reader = new FileReader();
+    reader.onload = function(evt){
+      let mediaObj = {
+        url: evt.target.result,
+        type: file.type,
+        desc: desc,
+        date: new Date().toLocaleDateString('ar-SA')
+      };
+      if(idx > -1){
+        mediaData[idx] = mediaObj;
+        $('editMediaIndex').value = "-1";
+        $('mediaFormTitle').innerText = "إضافة صورة أو فيديو جديد";
+      } else {
+        mediaData.unshift(mediaObj);
+      }
+      e.target.reset();
+      renderMedia();
+    };
+    reader.readAsDataURL(file);
+  } else if(idx > -1) {
+    // إذا كان تعديل الوصف فقط بدون تغيير الملف
+    mediaData[idx].desc = desc;
+    $('editMediaIndex').value = "-1";
+    $('mediaFormTitle').innerText = "إضافة صورة أو فيديو جديد";
+    e.target.reset();
+    renderMedia();
+  }
+}
+
+function editMedia(idx){
+  let m = mediaData[idx];
+  $('mediaDesc').value = m.desc;
+  $('editMediaIndex').value = idx;
+  $('mediaFormTitle').innerText = "تعديل وصف الوسائط رقم " + (idx+1);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function deleteMedia(idx){
+  if(confirm('هل أنت متأكد من حذف هذه الوسائط من الأرشيف؟')){
+    mediaData.splice(idx, 1);
+    renderMedia();
+  }
+}
+
 function exportExcel(){
   if(!salesData.length){ alert('لا توجد بيانات للتصدير!'); return; }
   let csv = '\uFEFFكود العميل,اسم العميل,رقم الجوال,التاريخ,الخدمات والأعداد والأسعار,الحالة,طريقة الدفع,التكلفة\n';
@@ -930,7 +1037,12 @@ function printSingleMonth(){
 }
 
 function backupData(){
-  let json = JSON.stringify(salesData, null, 2);
+  let backupObj = {
+    sales: salesData,
+    emps: empData,
+    media: mediaData
+  };
+  let json = JSON.stringify(backupObj, null, 2);
   let blob = new Blob([json], {type:'application/json;charset=utf-8'});
   let link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
@@ -950,6 +1062,14 @@ function restoreData(event){
       if(Array.isArray(parsed)){
         salesData = parsed;
         renderSales();
+        alert('تم استعادة النسخة الاحتياطية بنجاح!');
+      } else if(parsed && typeof parsed === 'object') {
+        if(parsed.sales) salesData = parsed.sales;
+        if(parsed.emps) empData = parsed.emps;
+        if(parsed.media) mediaData = parsed.media;
+        renderSales();
+        renderEmps();
+        renderMedia();
         alert('تم استعادة النسخة الاحتياطية بنجاح!');
       } else {
         alert('ملف غير صالح!');
