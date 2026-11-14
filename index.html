@@ -211,7 +211,7 @@ th{background:#fef3c7;color:#78350f}
         <p>نظام الصيانة والمبيعات الموحد</p>
         <form id="loginForm" onsubmit="handleLogin(event)">
             <div class="input-group">
-                <input type="text" id="loginUser" required placeholder="اسم المستخدم" autocomplete="off">
+                <input type="text" id="loginUser" required placeholder="اسم المستخدم (admin أو كود الفني)" autocomplete="off">
                 <i class="fa-regular fa-user"></i>
             </div>
             <div class="input-group">
@@ -400,14 +400,14 @@ th{background:#fef3c7;color:#78350f}
       </select>
 
       <div id="adminEmpSection">
-        <h3 id="empCardTitle">إضافة وإدارة الفنيين والموظفين</h3>
+        <h3 id="empCardTitle">إضافة وإدارة الفنيين والموظفين (أكثر من 10 أفراد)</h3>
         <form id="empForm">
           <input type="hidden" id="editEmpIndex" value="-1">
-          <label id="lblEmpName">اسم الموظف / اسم الدخول</label><input id="empName" required placeholder="مثال: TC24">
+          <label id="lblEmpName">اسم الموظف / اسم الدخول (مثال: فني 1)</label><input id="empName" required placeholder="مثال: فني 1">
           <label style="margin-top:8px;">الرقم السري الخاص بالموظف</label><input type="text" id="empPass" required placeholder="أدخل الرقم السري">
-          <label id="lblEmpRole">المسمى الوظيفي</label><input id="empRole" required placeholder="فني تركيبات">
-          <label id="lblEmpPhone">الجوال</label><input id="empPhone">
-          <button class="btn" type="submit" id="btnSaveEmp">حفظ الموظف</button>
+          <label id="lblEmpRole">المسمى الوظيفي</label><input id="empRole" required placeholder="فني صيانة وتكييف">
+          <label id="lblEmpPhone">الجوال</label><input id="empPhone" placeholder="05xxxxxxxx">
+          <button class="btn" type="submit" id="btnSaveEmp">حفظ الموظف الجديد</button>
         </form>
       </div>
 
@@ -475,12 +475,12 @@ const translations = {
     banner4: "صفحة الصيانة الدورية - العملاء اللي عدى عليهم 6 شهور أو أكثر", maintCardTitle: "تنبيهات الصيانة الدورية",
     mthCode: "الكود", mthClient: "العميل", mthPhone: "الجوال", mthDate: "آخر صيانة", mthServ: "الخدمات والأعداد",
     banner5: "صفحة الإعدادات - الفنيين والنسخ الاحتياطي", langSettingTitle: "🌐 تغيير لغة التطبيق / Language Settings", lblSelectLang: "اختر اللغة المفضلة:",
-    empCardTitle: "إضافة وإدارة الفنيين والموظفين", lblEmpName: "اسم الموظف / اسم الدخول", lblEmpRole: "المسمى الوظيفي", lblEmpPhone: "الجوال", btnSaveEmp: "حفظ الموظف",
+    empCardTitle: "إضافة وإدارة الفنيين والموظفين (أكثر من 10 أفراد)", lblEmpName: "اسم الموظف / اسم الدخول", lblEmpRole: "المسمى الوظيفي", lblEmpPhone: "الجوال", btnSaveEmp: "حفظ الموظف",
     ethName: "الاسم", ethRole: "الوظيفة", ethPhone: "الجوال", ethAction: "إجراءات", backupCardTitle: "النسخ الاحتياطي للبيانات", btnExportAll: "تصدير كافة البيانات Excel", btnBackupJson: "تحميل نسخة احتياطية JSON", lblRestore: "استعادة نسخة احتياطية:"
   },
   en: {
     nav1: "1. Customers & Sales", nav2: "2. Search", nav3: "3. Monthly Reports", nav4: "4. Periodic Maintenance", nav5: "5. Settings & Backup", nav6: "6. Media Archive",
-    banner1: "Welcome Abu Rayan 🤚 - Customers & Sales Page",
+    banner1: "Welcome Abu Rayan 5 - Customers & Sales Page",
     st1Title: "Total Sales", st2Title: "Cash Collected", st3Title: "Card / Transfer", st4Title: "Total Customers",
     formTitle: "Register New Maintenance", lblCode: "Client Code (English Numbers Only)", lblName: "Client Name", lblPhone: "Phone Number",
     lblServ: "Select Quantities and Prices", lblStatus: "Service Status", lblPay: "Payment Method", lblCost: "Total Cost (SAR)", lblDate: "Date", btnSave: "Save Data",
@@ -532,11 +532,12 @@ function updateLiveClock() {
 setInterval(updateLiveClock, 1000);
 
 let salesData = JSON.parse(localStorage.getItem('tc24_sales')) || [];
+// دعم مصفوفة فنيين وموظفين متسعة لأكثر من 10 أفراد مع الحساب الافتراضي
 let empData = JSON.parse(localStorage.getItem('tc24_emps')) || [
-  { name: "TC24", pass: "0011", role: "فني تركيبات وصيانة", phone: "05xxxxxxxx" }
+  { name: "TC24", pass: "0011", role: "فني تركيبات وصيانة أساسي", phone: "05xxxxxxxx" }
 ];
 
-// إدارة تسجيل الدخول الآمن والتحقق المباشر من حساب المشرف أو الموظف (TC24 / 0011)
+// إدارة تسجيل الدخول الآمن (المشرف أو أي موظف من قائمة الموظفين الأكثز من 10)
 function handleLogin(e) {
     e.preventDefault();
     let u = document.getElementById('loginUser').value.trim();
@@ -551,14 +552,14 @@ function handleLogin(e) {
         return;
     }
     
-    // التحقق المباشر من حساب الموظف (TC24 / 0011) أو أي موظف مضاف في النظام
+    // التحقق من حساب الموظفين الافتراضي أو أي فني مسجل في النظام (أكثر من 10 أفراد)
     let isDefaultEmp = (u.toUpperCase() === 'TC24' && p === '0011');
     let foundEmp = empData.find(emp => emp.name.toLowerCase() === u.toLowerCase() && emp.pass === p);
     
     if (isDefaultEmp || foundEmp) {
         sessionStorage.setItem('tc24_logged', 'true');
         sessionStorage.setItem('tc24_role', 'employee');
-        sessionStorage.setItem('tc24_user', isDefaultEmp ? 'TC24' : foundEmp.name);
+        sessionStorage.setItem('tc24_user', isDefaultEmp ? 'TC24 (موظف)' : foundEmp.name);
         initAppSession();
     } else {
         document.getElementById('loginError').style.display = 'block';
@@ -572,9 +573,9 @@ function initAppSession() {
     let roleName = sessionStorage.getItem('tc24_user') || 'المشرف العام';
     let isAdm = sessionStorage.getItem('tc24_role') === 'admin';
     
-    document.getElementById('userRoleBadge').innerText = isAdm ? '⭐ مشرف عام' : `👤 موظف (عرض فقط): ${roleName}`;
+    document.getElementById('userRoleBadge').innerText = isAdm ? '⭐ مشرف عام' : `👤 موظف (عرض كافٍ وشامل): ${roleName}`;
     
-    // إخفاء نماذج الإضافة والحذف للموظفين العاديين
+    // إخفاء نماذج الإضافة والتعديل والحذف للموظفين (صلاحية عرض كاملة للوحة المعلومات والمبيعات بدون تعديل)
     if (!isAdm) {
         if($('formCardContainer')) $('formCardContainer').style.display = 'none';
         if($('adminEmpSection')) $('adminEmpSection').style.display = 'none';
@@ -689,7 +690,7 @@ function renderSales(){
     if(isAdm) {
       actionButtons = `<button class="act pr" onclick="printInvoice(${i})">طباعة</button> <button class="act edit" onclick="editSale(${i})">تعديل</button> <button class="act del" onclick="deleteSale(${i})">حذف</button>`;
     } else {
-      actionButtons = `<button class="act pr" onclick="printInvoice(${i})">طباعة</button> <span style="font-size:0.8rem; color:var(--muted);">(عرض فقط)</span>`;
+      actionButtons = `<button class="act pr" onclick="printInvoice(${i})">طباعة الفاتورة</button> <span style="font-size:0.8rem; color:var(--muted);">(عرض فقط)</span>`;
     }
 
     html += '<tr><td><b>'+s.code+'</b><br><small>'+s.date+'</small></td><td><b>'+s.client+'</b><br><small>'+(s.phone||'')+'</small></td><td>'+servText+'<br><span class="badge '+statusClass(s.status)+'">'+(s.status||'مكتمل')+'</span></td><td><b>'+cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ر.س</b><br><small>['+s.payMethod+']</small></td><td class="no-print">'+actionButtons+'</td></tr>';
@@ -818,7 +819,7 @@ function renderMaint(){
   $('maintBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا يوجد عملاء يستحقون الصيانة حالياً</td></tr>';
 }
 
-// إدارة الموظفين (إضافة، تعديل، حذف) مع حفظهم
+// إدارة الموظفين والفنيين (تدعم أكثر من 10 أفراد بكل سهولة)
 function renderEmps(){
   if($('empBody')) {
     let html = '';
@@ -854,14 +855,14 @@ if($('empForm')) {
     if(idx > -1) {
       empData[idx] = { name, pass, role, phone };
       $('editEmpIndex').value = "-1";
-      $('btnSaveEmp').innerText = "حفظ الموظف";
+      $('btnSaveEmp').innerText = "حفظ الموظف الجديد";
     } else {
       empData.push({ name, pass, role, phone });
     }
 
     e.target.reset();
     renderEmps();
-    alert('تم حفظ بيانات الموظف بنجاح!');
+    alert('تم حفظ بيانات الموظف بنجاح وأصبح بإمكانه الدخول ورؤية كافة بيانات المشرف!');
   });
 }
 
