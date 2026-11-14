@@ -269,39 +269,39 @@ th{background:#fef3c7;color:#78350f}
       <form id="serviceForm">
         <input type="hidden" id="editIndex" value="-1">
         <label id="lblCode">رقم كود العميل (أرقام إنجليزية فقط)</label>
-        <input id="clientCode" required placeholder="1001" style="direction: ltr; text-align: right;" oninput="this.value = this.value.replace(/[^0-9A-Za-z]/g, '')">
+        <input id="clientCode" required placeholder="أدخل الكود..." style="direction: ltr; text-align: right;" oninput="this.value = this.value.replace(/[^0-9A-Za-z]/g, '')">
         
-        <label id="lblName">اسم العميل</label><input id="clientName" required placeholder="محمد العمري">
-        <label id="lblPhone">رقم الجوال</label><input id="clientPhone" required placeholder="05xxxxxxxx">
+        <label id="lblName">اسم العميل</label><input id="clientName" required placeholder="أدخل اسم العميل...">
+        <label id="lblPhone">رقم الجوال</label><input id="clientPhone" required placeholder="أدخل رقم الجوال...">
         
         <label id="lblServ">حدد الكمية والسعر لكل خدمة (يقبل الهللَات والكسور)</label>
         <div class="services-grid">
           <div class="service-item">
             <label>الدكت (العدد / السعر)</label>
             <div class="service-inputs">
-              <input type="number" id="qtyDuct" min="0" step="1" value="0" placeholder="العدد" oninput="calcTotalCost()">
-              <input type="number" id="priceDuct" min="0" step="0.01" value="0" placeholder="السعر" oninput="calcTotalCost()">
+              <input type="number" id="qtyDuct" min="0" step="1" placeholder="العدد" oninput="calcTotalCost()">
+              <input type="number" id="priceDuct" min="0" step="0.01" placeholder="السعر" oninput="calcTotalCost()">
             </div>
           </div>
           <div class="service-item">
             <label>الاسبلت (العدد / السعر)</label>
             <div class="service-inputs">
-              <input type="number" id="qtySplit" min="0" step="1" value="0" placeholder="العدد" oninput="calcTotalCost()">
-              <input type="number" id="priceSplit" min="0" step="0.01" value="0" placeholder="السعر" oninput="calcTotalCost()">
+              <input type="number" id="qtySplit" min="0" step="1" placeholder="العدد" oninput="calcTotalCost()">
+              <input type="number" id="priceSplit" min="0" step="0.01" placeholder="السعر" oninput="calcTotalCost()">
             </div>
           </div>
           <div class="service-item">
             <label>الفلتر (العدد / السعر)</label>
             <div class="service-inputs">
-              <input type="number" id="qtyFilter" min="0" step="1" value="0" placeholder="العدد" oninput="calcTotalCost()">
-              <input type="number" id="priceFilter" min="0" step="0.01" value="0" placeholder="السعر" oninput="calcTotalCost()">
+              <input type="number" id="qtyFilter" min="0" step="1" placeholder="العدد" oninput="calcTotalCost()">
+              <input type="number" id="priceFilter" min="0" step="0.01" placeholder="السعر" oninput="calcTotalCost()">
             </div>
           </div>
           <div class="service-item">
             <label>الماكينة (العدد / السعر)</label>
             <div class="service-inputs">
-              <input type="number" id="qtyMachine" min="0" step="1" value="0" placeholder="العدد" oninput="calcTotalCost()">
-              <input type="number" id="priceMachine" min="0" step="0.01" value="0" placeholder="السعر" oninput="calcTotalCost()">
+              <input type="number" id="qtyMachine" min="0" step="1" placeholder="العدد" oninput="calcTotalCost()">
+              <input type="number" id="priceMachine" min="0" step="0.01" placeholder="السعر" oninput="calcTotalCost()">
             </div>
           </div>
         </div>
@@ -310,7 +310,7 @@ th{background:#fef3c7;color:#78350f}
         <select id="serviceStatus"><option id="optComplete">مكتمل</option><option id="optProgress">قيد التنفيذ</option><option id="optPending">معلق</option></select>
         <label id="lblPay">طريقة الدفع</label>
         <select id="payMethod"><option id="payCash">كاش / نقدي</option><option id="payCard">شبكة</option><option id="payTransfer">تحويل بنكي</option></select>
-        <label id="lblCost">إجمالي التكلفة (ريال - قابل للتعديل اليدوي أو الحساب التلقائي)</label><input type="number" id="serviceCost" step="0.01" required>
+        <label id="lblCost">إجمالي التكلفة (ريال - قابل للتعديل اليدوي أو الحساب التلقائي)</label><input type="number" id="serviceCost" step="0.01" required placeholder="0.00">
         <label id="lblDate">التاريخ</label><input type="date" id="serviceDate" required>
         <button class="btn" type="submit" id="btnSave">حفظ البيانات</button>
       </form>
@@ -769,10 +769,14 @@ if($('serviceForm')) {
     }
     saveSharedSales(salesData);
     e.target.reset();
-    $('qtyDuct').value = 0; $('priceDuct').value = 0;
-    $('qtySplit').value = 0; $('priceSplit').value = 0;
-    $('qtyFilter').value = 0; $('priceFilter').value = 0;
-    $('qtyMachine').value = 0; $('priceMachine').value = 0;
+    $('qtyDuct').value = ''; $('priceDuct').value = '';
+    $('qtySplit').value = ''; $('priceSplit').value = '';
+    $('qtyFilter').value = ''; $('priceFilter').value = '';
+    $('qtyMachine').value = ''; $('priceMachine').value = '';
+    $('clientCode').value = '';
+    $('clientName').value = '';
+    $('clientPhone').value = '';
+    $('serviceCost').value = '';
     $('serviceDate').valueAsDate = new Date();
     renderSales();
     alert('تم حفظ وتحديث البيانات بنجاح!');
@@ -791,19 +795,19 @@ function editSale(i){
   $('serviceDate').value = s.date;
 
   if(s.servicesObj) {
-    $('qtyDuct').value = s.servicesObj.duct || 0;
-    $('priceDuct').value = s.servicesObj.priceDuct || 0;
-    $('qtySplit').value = s.servicesObj.split || 0;
-    $('priceSplit').value = s.servicesObj.priceSplit || 0;
-    $('qtyFilter').value = s.servicesObj.filter || 0;
-    $('priceFilter').value = s.servicesObj.priceFilter || 0;
-    $('qtyMachine').value = s.servicesObj.machine || 0;
-    $('priceMachine').value = s.servicesObj.priceMachine || 0;
+    $('qtyDuct').value = s.servicesObj.duct || '';
+    $('priceDuct').value = s.servicesObj.priceDuct || '';
+    $('qtySplit').value = s.servicesObj.split || '';
+    $('priceSplit').value = s.servicesObj.priceSplit || '';
+    $('qtyFilter').value = s.servicesObj.filter || '';
+    $('priceFilter').value = s.servicesObj.priceFilter || '';
+    $('qtyMachine').value = s.servicesObj.machine || '';
+    $('priceMachine').value = s.servicesObj.priceMachine || '';
   } else {
-    $('qtyDuct').value = 0; $('priceDuct').value = 0;
-    $('qtySplit').value = 0; $('priceSplit').value = 0;
-    $('qtyFilter').value = 0; $('priceFilter').value = 0;
-    $('qtyMachine').value = 0; $('priceMachine').value = 0;
+    $('qtyDuct').value = ''; $('priceDuct').value = '';
+    $('qtySplit').value = ''; $('priceSplit').value = '';
+    $('qtyFilter').value = ''; $('priceFilter').value = '';
+    $('qtyMachine').value = ''; $('priceMachine').value = '';
   }
 
   $('editIndex').value = i;
