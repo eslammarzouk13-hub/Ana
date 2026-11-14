@@ -63,7 +63,7 @@ th,td{padding:11px;border-bottom:1px solid var(--border);text-align:right;font-s
 th{background:#fef3c7;color:#78350f}
 .badge{padding:4px 8px;border-radius:6px;font-size:.8rem;font-weight:800}
 .ok{background:#dcfce7;color:#166534}.wait{background:#fef9c3;color:#854d0e}.run{background:#e0f2fe;color:#075985}
-.act{border:none;padding:6px 9px;border-radius:6px;color:#fff;cursor:pointer}
+.act{border:none;padding:6px 10px;border-radius:6px;color:#fff;cursor:pointer;font-weight:bold;font-size:0.85rem}
 .edit{background:#d97706}.del{background:#dc2626}.pr{background:#059669}.wa{background:#25D366}
 .search{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
 .search input,.search select{flex:1;min-width:180px}
@@ -235,8 +235,6 @@ th{background:#fef3c7;color:#78350f}
     </div>
     <div style="display: flex; gap: 8px; align-items: center;">
       <span id="userRoleBadge" style="background:rgba(255,255,255,0.2); padding:5px 10px; border-radius:8px; font-size:0.85rem; font-weight:bold;"></span>
-      <button class="btn2" onclick="exportExcel()"><i class="fa-solid fa-file-excel"></i> تصدير الكل</button>
-      <button class="btn2" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة</button>
       <button class="btn2" onclick="logout()" style="background:#dc2626; color:#fff; border:none;" title="تسجيل خروج"><i class="fa-solid fa-right-from-bracket"></i></button>
     </div>
   </div>
@@ -260,9 +258,9 @@ th{background:#fef3c7;color:#78350f}
 <section id="p1" class="page active">
   <div class="banner" id="banner1">أهلاً وسهلاً بك يا أبو ريان 🤚 - صفحة العملاء والمبيعات</div>
   <div class="stats">
-    <div class="stat"><span id="st1Title">إجمالي المبيعات</span><br><b id="sTotal">0 ر.س</b></div>
-    <div class="stat"><span id="st2Title">المحصل كاش</span><br><b id="sCash">0 ر.س</b></div>
-    <div class="stat"><span id="st3Title">المحصل شبكة / تحويل</span><br><b id="sCard">0 ر.س</b></div>
+    <div class="stat"><span id="st1Title">إجمالي المبيعات</span><br><b id="sTotal">0 ريال</b></div>
+    <div class="stat"><span id="st2Title">المحصل كاش</span><br><b id="sCash">0 ريال</b></div>
+    <div class="stat"><span id="st3Title">المحصل شبكة / تحويل</span><br><b id="sCard">0 ريال</b></div>
     <div class="stat"><span id="st4Title">عدد العملاء</span><br><b id="sCount">0</b></div>
   </div>
   <div class="grid">
@@ -312,7 +310,7 @@ th{background:#fef3c7;color:#78350f}
         <select id="serviceStatus"><option id="optComplete">مكتمل</option><option id="optProgress">قيد التنفيذ</option><option id="optPending">معلق</option></select>
         <label id="lblPay">طريقة الدفع</label>
         <select id="payMethod"><option id="payCash">كاش / نقدي</option><option id="payCard">شبكة</option><option id="payTransfer">تحويل بنكي</option></select>
-        <label id="lblCost">إجمالي التكلفة (ر.س - قابل للتعديل اليدوي أو الحساب التلقائي)</label><input type="number" id="serviceCost" step="0.01" required>
+        <label id="lblCost">إجمالي التكلفة (ريال - قابل للتعديل اليدوي أو الحساب التلقائي)</label><input type="number" id="serviceCost" step="0.01" required>
         <label id="lblDate">التاريخ</label><input type="date" id="serviceDate" required>
         <button class="btn" type="submit" id="btnSave">حفظ البيانات</button>
       </form>
@@ -467,7 +465,7 @@ const translations = {
     banner1: "أهلاً وسهلاً بك يا أبو ريان 🤚 - صفحة العملاء والمبيعات",
     st1Title: "إجمالي المبيعات", st2Title: "المحصل كاش", st3Title: "المحصل شبكة / تحويل", st4Title: "عدد العملاء",
     formTitle: "تسجيل عملية صيانة جديدة", lblCode: "رقم كود العميل (أرقام إنجليزية فقط)", lblName: "اسم العميل", lblPhone: "رقم الجوال",
-    lblServ: "حدد الكمية والسعر لكل خدمة (يقبل الهللَات والكسور)", lblStatus: "حالة الخدمة", lblPay: "طريقة الدفع", lblCost: "إجمالي التكلفة (ر.س - قابل للتعديل اليدوي)", lblDate: "التاريخ", btnSave: "حفظ البيانات",
+    lblServ: "حدد الكمية والسعر لكل خدمة (يقبل الهللَات والكسور)", lblStatus: "حالة الخدمة", lblPay: "طريقة الدفع", lblCost: "إجمالي التكلفة (ريال - قابل للتعديل اليدوي)", lblDate: "التاريخ", btnSave: "حفظ البيانات",
     tableTitle: "سجل العملاء والمبيعات", thCode: "الكود", thClient: "العميل", thServ: "الخدمات والأعداد والأسعار والحالة", thAmount: "المبلغ", thAction: "إجراءات",
     banner2: "صفحة البحث الذكي", searchCardTitle: "البحث والفلترة الذكية", sthCode: "الكود", sthClient: "العميل", sthPhone: "الجوال", sthServ: "الخدمات والأعداد والأسعار", sthAmount: "المبلغ",
     banner3: "صفحة التقارير - مبيعات الشهور والرسوم البيانية وتقارير الشهر المنفصل", repCardTitle: "استخراج تقارير شهر محدد (Excel أو طباعة)",
@@ -478,23 +476,6 @@ const translations = {
     banner5: "صفحة الإعدادات - الفنيين والنسخ الاحتياطي", langSettingTitle: "🌐 تغيير لغة التطبيق / Language Settings", lblSelectLang: "اختر اللغة المفضلة:",
     empCardTitle: "إضافة وإدارة الفنيين والموظفين (أكثر من 10 أفراد)", lblEmpName: "اسم الموظف / اسم الدخول", lblEmpRole: "المسمى الوظيفي", lblEmpPhone: "الجوال", btnSaveEmp: "حفظ الموظف",
     ethName: "الاسم", ethRole: "الوظيفة", ethPhone: "الجوال", ethAction: "إجراءات", backupCardTitle: "النسخ الاحتياطي للبيانات والتزامن", btnExportAll: "تصدير كافة البيانات Excel", btnBackupJson: "تحميل نسخة احتياطية JSON", lblRestore: "استعادة نسخة احتياطية:"
-  },
-  en: {
-    nav1: "1. Customers & Sales", nav2: "2. Search", nav3: "3. Monthly Reports", nav4: "4. Periodic Maintenance", nav5: "5. Settings & Backup", nav6: "6. Media Archive",
-    banner1: "Welcome Abu Rayan 5 - Customers & Sales Page",
-    st1Title: "Total Sales", st2Title: "Cash Collected", st3Title: "Card / Transfer", st4Title: "Total Customers",
-    formTitle: "Register New Maintenance", lblCode: "Client Code (English Numbers Only)", lblName: "Client Name", lblPhone: "Phone Number",
-    lblServ: "Select Quantities and Prices", lblStatus: "Service Status", lblPay: "Payment Method", lblCost: "Total Cost (SAR)", lblDate: "Date", btnSave: "Save Data",
-    tableTitle: "Customers & Sales Log", thCode: "Code", thClient: "Client", thServ: "Services, Qty & Prices", thAmount: "Amount", thAction: "Actions",
-    banner2: "Smart Search Page", searchCardTitle: "Smart Search & Filter", sthCode: "Code", sthClient: "Client", sthPhone: "Phone", sthServ: "Services & Prices", sthAmount: "Amount",
-    banner3: "Reports Page - Monthly Sales & Charts", repCardTitle: "Export Specific Month Report (Excel or Print)",
-    lblPickMonth: "Select Month and Year:", btnExcelMonth: "Month Excel", btnPrintMonth: "Print Month Report",
-    chartCardTitle: "Monthly Sales Charts", btnBar: "Bar Chart", btnLine: "Line Chart",
-    banner4: "Periodic Maintenance - Clients after 6+ months", maintCardTitle: "Maintenance Alerts",
-    mthCode: "Code", mthClient: "Client", mthPhone: "Phone", mthDate: "Last Maintenance", mthServ: "Services & Qty",
-    banner5: "Settings Page - Technicians & Backup", langSettingTitle: "🌐 Language Settings", lblSelectLang: "Select Preferred Language:",
-    empCardTitle: "Add Technician", lblEmpName: "Username", lblEmpRole: "Role", lblEmpPhone: "Phone", btnSaveEmp: "Save Employee",
-    ethName: "Name", ethRole: "Role", ethPhone: "Phone", ethAction: "Actions", backupCardTitle: "Backup & Restore", btnExportAll: "Export All Excel", btnBackupJson: "Download JSON Backup", lblRestore: "Restore Backup:"
   }
 };
 
@@ -730,19 +711,20 @@ function renderSales(){
     if(s.payMethod==='كاش / نقدي') cash += cost; else card += cost;
     let servText = formatServicesText(s);
     
+    // ترتيب أزرار الإجراءات بجانب بعضها تماماً
     let actionButtons = '';
     if(isAdm) {
-      actionButtons = `<button class="act pr" onclick="printInvoice(${i})">طباعة</button> <button class="act edit" onclick="editSale(${i})">تعديل</button> <button class="act del" onclick="deleteSale(${i})">حذف</button>`;
+      actionButtons = `<div style="display:flex; gap:6px; flex-wrap:wrap;"><button class="act pr" onclick="printInvoice(${i})">طباعة</button> <button class="act edit" onclick="editSale(${i})">تعديل</button> <button class="act del" onclick="deleteSale(${i})">حذف</button></div>`;
     } else {
-      actionButtons = `<button class="act pr" onclick="printInvoice(${i})">طباعة الفاتورة</button> <span style="font-size:0.8rem; color:var(--muted);">(عرض فقط)</span>`;
+      actionButtons = `<div style="display:flex; gap:6px; flex-wrap:wrap;"><button class="act pr" onclick="printInvoice(${i})">طباعة</button> <span style="font-size:0.8rem; color:var(--muted);">(عرض فقط)</span></div>`;
     }
 
-    html += '<tr><td><b>'+s.code+'</b><br><small>'+s.date+'</small></td><td><b>'+s.client+'</b><br><small>'+(s.phone||'')+'</small></td><td>'+servText+'<br><span class="badge '+statusClass(s.status)+'">'+(s.status||'مكتمل')+'</span></td><td><b>'+cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ر.س</b><br><small>['+s.payMethod+']</small></td><td class="no-print">'+actionButtons+'</td></tr>';
+    html += '<tr><td><b>'+s.code+'</b><br><small>'+s.date+'</small></td><td><b>'+s.client+'</b><br><small>'+(s.phone||'')+'</small></td><td>'+servText+'<br><span class="badge '+statusClass(s.status)+'">'+(s.status||'مكتمل')+'</span></td><td><b>'+cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ريال</b><br><small>['+s.payMethod+']</small></td><td class="no-print">'+actionButtons+'</td></tr>';
   });
   if($('salesBody')) $('salesBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا توجد بيانات بعد</td></tr>';
-  if($('sTotal')) $('sTotal').innerText = total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ر.س';
-  if($('sCash')) $('sCash').innerText = cash.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ر.س';
-  if($('sCard')) $('sCard').innerText = card.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ر.س';
+  if($('sTotal')) $('sTotal').innerText = total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ريال';
+  if($('sCash')) $('sCash').innerText = cash.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ريال';
+  if($('sCard')) $('sCard').innerText = card.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ريال';
   if($('sCount')) $('sCount').innerText = salesData.length;
 }
 
@@ -850,7 +832,7 @@ function filterData(){
     let matchP = pay==='all' || s.payMethod===pay;
     if(matchQ && matchS && matchP){
       let servText = formatServicesText(s);
-      html += '<tr><td>'+s.code+'</td><td>'+s.client+'</td><td>'+(s.phone||'-')+'</td><td>'+servText+'</td><td>'+(Number(s.cost)||0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ر.س</td></tr>';
+      html += '<tr><td>'+s.code+'</td><td>'+s.client+'</td><td>'+(s.phone||'-')+'</td><td>'+servText+'</td><td>'+(Number(s.cost)||0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ريال</td></tr>';
     }
   });
   $('searchBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا توجد نتائج</td></tr>';
@@ -1106,7 +1088,7 @@ function printSingleMonth(){
     let cost = Number(s.cost) || 0;
     totalMonth += cost;
     let servText = formatServicesText(s);
-    rowsHtml += '<tr><td>'+(idx+1)+'</td><td>'+s.code+'</td><td>'+s.client+'</td><td>'+s.date+'</td><td>'+servText+'</td><td>'+s.payMethod+'</td><td>'+cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ر.س</td></tr>';
+    rowsHtml += '<tr><td>'+(idx+1)+'</td><td>'+s.code+'</td><td>'+s.client+'</td><td>'+s.date+'</td><td>'+servText+'</td><td>'+s.payMethod+'</td><td>'+cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ريال</td></tr>';
   });
 
   let w = window.open('', '_blank', 'width=800,height=700');
@@ -1198,10 +1180,10 @@ function printInvoice(i){
   let rowsPrint = '';
   if (s.servicesObj) {
     let so = s.servicesObj;
-    if(so.duct > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">تنظيف دكت</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.duct}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${Number(so.priceDuct).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:left;font-weight:bold;">${(so.duct * so.priceDuct).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</td></tr>`;
-    if(so.split > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">تنظيف مكيف اسبلت</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.split}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${Number(so.priceSplit).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:left;font-weight:bold;">${(so.split * so.priceSplit).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</td></tr>`;
-    if(so.filter > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">فلتر</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.filter}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${Number(so.priceFilter).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:left;font-weight:bold;">${(so.filter * so.priceFilter).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</td></tr>`;
-    if(so.machine > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">ماكينة</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.machine}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${Number(so.priceMachine).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:left;font-weight:bold;">${(so.machine * so.priceMachine).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ر.س</td></tr>`;
+    if(so.duct > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">تنظيف دكت</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.duct}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${Number(so.priceDuct).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:left;font-weight:bold;">${(so.duct * so.priceDuct).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</td></tr>`;
+    if(so.split > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">تنظيف مكيف اسبلت</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.split}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${Number(so.priceSplit).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:left;font-weight:bold;">${(so.split * so.priceSplit).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</td></tr>`;
+    if(so.filter > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">فلتر</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.filter}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${Number(so.priceFilter).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:left;font-weight:bold;">${(so.filter * so.priceFilter).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</td></tr>`;
+    if(so.machine > 0) rowsPrint += `<tr><td style="padding:10px;border-bottom:1px solid #eee;">ماكينة</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${so.machine}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center;font-weight:bold;">${Number(so.priceMachine).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:left;font-weight:bold;">${(so.machine * so.priceMachine).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</td></tr>`;
   }
 
   let w = window.open('', '_blank', 'width=750,height=700');
@@ -1276,7 +1258,7 @@ function renderChart(type = 'bar'){
     data:{
       labels: labels, 
       datasets:[{
-        label: 'إجمالي المبيعات الشهري (ر.س)', 
+        label: 'إجمالي المبيعات الشهري (ريال)', 
         data: data, 
         backgroundColor: bgColors,
         borderColor: '#78350f',
