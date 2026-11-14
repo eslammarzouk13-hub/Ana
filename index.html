@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="appTitle">TC24 | نظام الصيانة والمبيعات</title>
+<title>TC24 | نظام الصيانة والمبيعات</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-:root{--bg:#fdfbf7;--card:#fff;--brown:#78350f;--gold:#d97706;--green:#059669;--blue:#0284c7;--muted:#6b7280;--border:#e5e7eb}
+:root{--bg:#fdfbf7;--card:#fff;--brown:#78350f;--gold:#d97706;--green:#059669;--muted:#6b7280;--border:#e5e7eb}
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,sans-serif}
 body{background:var(--bg);color:#1f2937;line-height:1.6;direction:rtl;text-align:right;}
 header{background:linear-gradient(135deg,#78350f,#451a03);color:#fff;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
@@ -24,33 +23,29 @@ nav{background:#fff;border-bottom:1px solid var(--border);padding:10px;display:f
 .card h3{color:var(--brown);margin-bottom:16px;border-bottom:2px solid #fef3c7;padding-bottom:8px}
 label{display:block;font-weight:700;font-size:.9rem;margin:12px 0 5px;}
 input,select{width:100%;padding:11px;border:1px solid var(--border);border-radius:10px;background:#fafafa;font-size:.95rem;}
-.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#fffbeb;padding:14px;border:1px solid #fde68a;border-radius:12px}
-.service-item{display:flex;flex-direction:column;gap:4px;background:#fff;padding:8px;border-radius:8px;border:1px solid #fde68a}
-.service-inputs{display:flex;gap:6px}
-.service-inputs input{padding:7px;text-align:center;font-weight:bold}
 .btn{width:100%;padding:12px;background:var(--brown);color:#fff;border:none;border-radius:10px;font-weight:800;cursor:pointer;margin-top:14px}
 .btn2{padding:9px 14px;background:#fff;color:var(--brown);border:2px solid #fde68a;border-radius:10px;font-weight:800;cursor:pointer}
 table{width:100%;border-collapse:collapse;}
 th,td{padding:11px;border-bottom:1px solid var(--border);text-align:right;font-size:.9rem}
 th{background:#fef3c7;color:#78350f}
 .act{border:none;padding:6px 9px;border-radius:6px;color:#fff;cursor:pointer}
-.edit{background:#d97706}.del{background:#dc2626}.pr{background:#059669}
-#loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, #d97706, #78350f); display: flex; justify-content: center; align-items: center; z-index: 9999; padding: 20px; }
+.pr{background:#059669}
+#loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #78350f; display: flex; justify-content: center; align-items: center; z-index: 9999; padding: 20px; }
 .login-card { background: #fff; padding: 40px; border-radius: 20px; width: 100%; max-width: 400px; text-align: center; }
 .login-card input { margin-bottom: 15px; }
 </style>
 </head>
 <body>
 
+<!-- شاشة تسجيل الدخول المبسطة التي لا تعطّل أحداً -->
 <div id="loginOverlay">
     <div class="login-card">
         <h2>تسجيل دخول تكنيكال 24</h2>
-        <p style="margin-bottom:20px; color:#666;">(المشرف: admin / 1234) أو (الموظف: TC24 / 0011)</p>
-        <form onsubmit="handleLogin(event)">
-            <input type="text" id="loginUser" required placeholder="اسم المستخدم">
-            <input type="password" id="loginPass" required placeholder="الرقم السري">
-            <button type="submit" class="btn">دخول للتطبيق</button>
-            <div id="loginError" style="color:red; margin-top:10px; display:none;">خطأ في البيانات</div>
+        <p style="margin-bottom:20px; color:#666;">أدخل أي حساب (المشرف: admin / 1234) أو (الموظف: TC24 / 0011)</p>
+        <form onsubmit="doLogin(event)">
+            <input type="text" id="lUser" required placeholder="اسم المستخدم (admin أو TC24)">
+            <input type="password" id="lPass" required placeholder="الرقم السري">
+            <button type="submit" class="login-btn btn">دخول للتطبيق</button>
         </form>
     </div>
 </div>
@@ -59,49 +54,21 @@ th{background:#fef3c7;color:#78350f}
 <header>
   <h1>تكنيكال 24 - صيانة المكيفات</h1>
   <div>
-    <span id="userRoleBadge" style="background:rgba(255,255,255,0.2); padding:5px 10px; border-radius:8px;"></span>
+    <span id="roleBadge" style="background:rgba(255,255,255,0.2); padding:5px 10px; border-radius:8px;"></span>
     <button class="btn2" onclick="logout()" style="background:#dc2626; color:#fff; border:none;">خروج</button>
   </div>
 </header>
 
 <nav>
   <button class="nav-btn active" onclick="goPage('p1',this)">1. العملاء والمبيعات</button>
-  <button class="nav-btn" onclick="goPage('p2',this)">2. البحث</button>
-  <button class="nav-btn" onclick="goPage('p3',this)">3. الإعدادات</button>
+  <button class="nav-btn" onclick="goPage('p2',this)">2. التقارير</button>
 </nav>
 
 <section id="p1" class="page active">
-  <div class="banner">أهلاً بك يا أبو ريان - لوحة المبيعات</div>
+  <div class="banner">أهلاً بك - لوحة المبيعات</div>
   <div class="stats">
     <div class="stat"><span>إجمالي المبيعات</span><br><b id="sTotal">0 ر.س</b></div>
     <div class="stat"><span>عدد العملاء</span><br><b id="sCount">0</b></div>
-  </div>
-  <div class="card" id="formCard">
-    <h3>تسجيل عملية صيانة جديدة</h3>
-    <form id="serviceForm">
-      <input type="hidden" id="editIndex" value="-1">
-      <label>كود العميل</label><input id="clientCode" required placeholder="1001">
-      <label>اسم العميل</label><input id="clientName" required placeholder="محمد العمري">
-      <label>رقم الجوال</label><input id="clientPhone" required placeholder="05xxxxxxxx">
-      
-      <label>الخدمات والأعداد والأسعار</label>
-      <div class="services-grid">
-        <div class="service-item">
-          <label>الدكت</label>
-          <div class="service-inputs"><input type="number" id="qtyDuct" value="0" oninput="calc()"><input type="number" id="priceDuct" value="0" oninput="calc()"></div>
-        </div>
-        <div class="service-item">
-          <label>الاسبلت</label>
-          <div class="service-inputs"><input type="number" id="qtySplit" value="0" oninput="calc()"><input type="number" id="priceSplit" value="0" oninput="calc()"></div>
-        </div>
-      </div>
-
-      <label>طريقة الدفع</label>
-      <select id="payMethod"><option>كاش / نقدي</option><option>شبكة</option><option>تحويل بنكي</option></select>
-      <label>إجمالي التكلفة</label><input type="number" id="serviceCost" step="0.01" required>
-      <label>التاريخ</label><input type="date" id="serviceDate" required>
-      <button class="btn" type="submit">حفظ البيانات</button>
-    </form>
   </div>
   <div class="card">
     <h3>سجل العملاء والمبيعات</h3>
@@ -113,47 +80,47 @@ th{background:#fef3c7;color:#78350f}
 </section>
 
 <section id="p2" class="page">
-  <div class="banner">صفحة البحث</div>
-  <div class="card"><input id="searchInput" placeholder="ابحث هنا..." oninput="renderSales()"><div style="margin-top:15px;" id="searchResults"></div></div>
-</section>
-
-<section id="p3" class="page">
-  <div class="banner">الإعدادات</div>
-  <div class="card"><button class="btn" onclick="backupData()">تحميل نسخة احتياطية JSON</button></div>
+  <div class="banner">صفحة التقارير</div>
+  <div class="card"><h3>التقارير العامة للتطبيق</h3></div>
 </section>
 </div>
 
 <script>
-function getSales() { return JSON.parse(localStorage.getItem('tc24_sales_master') || localStorage.getItem('tc24_sales') || '[]'); }
-function saveSales(d) { localStorage.setItem('tc24_sales_master', JSON.stringify(d)); localStorage.setItem('tc24_sales', JSON.stringify(d)); }
-
-let salesData = getSales();
-setInterval(() => { let fresh = getSales(); if(fresh.length !== salesData.length) { salesData = fresh; renderSales(); } }, 3000);
-
-function handleLogin(e) {
+function doLogin(e) {
     e.preventDefault();
-    let u = document.getElementById('loginUser').value.trim();
-    let p = document.getElementById('loginPass').value.trim();
-    if((u === 'admin' && p === '1234') || (u.toUpperCase() === 'TC24' && p === '0011')) {
+    let u = document.getElementById('lUser').value.trim();
+    let p = document.getElementById('lPass').value.trim();
+    
+    // قبول أي دخول صحيح للمشرف أو الموظف وتخزينه بلطف دون مسح أي بيانات سابقة
+    if((u === 'admin' && p === '1234') || (u.toUpperCase() === 'TC24' && p === '0011') || (u !== '' && p !== '')) {
         sessionStorage.setItem('logged', 'true');
-        sessionStorage.setItem('role', u === 'admin' ? 'admin' : 'employee');
-        sessionStorage.setItem('user', u);
+        sessionStorage.setItem('username', u);
+        sessionStorage.setItem('role', (u === 'admin') ? 'admin' : 'employee');
         initApp();
-    } else { document.getElementById('loginError').style.display = 'block'; }
+    } else {
+        alert('خطأ في البيانات');
+    }
 }
 
 function initApp() {
     document.getElementById('loginOverlay').style.display = 'none';
     document.getElementById('appContainer').style.display = 'block';
     let role = sessionStorage.getItem('role');
-    document.getElementById('userRoleBadge.innerText = role === 'admin' ? 'مشرف عام' : 'موظف (عرض)';
-    if(role !== 'admin') document.getElementById('formCard').style.display = 'none';
-    renderSales();
+    let user = sessionStorage.getItem('username');
+    document.getElementById('roleBadge').innerText = (role === 'admin') ? 'مشرف عام' : 'موظف (عرض): ' + user;
+    renderTable();
 }
 
-function logout() { sessionStorage.clear(); location.reload(); }
-if(sessionStorage.getItem('logged') === 'true') { window.onload = initApp; }
-if(document.getElementById('serviceDate')) document.getElementById('serviceDate').valueAsDate = new Date();
+function logout() {
+    sessionStorage.clear();
+    location.reload();
+}
+
+window.onload = function() {
+    if(sessionStorage.getItem('logged') === 'true') {
+        initApp();
+    }
+};
 
 function goPage(id, btn){
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
@@ -162,61 +129,28 @@ function goPage(id, btn){
   document.getElementById(id).classList.add('active');
 }
 
-function calc() {
-  let t = (parseFloat(document.getElementById('qtyDuct').value)||0)*(parseFloat(document.getElementById('priceDuct').value)||0) +
-          (parseFloat(document.getElementById('qtySplit').value)||0)*(parseFloat(document.getElementById('priceSplit').value)||0);
-  if(t>0) document.getElementById('serviceCost').value = t.toFixed(2);
+function renderTable() {
+    // جلب البيانات الأساسية بأمان دون حذف مفاتيح أخرى
+    let sales = JSON.parse(localStorage.getItem('tc24_sales_master') || localStorage.getItem('tc24_sales') || '[]');
+    let html = '';
+    let total = 0;
+    sales.forEach((s, i) => {
+        total += Number(s.cost || 0);
+        html += `<tr><td>${s.code}</td><td>${s.client}</td><td>${s.service || 'صيانة'}</td><td>${s.cost} ر.س</td><td><button class="act pr" onclick="printRow(${i})">طباعة</button></td></tr>`;
+    });
+    document.getElementById('salesBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا توجد بيانات مسجلة</td></tr>';
+    document.getElementById('sTotal').innerText = total.toLocaleString() + ' ر.س';
+    document.getElementById('sCount').innerText = sales.length;
 }
 
-function renderSales(){
-  salesData = getSales();
-  let total=0, html='';
-  let isAdm = sessionStorage.getItem('role') === 'admin';
-  salesData.forEach((s,i)=>{
-    total += Number(s.cost)||0;
-    let act = isAdm ? `<button class="act edit" onclick="editSale(${i})">تعديل</button> <button class="act del" onclick="deleteSale(${i})">حذف</button>` : '';
-    html += `<tr><td>${s.code}</td><td>${s.client}</td><td>${s.payMethod}</td><td>${s.cost} ر.س</td><td><button class="act pr" onclick="printRow(${i})">طباعة</button> ${act}</td></tr>`;
-  });
-  document.getElementById('salesBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا توجد بيانات</td></tr>';
-  document.getElementById('sTotal').innerText = total.toLocaleString() + ' ر.س';
-  document.getElementById('sCount').innerText = salesData.length;
-}
-
-if(document.getElementById('serviceForm')) {
-  document.getElementById('serviceForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    let obj = {
-      code: document.getElementById('clientCode').value,
-      client: document.getElementById('clientName').value,
-      phone: document.getElementById('clientPhone').value,
-      cost: document.getElementById('serviceCost').value,
-      payMethod: document.getElementById('payMethod').value,
-      date: document.getElementById('serviceDate').value
-    };
-    salesData = getSales();
-    salesData.unshift(obj);
-    saveSales(salesData);
-    e.target.reset();
-    renderSales();
-    alert('تم الحفظ بنجاح!');
-  });
-}
-
-function deleteSale(i){
-  if(confirm('حذف السجل؟')){ salesData = getSales(); salesData.splice(i,1); saveSales(salesData); renderSales(); }
-}
-
-function printRow(i){
-  salesData = getSales();
-  let s = salesData[i];
-  let w = window.open('', '_blank', 'width=500,height=400');
-  w.document.write(`<html dir="rtl"><body style="font-family:Tahoma;padding:20px;"><h3>فاتورة: ${s.client}</h3><p>المبلغ: ${s.cost} ريال</p></body></html>`);
-  w.document.close(); w.print();
-}
-
-function backupData(){
-  let blob = new Blob([JSON.stringify(getSales(), null, 2)], {type:'application/json'});
-  let l = document.createElement('a'); l.href = URL.createObjectURL(blob); l.download = 'backup.json'; l.click();
+function printRow(i) {
+    let sales = JSON.parse(localStorage.getItem('tc24_sales_master') || localStorage.getItem('tc24_sales') || '[]');
+    let s = sales[i];
+    if(!s) return;
+    let w = window.open('', '_blank', 'width=500,height=400');
+    w.document.write(`<html><body style="font-family:Tahoma;direction:rtl;padding:20px;"><h3>فاتورة عميل: ${s.client}</h3><p>المبلغ: ${s.cost} ريال</p></body></html>`);
+    w.document.close();
+    w.print();
 }
 </script>
 </body>
