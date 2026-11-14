@@ -385,7 +385,7 @@ th{background:#fef3c7;color:#78350f}
 
 <!-- صفحة 5 -->
 <section id="p5" class="page">
-  <div class="banner" id="banner5">صفحة الإعدادات - الفنيين والنسخ الاحتياطي</div>
+  <div class="banner" id="banner5">صفحة الإعدادات - الفنيين والنسخ الاحتياطي والمزامنة</div>
   <div class="grid">
     <div class="card">
       <h3 id="langSettingTitle">🌐 تغيير لغة التطبيق / Language Settings</h3>
@@ -532,15 +532,26 @@ function updateLiveClock() {
 }
 setInterval(updateLiveClock, 1000);
 
-// دالة أساسية لجلب البيانات من المخزن المشترك الموحد (لتظهر للموظف والمشرف في آن واحد)
+// دالة أساسية لجلب البيانات من المخزن المشترك الموحد (لتظهر للموظف والمشرف في آن واحد) بدون حذف أي شيء قديم
 function getSharedSales() {
-    let data = localStorage.getItem('tc24_sales_master') || localStorage.getItem('tc24_sales');
-    if (!data) return [];
-    try {
-        return JSON.parse(data) || [];
-    } catch(e) {
-        return [];
-    }
+    let masterData = localStorage.getItem('tc24_sales_master');
+    let oldData = localStorage.getItem('tc24_sales');
+    
+    let parsedMaster = [];
+    let parsedOld = [];
+    
+    try { if(masterData) parsedMaster = JSON.parse(masterData) || []; } catch(e) {}
+    try { if(oldData) parsedOld = JSON.parse(oldData) || []; } catch(e) {}
+    
+    // دمج البيانات القديمة والجديدة لضمان عدم ضياع أي عميل قديم
+    let combined = [...parsedMaster];
+    parsedOld.forEach(item => {
+        if (!combined.some(c => c.code === item.code && c.date === item.date)) {
+            combined.push(item);
+        }
+    });
+    
+    return combined.length > 0 ? combined : parsedOld;
 }
 
 function saveSharedSales(data) {
