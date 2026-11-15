@@ -251,7 +251,7 @@ th{background:#fef3c7;color:#78350f}
   <button class="nav-btn" onclick="goPage('p3',this)" id="nav3">3. التقارير الشهرية</button>
   <button class="nav-btn" onclick="goPage('p4',this)" id="nav4">4. الصيانة الدورية</button>
   <button class="nav-btn" onclick="goPage('p5',this)" id="nav5">5. الإعدادات والنسخ</button>
-  <button class="nav-btn" onclick="goPage('p6',this)" id="nav6">6. الصور والفيديوهات</button>
+  <button class="nav-btn" onclick="goPage('p6',this)" id="nav6">6. أرشيف صور العملاء</button>
 </nav>
 
 <!-- صفحة 1 -->
@@ -431,25 +431,47 @@ th{background:#fef3c7;color:#78350f}
   </div>
 </section>
 
-<!-- صفحة 6: الصور والفيديوهات المحسنة -->
+<!-- صفحة 6: أرشيف صور وفيديوهات العملاء الفردية -->
 <section id="p6" class="page">
-  <div class="banner">قسم أرشيف الصور والفيديوهات - مساحة تخزين عالية ومشاركة عبر الواتساب</div>
+  <div class="banner">📁 أرشيف وملفات العملاء (صور وفيديوهات) - البحث برقم الكود والمشاركة مع تفاصيل الشغل</div>
+  
+  <!-- شريط البحث والتصفية برقم الكود -->
+  <div class="card no-print" style="background:#fffbeb; border:1px solid #fde68a;">
+    <h3 style="color:#78350f; margin-bottom:10px;"><i class="fa-solid fa-magnifying-glass"></i> البحث في فولدرات العملاء</h3>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <input type="text" id="mediaSearchInput" placeholder="ابحث برقم كود العميل أو اسم العميل..." oninput="renderMedia()" style="background:#fff; flex:1; min-width:220px;">
+      <button class="btn2" onclick="document.getElementById('mediaSearchInput').value=''; renderMedia();" style="background:#fff; color:#78350f;">عرض الكل</button>
+    </div>
+  </div>
+
   <div class="grid">
     <div class="card" id="mediaFormCard">
-      <h3 id="mediaFormTitle">إضافة صورة أو فيديو جديد</h3>
+      <h3 id="mediaFormTitle">إضافة صورة أو فيديو لملف العميل</h3>
       <form id="mediaForm" onsubmit="handleMediaSubmit(event)">
         <input type="hidden" id="editMediaId" value="">
-        <label>اختر الوسائط (صورة أو فيديو بحجم كبير من الكاميرا أو المستودع)</label>
+        
+        <label>اختر العميل المسجل مسبقاً</label>
+        <select id="mediaClientSelect" required onchange="fillClientCodeForMedia(this)">
+          <option value="">-- اختر العميل --</option>
+        </select>
+
+        <label style="margin-top:10px;">كود العميل (للبحث والفلترة)</label>
+        <input type="text" id="mediaClientCode" required readonly style="background:#e5e7eb; font-weight:bold;" placeholder="سيتم تعبئة الكود تلقائياً...">
+
+        <label style="margin-top:10px;">اختر الوسائط (صورة أو فيديو من الكاميرا أو الألبوم)</label>
         <input type="file" id="mediaFile" accept="image/*,video/*" style="padding:8px;">
-        <label style="margin-top:12px;">كود العميل أو الوصف (مثال: عميل 1001 - توثيق قبل وبعد)</label>
-        <input type="text" id="mediaDesc" required placeholder="أدخل وصفاً توضيحياً للوسائط...">
-        <button class="btn" type="submit" id="btnSaveMedia">حفظ دائم في الأرشيف</button>
+
+        <label style="margin-top:10px;">وصف الشغل / الصيانة (مثال: تنظيف مكيفات اسبلت وصيانة الدكت)</label>
+        <input type="text" id="mediaDesc" required placeholder="أدخل وصف الشغل...">
+
+        <button class="btn" type="submit" id="btnSaveMedia">حفظ في ملف العميل</button>
       </form>
     </div>
+
     <div class="card">
-      <h3>أرشيف الوسائط المحفوظة محلياً</h3>
-      <div id="mediaGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; margin-top: 10px;">
-        <!-- سيتم تعبئة الوسائط هنا برمجياً -->
+      <h3>فولدرات وأرشيف وسائط العملاء</h3>
+      <div id="mediaGrid" style="display: flex; flex-direction: column; gap: 20px; margin-top: 10px;">
+        <!-- سيتم تعبئة فولدرات العملاء هنا برمجياً -->
       </div>
     </div>
   </div>
@@ -461,7 +483,7 @@ th{background:#fef3c7;color:#78350f}
 // ترجمات اللغات المختلفة
 const translations = {
   ar: {
-    nav1: "1. العملاء والمبيعات", nav2: "2. البحث", nav3: "3. التقارير الشهرية", nav4: "4. الصيانة الدورية", nav5: "5. الإعدادات والنسخ", nav6: "6. الصور والفيديوهات",
+    nav1: "1. العملاء والمبيعات", nav2: "2. البحث", nav3: "3. التقارير الشهرية", nav4: "4. الصيانة الدورية", nav5: "5. الإعدادات والنسخ", nav6: "6. أرشيف صور العملاء",
     banner1: "أهلاً وسهلاً بك يا أبو ريان 🤚 - صفحة العملاء والمبيعات",
     st1Title: "إجمالي المبيعات", st2Title: "المحصل كاش", st3Title: "المحصل شبكة / تحويل", st4Title: "عدد العملاء",
     formTitle: "تسجيل عملية صيانة جديدة", lblCode: "رقم كود العميل (أرقام إنجليزية فقط)", lblName: "اسم العميل", lblPhone: "رقم الجوال",
@@ -545,7 +567,7 @@ let empData = JSON.parse(localStorage.getItem('tc24_emps')) || [
   { name: "TC24", pass: "0011", role: "فني تركيبات وصيانة أساسي", phone: "05xxxxxxxx" }
 ];
 
-// تحديث تلقائي خلفي كل 3 ثوانٍ لكي يرى الموظف أي مبيعات جديدة يسجلها المشرف فوراً
+// تحديث تلقائي خلفي كل 3 ثوانٍ
 setInterval(() => {
     let freshData = getSharedSales();
     if (JSON.stringify(freshData) !== JSON.stringify(salesData)) {
@@ -561,13 +583,12 @@ function syncDataNow() {
     alert('تم تحديث ومزامنة البيانات المشتركة بنجاح!');
 }
 
-// إدارة تسجيل الدخول الآمن (المشرف أو أي موظف من قائمة الموظفين)
+// إدارة تسجيل الدخول الآمن
 function handleLogin(e) {
     e.preventDefault();
     let u = document.getElementById('loginUser').value.trim();
     let p = document.getElementById('loginPass').value.trim();
     
-    // حساب المشرف العام
     if (u === 'admin' && p === '1234') {
         sessionStorage.setItem('tc24_logged', 'true');
         sessionStorage.setItem('tc24_role', 'admin');
@@ -576,7 +597,6 @@ function handleLogin(e) {
         return;
     }
     
-    // التحقق من حساب الموظفين الافتراضي أو أي فني مسجل في النظام
     let isDefaultEmp = (u.toUpperCase() === 'TC24' && p === '0011');
     let foundEmp = empData.find(emp => emp.name.toLowerCase() === u.toLowerCase() && emp.pass === p);
     
@@ -597,9 +617,8 @@ function initAppSession() {
     let roleName = sessionStorage.getItem('tc24_user') || 'المشرف العام';
     let isAdm = sessionStorage.getItem('tc24_role') === 'admin';
     
-    document.getElementById('userRoleBadge').innerText = isAdm ? '⭐ مشرف عام' : `👤 موظف (عرض كافٍ وشامل): ${roleName}`;
+    document.getElementById('userRoleBadge').innerText = isAdm ? '⭐ مشرف عام' : `👤 موظف: ${roleName}`;
     
-    // إخفاء نماذج الإضافة والتعديل والحذف للموظفين
     if (!isAdm) {
         if($('formCardContainer')) $('formCardContainer').style.display = 'none';
         if($('adminEmpSection')) $('adminEmpSection').style.display = 'none';
@@ -628,7 +647,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// نظام التخزين المتطور IndexedDB للصور والفيديوهات الكبيرة
+// نظام التخزين IndexedDB للصور والفيديوهات الكبيرة
 let db = null;
 function initDB() {
     let request = indexedDB.open("TC24_MediaDB", 1);
@@ -638,6 +657,7 @@ function initDB() {
     request.onsuccess = function(event) {
         db = event.target.result;
         renderMedia();
+        populateClientDropdown();
     };
     request.onupgradeneeded = function(event) {
         let dbInstance = event.target.result;
@@ -661,7 +681,7 @@ function goPage(id, btn){
   if(id==='p2') filterData();
   if(id==='p4') renderMaint();
   if(id==='p5') renderEmps();
-  if(id==='p6') renderMedia();
+  if(id==='p6') { renderMedia(); populateClientDropdown(); }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -711,7 +731,6 @@ function renderSales(){
     if(s.payMethod==='كاش / نقدي') cash += cost; else card += cost;
     let servText = formatServicesText(s);
     
-    // ترتيب أزرار الإجراءات بجانب بعضها تماماً في سطر واحد بدون التفاف
     let actionButtons = '';
     if(isAdm) {
       actionButtons = `<div style="display:flex; gap:4px; align-items:center; flex-wrap:nowrap;"><button class="act pr" onclick="printInvoice(${i})">طباعة</button><button class="act edit" onclick="editSale(${i})">تعديل</button><button class="act del" onclick="deleteSale(${i})">حذف</button></div>`;
@@ -921,12 +940,35 @@ function deleteEmp(idx){
   }
 }
 
-// دوال إدارة الأرشيف الذكي للصور والفيديوهات عبر IndexedDB
+// ==========================================
+// إدارة أرشيف الوسائط وملفات العملاء عبر IndexedDB
+// ==========================================
+function populateClientDropdown() {
+  let select = $('mediaClientSelect');
+  if(!select) return;
+  salesData = getSharedSales();
+  let html = '<option value="">-- اختر العميل المسجل --</option>';
+  salesData.forEach(s => {
+    html += `<option value="${s.code}" data-name="${s.client}" data-phone="${s.phone || ''}">كود: ${s.code} - ${s.client}</option>`;
+  });
+  select.innerHTML = html;
+}
+
+function fillClientCodeForMedia(select) {
+  let codeInput = $('mediaClientCode');
+  if(select.value) {
+    codeInput.value = select.value;
+  } else {
+    codeInput.value = '';
+  }
+}
+
 function renderMedia(){
   if(!db) return;
   let grid = $('mediaGrid');
   if(!grid) return;
   
+  let searchQuery = $('mediaSearchInput') ? $('mediaSearchInput').value.trim().toLowerCase() : '';
   let transaction = db.transaction(["mediaStore"], "readonly");
   let store = transaction.objectStore("mediaStore");
   let request = store.getAll();
@@ -934,32 +976,75 @@ function renderMedia(){
 
   request.onsuccess = function(event) {
     let items = event.target.result;
+    
+    // تجميع الوسائط حسب كود العميل (فولدرات)
+    let folders = {};
+    items.forEach(m => {
+      let code = m.clientCode || 'غير مصنف';
+      if(!folders[code]) {
+        folders[code] = { clientName: m.clientName || 'عميل عام', items: [] };
+      }
+      folders[code].items.push(m);
+    });
+
+    salesData = getSharedSales();
+
     let html = '';
-    items.forEach((m)=>{
-      let isVideo = m.type && m.type.startsWith('video');
-      let blobUrl = URL.createObjectURL(m.blob);
-      let safeDesc = m.desc.replace(/'/g, "\\'");
+    let foundAny = false;
+
+    for(let code in folders) {
+      if(searchQuery && !code.toLowerCase().includes(searchQuery) && !folders[code].clientName.toLowerCase().includes(searchQuery)) {
+        continue;
+      }
+      foundAny = true;
+      let folderData = folders[code];
       
-      let adminButtons = isAdm ? `
-        <button class="act edit" style="flex:1;" onclick="editMedia(${m.id}, '${safeDesc}')">تعديل</button>
-        <button class="act del" style="flex:1;" onclick="deleteMedia(${m.id})">حذف</button>
-      ` : '';
+      let clientObj = salesData.find(s => s.code === code);
+      let clientName = clientObj ? clientObj.client : folderData.clientName;
+      let clientPhone = clientObj ? clientObj.phone : '';
 
       html += `
-        <div style="background:#f9fafb; border:1px solid var(--border); border-radius:12px; padding:10px; display:flex; flex-direction:column; gap:8px;">
-          <div style="width:100%; height:150px; background:#000; border-radius:8px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
-            ${isVideo ? `<video src="${blobUrl}" controls style="width:100%; height:100%; object-fit:cover;"></video>` : `<img src="${blobUrl}" style="width:100%; height:100%; object-fit:cover;">`}
+        <div style="background:#fff; border:2px solid #fde68a; border-radius:14px; padding:16px; box-shadow:0 4px 6px rgba(0,0,0,0.05);">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #fef3c7; padding-bottom:8px; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+            <div>
+              <h4 style="color:#78350f; font-size:1.1rem; margin:0;"><i class="fa-solid fa-folder-open" style="color:#d97706;"></i> كود العميل: ${code} - ${clientName}</h4>
+              <small style="color:var(--muted);">رقم الجوال: ${clientPhone || 'غير متوفر'} | إجمالي الملفات: ${folderData.items.length}</small>
+            </div>
+            <span class="badge run">فولدر العميل</span>
           </div>
-          <p style="font-size:0.85rem; font-weight:bold; color:#1f2937; margin:0; word-break:break-word;">${m.desc}</p>
-          <small style="color:var(--muted);">${m.date}</small>
-          <div style="display:flex; gap:6px; margin-top:4px;">
-            <button class="act wa" style="flex:1;" onclick="shareMedia(${m.id})"><i class="fa-brands fa-whatsapp"></i> واتساب</button>
-            ${adminButtons}
-          </div>
-        </div>
+          
+          <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px;">
       `;
-    });
-    grid.innerHTML = html || '<p style="grid-column: 1/-1; text-align:center; color:var(--muted);">لا توجد صور أو فيديوهات محفوظة في الأرشيف</p>';
+
+      folderData.items.forEach(m => {
+        let isVideo = m.type && m.type.startsWith('video');
+        let blobUrl = URL.createObjectURL(m.blob);
+        let safeDesc = m.desc.replace(/'/g, "\\'");
+        
+        let adminButtons = isAdm ? `
+          <button class="act edit" style="flex:1;" onclick="editMedia(${m.id}, '${safeDesc}')">تعديل</button>
+          <button class="act del" style="flex:1;" onclick="deleteMedia(${m.id})">حذف</button>
+        ` : '';
+
+        html += `
+          <div style="background:#f9fafb; border:1px solid var(--border); border-radius:10px; padding:8px; display:flex; flex-direction:column; gap:6px;">
+            <div style="width:100%; height:140px; background:#000; border-radius:8px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+              ${isVideo ? `<video src="${blobUrl}" controls style="width:100%; height:100%; object-fit:cover;"></video>` : `<img src="${blobUrl}" style="width:100%; height:100%; object-fit:cover;">`}
+            </div>
+            <p style="font-size:0.85rem; font-weight:bold; color:#1f2937; margin:0; word-break:break-word;">${m.desc}</p>
+            <small style="color:var(--muted);">التاريخ: ${m.date}</small>
+            <div style="display:flex; gap:4px; margin-top:4px;">
+              <button class="act wa" style="flex:1;" onclick="shareMedia(${m.id})"><i class="fa-brands fa-whatsapp"></i> واتساب</button>
+              ${adminButtons}
+            </div>
+          </div>
+        `;
+      });
+
+      html += `</div></div>`;
+    }
+
+    grid.innerHTML = foundAny ? html : '<p style="text-align:center; color:var(--muted); padding:20px;">لا توجد ملفات أو صور مطابقة للبحث</p>';
   };
 }
 
@@ -968,6 +1053,10 @@ function handleMediaSubmit(e){
   if(!db) return;
   let fileInput = $('mediaFile');
   let desc = $('mediaDesc').value.trim();
+  let clientCode = $('mediaClientCode').value.trim();
+  let clientSelect = $('mediaClientSelect');
+  let selectedOption = clientSelect.options[clientSelect.selectedIndex];
+  let clientName = selectedOption ? selectedOption.getAttribute('data-name') : '';
   let editId = $('editMediaId').value;
 
   if(editId) {
@@ -978,10 +1067,13 @@ function handleMediaSubmit(e){
       let data = event.target.result;
       if(data) {
         data.desc = desc;
+        data.clientCode = clientCode;
+        data.clientName = clientName;
         store.put(data).onsuccess = function() {
           $('editMediaId').value = "";
-          $('mediaFormTitle').innerText = "إضافة صورة أو فيديو جديد";
+          $('mediaFormTitle').innerText = "إضافة صورة أو فيديو لملف العميل";
           e.target.reset();
+          $('mediaClientCode').value = "";
           renderMedia();
         };
       }
@@ -995,11 +1087,14 @@ function handleMediaSubmit(e){
         blob: file,
         type: file.type,
         desc: desc,
+        clientCode: clientCode,
+        clientName: clientName,
         date: new Date().toLocaleDateString('ar-SA')
       };
       let req = store.add(mediaObj);
       req.onsuccess = function() {
         e.target.reset();
+        $('mediaClientCode').value = "";
         renderMedia();
       };
     } else {
@@ -1032,13 +1127,19 @@ function shareMedia(id){
   req.onsuccess = function(event) {
     let m = event.target.result;
     if(m) {
-      let text = `شركة تكنيكال 24 - توثيق صيانة:\n${m.desc}\nالتاريخ: ${m.date}`;
+      salesData = getSharedSales();
+      let clientObj = salesData.find(s => s.code === m.clientCode);
+      let phone = clientObj ? clientObj.phone : '';
+      let cName = clientObj ? clientObj.client : (m.clientName || 'عميل');
+
+      let text = `❄️ شركة تكنيكال 24 - توثيق صيانة المكيفات ❄️\n━━━━━━━━━━━━━━━━━━━\n👤 اسم العميل: ${cName}\n📌 كود العميل: ${m.clientCode || '-'}\n📞 الجوال: ${phone || '-'}\n🛠️ وصف الشغل: ${m.desc}\n📅 التاريخ: ${m.date}\n━━━━━━━━━━━━━━━━━━━\nنسعد دائماً بخدمتكم!`;
+
       if (navigator.canShare && navigator.canShare({ files: [new File([m.blob], m.blob.name || 'media', { type: m.type })] })) {
         navigator.share({
           files: [new File([m.blob], m.blob.name || 'media', { type: m.type })],
           title: 'تكنيكال 24',
           text: text
-        }).catch(err => console.log('شارك عبر واتساب يدوياً'));
+        }).catch(err => console.log('مشاركة تمت'));
       } else {
         let whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
         window.open(whatsappUrl, '_blank');
