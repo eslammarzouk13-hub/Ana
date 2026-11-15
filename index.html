@@ -137,14 +137,17 @@ nav{
 
 .page{display:none;padding:20px;max-width:1200px;margin:auto}
 .page.active{display:block}
-.banner{background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:12px 16px;border-radius:12px;margin-bottom:16px;font-weight:700}
+
+/* تم تغيير اللون الأصفر إلى بيج غامق راقٍ ومريح للعين هنا */
+.banner{background:#e3c5a5;border:1px solid #d4b28c;color:#451a03;padding:12px 16px;border-radius:12px;margin-bottom:16px;font-weight:700}
+
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px}
 .stat{background:#fff;padding:18px;border-radius:14px;border:1px solid var(--border);border-right:6px solid var(--brown)}
 .stat b{font-size:1.35rem;color:var(--brown)}
 .grid{display:grid;grid-template-columns:1fr 2fr;gap:20px;align-items:start;}
 @media(max-width:900px){.grid{grid-template-columns:1fr}}
 .card{background:#fff;padding:22px;border-radius:16px;border:1px solid var(--border);margin-bottom:20px}
-.card h3{color:var(--brown);margin-bottom:16px;border-bottom:2px solid #fef3c7;padding-bottom:8px}
+.card h3{color:var(--brown);margin-bottom:16px;border-bottom:2px solid #e3c5a5;padding-bottom:8px}
 
 .table-container-scroll {
   max-height: 480px;
@@ -157,21 +160,22 @@ nav{
   position: sticky;
   top: 0;
   z-index: 5;
-  background: #fef3c7;
+  background: #e3c5a5; /* تم التعديل هنا أيضاً ليصبح بيج غامق متناسق */
+  color: #451a03;
 }
 
 label{display:block;font-weight:700;font-size:.9rem;margin:12px 0 5px}
 input,select{width:100%;padding:11px;border:1px solid var(--border);border-radius:10px;background:#fafafa;font-size:.95rem}
-.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#fffbeb;padding:14px;border:1px solid #fde68a;border-radius:12px}
-.service-item{display:flex;flex-direction:column;gap:4px;background:#fff;padding:8px;border-radius:8px;border:1px solid #fde68a}
+.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#fcf8f2;padding:14px;border:1px solid #d4b28c;border-radius:12px}
+.service-item{display:flex;flex-direction:column;gap:4px;background:#fff;padding:8px;border-radius:8px;border:1px solid #d4b28c}
 .service-item label{font-size:0.8rem;color:#78350f;margin:0}
 .service-inputs{display:flex;gap:6px}
 .service-inputs input{padding:7px;text-align:center;font-weight:bold;font-size:0.9rem}
 .btn{width:100%;padding:12px;background:var(--brown);color:#fff;border:none;border-radius:10px;font-weight:800;cursor:pointer;margin-top:14px}
-.btn2{width:auto;padding:9px 14px;background:#fff;color:var(--brown);border:2px solid #fde68a;border-radius:10px;font-weight:800;cursor:pointer}
+.btn2{width:auto;padding:9px 14px;background:#fff;color:var(--brown);border:2px solid #d4b28c;border-radius:10px;font-weight:800;cursor:pointer}
 table{width:100%;border-collapse:collapse}
 th,td{padding:11px;border-bottom:1px solid var(--border);text-align:right;font-size:.9rem}
-th{background:#fef3c7;color:#78350f}
+th{background:#e3c5a5;color:#451a03} /* تم التعديل هنا أيضاً لرؤوس الجداول */
 .badge{padding:4px 8px;border-radius:6px;font-size:.8rem;font-weight:800}
 .ok{background:#dcfce7;color:#166534}.wait{background:#fef9c3;color:#854d0e}.run{background:#e0f2fe;color:#075985}
 .act{border:none;padding:6px 10px;border-radius:6px;color:#fff;cursor:pointer;font-weight:bold;font-size:0.85rem;white-space:nowrap;}
@@ -201,7 +205,7 @@ th{background:#fef3c7;color:#78350f}
     text-align: center;
     position: relative;
     z-index: 2;
-    border: 1px solid #fde68a;
+    border: 1px solid #d4b28c;
     backdrop-filter: blur(10px);
 }
 .login-icon-box {
@@ -315,7 +319,7 @@ th{background:#fef3c7;color:#78350f}
         <i class="fa-regular fa-clock"></i> <span id="clockText">12:00:00 ص</span>
       </div>
       <div style="display: flex; gap: 8px; align-items: center;">
-        <span id="userRoleBadge" style="background:rgba(255,255,255,0.85); color:#78350f; padding:5px 10px; border-radius:8px; font-size:0.85rem; font-weight:bold; border:1px solid #fde68a;"></span>
+        <span id="userRoleBadge" style="background:rgba(255,255,255,0.85); color:#78350f; padding:5px 10px; border-radius:8px; font-size:0.85rem; font-weight:bold; border:1px solid #d4b28c;"></span>
         <button class="btn2" onclick="logout()" style="background:#dc2626; color:#fff; border:none;" title="تسجيل خروج"><i class="fa-solid fa-right-from-bracket"></i></button>
       </div>
     </div>
@@ -527,7 +531,7 @@ th{background:#fef3c7;color:#78350f}
 <section id="p6" class="page">
   <div class="banner">📁 أرشيف وملفات العملاء (صور وفيديوهات) - البحث برقم الكود والمشاركة مع تفاصيل الشغل</div>
   
-  <div class="card no-print" style="background:#fffbeb; border:1px solid #fde68a;">
+  <div class="card no-print" style="background:#fcf8f2; border:1px solid #d4b28c;">
     <h3 style="color:#78350f; margin-bottom:10px;"><i class="fa-solid fa-magnifying-glass"></i> البحث في فولدرات العملاء</h3>
     <div style="display:flex; gap:10px; flex-wrap:wrap;">
       <input type="text" id="mediaSearchInput" placeholder="ابحث برقم كود العميل أو اسم العميل..." oninput="renderMedia()" style="background:#fff; flex:1; min-width:220px;">
@@ -1005,8 +1009,8 @@ function renderMedia(){
       let clientName = clientObj ? clientObj.client : folderData.clientName;
       let clientPhone = clientObj ? clientObj.phone : '';
 
-      html += `<div style="background:#fff; border:2px solid #fde68a; border-radius:14px; padding:16px; box-shadow:0 4px 6px rgba(0,0,0,0.05);">
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #fef3c7; padding-bottom:8px; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+      html += `<div style="background:#fff; border:2px solid #d4b28c; border-radius:14px; padding:16px; box-shadow:0 4px 6px rgba(0,0,0,0.05);">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #e3c5a5; padding-bottom:8px; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
           <div><h4 style="color:#78350f; font-size:1.1rem; margin:0;"><i class="fa-solid fa-folder-open" style="color:#d97706;"></i> كود العميل: ${code} - ${clientName}</h4>
           <small style="color:var(--muted);">رقم الجوال: ${clientPhone || 'غير متوفر'} | إجمالي الملفات: ${folderData.items.length}</small></div>
           <span class="badge run">فولدر العميل</span>
@@ -1162,10 +1166,10 @@ function printSingleMonth(){
         <h2 style="text-align:center;color:#78350f;margin-bottom:5px;">TC24 _قسم المكيف SP3 - تقرير المبيعات الشهري</h2>
         <p style="text-align:center;font-weight:bold;color:#6b7280;margin-bottom:20px;">عن شهر: ${m}</p>
         <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
-          <thead><tr style="background:#fef3c7;color:#78350f;"><th style="padding:8px;border:1px solid #ddd;">#</th><th style="padding:8px;border:1px solid #ddd;">الكود</th><th style="padding:8px;border:1px solid #ddd;">العميل</th><th style="padding:8px;border:1px solid #ddd;">التاريخ</th><th style="padding:8px;border:1px solid #ddd;">الخدمات</th><th style="padding:8px;border:1px solid #ddd;">الدفع</th><th style="padding:8px;border:1px solid #ddd;">المبلغ</th></tr></thead>
+          <thead><tr style="background:#e3c5a5;color:#451a03;"><th style="padding:8px;border:1px solid #ddd;">#</th><th style="padding:8px;border:1px solid #ddd;">الكود</th><th style="padding:8px;border:1px solid #ddd;">العميل</th><th style="padding:8px;border:1px solid #ddd;">التاريخ</th><th style="padding:8px;border:1px solid #ddd;">الخدمات</th><th style="padding:8px;border:1px solid #ddd;">الدفع</th><th style="padding:8px;border:1px solid #ddd;">المبلغ</th></tr></thead>
           <tbody>${rowsHtml}</tbody>
         </table>
-        <h3 style="text-align:left;background:#fef3c7;padding:10px;border-radius:8px;">إجمالي مبيعات الشهر: ${totalMonth.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</h3>
+        <h3 style="text-align:left;background:#e3c5a5;padding:10px;border-radius:8px;color:#451a03;">إجمالي مبيعات الشهر: ${totalMonth.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</h3>
         <div style="margin-top:40px;text-align:left;font-weight:bold;font-size:1.1rem;border-top:1px dashed #78350f;padding-top:15px;">تم بواسطة: إسلام أحمد</div>
       </div>
     </body></html>`);
@@ -1226,11 +1230,11 @@ function printInvoice(i){
   w.document.write(`<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>فاتورة صيانة - ${s.code}</title></head>
     <body style="font-family:Tahoma;background:#fdfbf7;padding:30px;color:#1f2937;">
       <div style="max-width:650px;margin:auto;background:#fff;border:2px solid #78350f;border-radius:16px;padding:30px;box-shadow:0 10px 25px rgba(0,0,0,0.1);">
-        <div style="text-align:center;border-bottom:2px solid #fef3c7;padding-bottom:15px;margin-bottom:20px;">
+        <div style="text-align:center;border-bottom:2px solid #e3c5a5;padding-bottom:15px;margin-bottom:20px;">
           <h2 style="color:#78350f;margin-bottom:5px;">TC24 _قسم المكيف SP3 ❄️</h2>
           <p style="color:#6b7280;font-size:1.05rem;font-weight:bold;">فاتوره العميل</p>
         </div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:20px;font-size:0.95rem;background:#fef3c7;padding:12px;border-radius:10px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:20px;font-size:0.95rem;background:#e3c5a5;padding:12px;border-radius:10px;color:#451a03;">
           <div><b>كود العميل:</b> ${s.code}</div><div><b>التاريخ:</b> ${s.date}</div>
         </div>
         <div style="margin-bottom:20px;font-size:0.95rem;">
@@ -1243,7 +1247,7 @@ function printInvoice(i){
           <thead><tr style="background:#78350f;color:#fff;"><th style="padding:10px;text-align:right;">الخدمة المطلوبة</th><th style="padding:10px;text-align:center;">العدد</th><th style="padding:10px;text-align:center;">السعر الفردي</th><th style="padding:10px;text-align:left;">الإجمالي</th></tr></thead>
           <tbody>${rowsPrint}</tbody>
         </table>
-        <div style="text-align:left;background:#fef3c7;padding:14px;border-radius:10px;font-size:1.2rem;font-weight:bold;color:#78350f;margin-bottom:30px;">إجمالي المبلغ: ${(Number(s.cost)||0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</div>
+        <div style="text-align:left;background:#e3c5a5;padding:14px;border-radius:10px;font-size:1.2rem;font-weight:bold;color:#451a03;margin-bottom:30px;">إجمالي المبلغ: ${(Number(s.cost)||0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</div>
         <div style="text-align:left;font-weight:bold;font-size:1.05rem;border-top:1px dashed #78350f;padding-top:15px;color:#451a03;">تم بواسطة: إسلام أحمد</div>
       </div>
     </body></html>`);
