@@ -69,29 +69,6 @@ th{background:#fef3c7;color:#78350f}
 .search input,.search select{flex:1;min-width:180px}
 @media print{header,nav,.no-print{display:none!important}}
 
-/* تصميم الشريط المتحرك المحترف */
-.ticker-container {
-    background: linear-gradient(135deg, #78350f, #d97706);
-    color: #fff;
-    padding: 10px 0;
-    overflow: hidden;
-    white-space: nowrap;
-    position: relative;
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
-    margin-bottom: 20px;
-}
-.ticker-text {
-    display: inline-block;
-    padding-left: 100%;
-    animation: ticker 25s linear infinite;
-    font-weight: bold;
-    font-size: 1.05rem;
-}
-@keyframes ticker {
-    0% { transform: translate3d(0, 0, 0); }
-    100% { transform: translate3d(-100%, 0, 0); }
-}
-
 /* تصميم واجهة تسجيل الدخول الفخمة الآمنة */
 #loginOverlay {
     position: fixed;
@@ -240,11 +217,6 @@ th{background:#fef3c7;color:#78350f}
   </div>
 </header>
 
-<!-- الشريط المتحرك الاحترافي -->
-<div class="ticker-container">
-  <div class="ticker-text">✨ شركة تكنيكال 24 لتنظيف وصيانة المكيفات - الراحة والجودة عنواننا دائمًا ✨ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🛠️ نعمل بدقة واحترانية لخدمتكم على مدار الساعة 🛠️</div>
-</div>
-
 <nav>
   <button class="nav-btn active" onclick="goPage('p1',this)" id="nav1">1. العملاء والمبيعات</button>
   <button class="nav-btn" onclick="goPage('p2',this)" id="nav2">2. البحث</button>
@@ -256,7 +228,7 @@ th{background:#fef3c7;color:#78350f}
 
 <!-- صفحة 1 -->
 <section id="p1" class="page active">
-  <div class="banner" id="banner1">أهلاً وسهلاً بك يا أبو ريان 🤚 - صفحة العملاء والمبيعات</div>
+  <div class="banner" id="banner1">هلا وسهلا بيك، مساكم الله بالخير 🤚 - صفحة العملاء والمبيعات</div>
   <div class="stats">
     <div class="stat"><span id="st1Title">إجمالي المبيعات</span><br><b id="sTotal">0 ريال</b></div>
     <div class="stat"><span id="st2Title">المحصل كاش</span><br><b id="sCash">0 ريال</b></div>
@@ -484,7 +456,6 @@ th{background:#fef3c7;color:#78350f}
 const translations = {
   ar: {
     nav1: "1. العملاء والمبيعات", nav2: "2. البحث", nav3: "3. التقارير الشهرية", nav4: "4. الصيانة الدورية", nav5: "5. الإعدادات والنسخ", nav6: "6. أرشيف صور العملاء",
-    banner1: "أهلاً وسهلاً بك يا أبو ريان 🤚 - صفحة العملاء والمبيعات",
     st1Title: "إجمالي المبيعات", st2Title: "المحصل كاش", st3Title: "المحصل شبكة / تحويل", st4Title: "عدد العملاء",
     formTitle: "تسجيل عملية صيانة جديدة", lblCode: "رقم كود العميل (أرقام إنجليزية فقط)", lblName: "اسم العميل", lblPhone: "رقم الجوال",
     lblServ: "حدد الكمية والسعر لكل خدمة (يقبل الهللَات والكسور)", lblStatus: "حالة الخدمة", lblPay: "طريقة الدفع", lblCost: "إجمالي التكلفة (ريال - قابل للتعديل اليدوي)", lblDate: "التاريخ", btnSave: "حفظ البيانات",
@@ -513,7 +484,7 @@ function changeLanguage(lang) {
   }
 }
 
-// دالة تحديث الساعة الحية بتنسيق 12 ساعة مع AM/PM بالعربية
+// دالة تحديث الترحيب والساعة حسب الوقت الفعلي (صباحاً / مساءً)
 function updateLiveClock() {
   let now = new Date();
   let hours = now.getHours();
@@ -521,10 +492,10 @@ function updateLiveClock() {
   let seconds = now.getSeconds();
   
   let ampm = hours >= 12 ? 'مساءً' : 'صباحاً';
-  hours = hours % 12;
-  hours = hours ? hours : 12;
+  let displayHours = hours % 12;
+  displayHours = displayHours ? displayHours : 12;
   
-  let hStr = String(hours).padStart(2, '0');
+  let hStr = String(displayHours).padStart(2, '0');
   let mStr = String(minutes).padStart(2, '0');
   let sStr = String(seconds).padStart(2, '0');
   
@@ -532,10 +503,17 @@ function updateLiveClock() {
   if(clockEl) {
     clockEl.innerText = `${hStr}:${mStr}:${sStr} ${ampm}`;
   }
+
+  // تحديث جملة الترحيب حسب الوقت (صباحاً / مساءً)
+  let banner1 = document.getElementById('banner1');
+  if(banner1) {
+    let greetingTime = (hours >= 4 && hours < 12) ? 'صباحكم الله بالخير' : 'مساكم الله بالخير';
+    banner1.innerHTML = `هلا وسهلا بيك، ${greetingTime} 🤚 - صفحة العملاء والمبيعات`;
+  }
 }
 setInterval(updateLiveClock, 1000);
 
-// دالة أساسية لجلب البيانات من المخزن المشترك الموحد (لتظهر للموظف والمشرف في آن واحد) بدون حذف أي شيء قديم
+// دالة أساسية لجلب البيانات من المخزن المشترك الموحد
 function getSharedSales() {
     let masterData = localStorage.getItem('tc24_sales_master');
     let oldData = localStorage.getItem('tc24_sales');
@@ -546,7 +524,6 @@ function getSharedSales() {
     try { if(masterData) parsedMaster = JSON.parse(masterData) || []; } catch(e) {}
     try { if(oldData) parsedOld = JSON.parse(oldData) || []; } catch(e) {}
     
-    // دمج البيانات القديمة والجديدة لضمان عدم ضياع أي عميل قديم
     let combined = [...parsedMaster];
     parsedOld.forEach(item => {
         if (!combined.some(c => c.code === item.code && c.date === item.date)) {
@@ -940,14 +917,12 @@ function deleteEmp(idx){
   }
 }
 
-// ==========================================
-// إدارة أرشيف الوسائط وملفات العملاء عبر IndexedDB
-// ==========================================
+// إدارة أرشيف الوسائط وملفات العملاء
 function populateClientDropdown() {
   let select = $('mediaClientSelect');
   if(!select) return;
   salesData = getSharedSales();
-  let html = '<option value="">-- اختر العميل المسجل --</option>';
+  let html = '<option value="">-- اختر العميل --</option>';
   salesData.forEach(s => {
     html += `<option value="${s.code}" data-name="${s.client}" data-phone="${s.phone || ''}">كود: ${s.code} - ${s.client}</option>`;
   });
@@ -976,8 +951,6 @@ function renderMedia(){
 
   request.onsuccess = function(event) {
     let items = event.target.result;
-    
-    // تجميع الوسائط حسب كود العميل (فولدرات)
     let folders = {};
     items.forEach(m => {
       let code = m.clientCode || 'غير مصنف';
@@ -988,7 +961,6 @@ function renderMedia(){
     });
 
     salesData = getSharedSales();
-
     let html = '';
     let foundAny = false;
 
@@ -1220,7 +1192,7 @@ function printSingleMonth(){
         </table>
         <h3 style="text-align:left;background:#fef3c7;padding:10px;border-radius:8px;">إجمالي مبيعات الشهر: ${totalMonth.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</h3>
         <div style="margin-top:40px;text-align:left;font-weight:bold;font-size:1.1rem;border-top:1px dashed #78350f;padding-top:15px;">
-          المشرف الفني العام: إسلام مرزوق أحمد
+          تم بواسطة: إسلام أحمد
         </div>
       </div>
     </body></html>
@@ -1298,8 +1270,8 @@ function printInvoice(i){
     <body style="font-family:Tahoma;background:#fdfbf7;padding:30px;color:#1f2937;">
       <div style="max-width:650px;margin:auto;background:#fff;border:2px solid #78350f;border-radius:16px;padding:30px;box-shadow:0 10px 25px rgba(0,0,0,0.1);">
         <div style="text-align:center;border-bottom:2px solid #fef3c7;padding-bottom:15px;margin-bottom:20px;">
-          <h2 style="color:#78350f;margin-bottom:5px;">شركة تكنيكال 24 لتنظيف وصيانة المكيفات</h2>
-          <p style="color:#6b7280;font-size:0.9rem;">الراحة والجودة عنواننا دائمًا</p>
+          <h2 style="color:#78350f;margin-bottom:5px;">تكنيكال 24 قسم المكيف SP3 ❄️</h2>
+          <p style="color:#6b7280;font-size:1.05rem;font-weight:bold;">فاتوره العميل</p>
         </div>
         
         <div style="display:flex;justify-content:space-between;margin-bottom:20px;font-size:0.95rem;background:#fef3c7;padding:12px;border-radius:10px;">
@@ -1333,7 +1305,7 @@ function printInvoice(i){
         </div>
 
         <div style="text-align:left;font-weight:bold;font-size:1.05rem;border-top:1px dashed #78350f;padding-top:15px;color:#451a03;">
-          المشرف الفني العام: إسلام مرزوق أحمد
+          تم بواسطة: إسلام أحمد
         </div>
       </div>
     </body></html>
