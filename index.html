@@ -15,9 +15,44 @@
 :root{--bg:#fdfbf7;--card:#fff;--brown:#78350f;--gold:#d97706;--green:#059669;--blue:#0284c7;--muted:#6b7280;--border:#e5e7eb}
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,sans-serif}
 body{background:var(--bg);color:#1f2937;line-height:1.6}
-header{background:linear-gradient(135deg,#78350f,#451a03);color:#fff;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-header h1{font-size:1.4rem}
-header h1 i{color:#fde68a}
+header{background:linear-gradient(135deg,#78350f,#451a03);color:#fff;padding:16px 24px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;position:relative}
+.header-top-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.header-center-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+.header-center-title i{color:#fde68a}
+.online-status-badge {
+  background: rgba(5, 150, 105, 0.2);
+  border: 1px solid #34d399;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.online-dot {
+  width: 9px;
+  height: 9px;
+  background-color: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #10b981;
+}
 .header-left-area {
   display: flex;
   align-items: center;
@@ -184,7 +219,7 @@ th{background:#fef3c7;color:#78350f}
         <div class="login-icon-box">
             <i class="fa-solid fa-snowflake"></i>
         </div>
-        <h2>شركة تكنيكال 24</h2>
+        <h2>TC24 _قسم المكيف SP3</h2>
         <p>نظام الصيانة والمبيعات الموحد</p>
         <form id="loginForm" onsubmit="handleLogin(event)">
             <div class="input-group">
@@ -204,16 +239,24 @@ th{background:#fef3c7;color:#78350f}
 <!-- المحتوى الأصلي للتطبيق -->
 <div id="appContainer" style="display: none;">
 <header>
-  <h1><i class="fa-solid fa-snowflake"></i> تكنيكال 24 - صيانة المكيفات (SP3)</h1>
-  <div class="header-left-area">
-    <!-- عرض الساعة بتنسيق 12 ساعة -->
-    <div class="live-clock" id="liveClockDisplay">
-      <i class="fa-regular fa-clock"></i> <span id="clockText">12:00:00 ص</span>
+  <!-- الصف العلوي: الحالة يمينًا والساعة والتحكم يسارًا -->
+  <div class="header-top-row">
+    <div class="online-status-badge">
+      <span class="online-dot"></span> دخول : ESLAM MARZOUK <i class="fa-solid fa-circle-check" style="color: #34d399;"></i> (متصل)
     </div>
-    <div style="display: flex; gap: 8px; align-items: center;">
-      <span id="userRoleBadge" style="background:rgba(255,255,255,0.2); padding:5px 10px; border-radius:8px; font-size:0.85rem; font-weight:bold;"></span>
-      <button class="btn2" onclick="logout()" style="background:#dc2626; color:#fff; border:none;" title="تسجيل خروج"><i class="fa-solid fa-right-from-bracket"></i></button>
+    <div class="header-left-area">
+      <div class="live-clock" id="liveClockDisplay">
+        <i class="fa-regular fa-clock"></i> <span id="clockText">12:00:00 ص</span>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <span id="userRoleBadge" style="background:rgba(255,255,255,0.2); padding:5px 10px; border-radius:8px; font-size:0.85rem; font-weight:bold;"></span>
+        <button class="btn2" onclick="logout()" style="background:#dc2626; color:#fff; border:none;" title="تسجيل خروج"><i class="fa-solid fa-right-from-bracket"></i></button>
+      </div>
     </div>
+  </div>
+  <!-- العنوان الجديد في منتصف الخانة تماماً -->
+  <div class="header-center-title">
+    <i class="fa-solid fa-snowflake"></i> TC24 _قسم المكيف SP3
   </div>
 </header>
 
@@ -1174,7 +1217,7 @@ function printSingleMonth(){
     <html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>تقرير شهر ${m}</title></head>
     <body style="font-family:Tahoma;padding:30px;color:#1f2937;">
       <div style="max-width:700px;margin:auto;border:2px solid #78350f;border-radius:12px;padding:25px;">
-        <h2 style="text-align:center;color:#78350f;margin-bottom:5px;">تكنيكال 24 - تقرير المبيعات الشهري</h2>
+        <h2 style="text-align:center;color:#78350f;margin-bottom:5px;">TC24 _قسم المكيف SP3 - تقرير المبيعات الشهري</h2>
         <p style="text-align:center;font-weight:bold;color:#6b7280;margin-bottom:20px;">عن شهر: ${m}</p>
         <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
           <thead>
@@ -1270,7 +1313,7 @@ function printInvoice(i){
     <body style="font-family:Tahoma;background:#fdfbf7;padding:30px;color:#1f2937;">
       <div style="max-width:650px;margin:auto;background:#fff;border:2px solid #78350f;border-radius:16px;padding:30px;box-shadow:0 10px 25px rgba(0,0,0,0.1);">
         <div style="text-align:center;border-bottom:2px solid #fef3c7;padding-bottom:15px;margin-bottom:20px;">
-          <h2 style="color:#78350f;margin-bottom:5px;">تكنيكال 24 قسم المكيف SP3 ❄️</h2>
+          <h2 style="color:#78350f;margin-bottom:5px;">TC24 _قسم المكيف SP3 ❄️</h2>
           <p style="color:#6b7280;font-size:1.05rem;font-weight:bold;">فاتوره العميل</p>
         </div>
         
