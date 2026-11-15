@@ -16,7 +16,7 @@
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,sans-serif}
 body{background:var(--bg);color:#1f2937;line-height:1.6;overflow-x:hidden;}
 
-/* خلفية دكتات ومكيفات واضحة جداً في الهيدر مع تدرج بني شفاف يبرز تفاصيل الدكتات */
+/* خلفية دكتات ومكيفات واضحة جداً في الهيدر العلوي لوحده */
 header{
   background: linear-gradient(135deg, rgba(120, 53, 15, 0.72), rgba(69, 26, 3, 0.78)), url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;
   color:#fff;
@@ -89,10 +89,10 @@ header{
   backdrop-filter: blur(4px);
 }
 
-/* شريط التنقل العلوي يكمل نفس خلفية الدكتات البنية الفخمة */
+/* شريط التنقل العلوي أصبح في الجزء الأبيض أسفل الهيدر بتصميم متناسق ونظيف */
 nav{
-  background: linear-gradient(135deg, rgba(69, 26, 3, 0.82), rgba(120, 53, 15, 0.78)), url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1400&auto=format&fit=crop') bottom center/cover no-repeat;
-  border-bottom: 2px solid rgba(253, 230, 138, 0.45);
+  background: #ffffff;
+  border-bottom: 2px solid var(--border);
   padding: 10px 14px;
   display: flex;
   gap: 8px;
@@ -100,28 +100,30 @@ nav{
   position: sticky;
   top: 0;
   z-index: 10;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 .nav-btn{
   flex: 1;
   white-space: nowrap;
   padding: 11px 14px;
-  border: 1px solid rgba(253, 230, 138, 0.5);
-  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--border);
+  background: #f9fafb;
   border-radius: 10px;
   font-weight: 800;
   cursor: pointer;
-  color: var(--brown);
+  color: var(--muted);
   transition: all 0.2s;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
 .nav-btn:hover{
-  background: #fff;
+  background: #f3f4f6;
+  color: var(--brown);
 }
 .nav-btn.active{
   background: var(--brown);
   color: #fff;
-  border-color: #fde68a;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.45);
+  border-color: var(--brown);
+  box-shadow: 0 4px 10px rgba(120, 53, 15, 0.3);
 }
 
 .page{display:none;padding:20px;max-width:1200px;margin:auto}
