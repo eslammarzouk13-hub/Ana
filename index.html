@@ -16,9 +16,9 @@
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,sans-serif}
 body{background:var(--bg);color:#1f2937;line-height:1.6;overflow-x:hidden;}
 
-/* إضافة خلفية دكتات ومكيفات فخمة وواضحة للمكان البني فقط مع تغميق خفيف لقراءة النصوص */
+/* خلفية دكتات ومكيفات واضحة جداً في الهيدر مع تدرج بني شفاف يبرز تفاصيل الدكتات */
 header{
-  background: linear-gradient(rgba(70, 26, 3, 0.88), rgba(45, 16, 2, 0.92)), url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
+  background: linear-gradient(135deg, rgba(120, 53, 15, 0.72), rgba(69, 26, 3, 0.78)), url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;
   color:#fff;
   padding:16px 24px;
   display:flex;
@@ -27,7 +27,7 @@ header{
   gap:10px;
   text-align:center;
   position:relative;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+  box-shadow: inset 0 0 25px rgba(0,0,0,0.45);
 }
 
 .header-top-row {
@@ -46,11 +46,11 @@ header{
   align-items: center;
   gap: 8px;
   justify-content: center;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  text-shadow: 0 2px 6px rgba(0,0,0,0.85);
 }
 .header-center-title i{color:#fde68a}
 .online-status-badge {
-  background: rgba(5, 150, 105, 0.25);
+  background: rgba(5, 150, 105, 0.35);
   border: 1px solid #34d399;
   padding: 4px 12px;
   border-radius: 20px;
@@ -76,21 +76,54 @@ header{
   flex-wrap: wrap;
 }
 .live-clock {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.35);
   padding: 6px 14px;
   border-radius: 20px;
   font-weight: bold;
   font-size: 0.95rem;
-  border: 1px solid rgba(253, 230, 138, 0.4);
+  border: 1px solid rgba(253, 230, 138, 0.5);
   letter-spacing: 0.5px;
   display: flex;
   align-items: center;
   gap: 6px;
   backdrop-filter: blur(4px);
 }
-nav{background:#fff;border-bottom:1px solid var(--border);padding:10px;display:flex;gap:8px;overflow-x:auto;position:sticky;top:0;z-index:10}
-.nav-btn{flex:1;white-space:nowrap;padding:11px 14px;border:1px solid var(--border);background:#f9fafb;border-radius:10px;font-weight:800;cursor:pointer;color:var(--muted);transition: all 0.2s;}
-.nav-btn.active{background:var(--brown);color:#fff;border-color:var(--brown)}
+
+/* شريط التنقل العلوي يكمل نفس خلفية الدكتات البنية الفخمة */
+nav{
+  background: linear-gradient(135deg, rgba(69, 26, 3, 0.82), rgba(120, 53, 15, 0.78)), url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1400&auto=format&fit=crop') bottom center/cover no-repeat;
+  border-bottom: 2px solid rgba(253, 230, 138, 0.45);
+  padding: 10px 14px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.nav-btn{
+  flex: 1;
+  white-space: nowrap;
+  padding: 11px 14px;
+  border: 1px solid rgba(253, 230, 138, 0.5);
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  color: var(--brown);
+  transition: all 0.2s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+}
+.nav-btn:hover{
+  background: #fff;
+}
+.nav-btn.active{
+  background: var(--brown);
+  color: #fff;
+  border-color: #fde68a;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.45);
+}
+
 .page{display:none;padding:20px;max-width:1200px;margin:auto}
 .page.active{display:block}
 .banner{background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:12px 16px;border-radius:12px;margin-bottom:16px;font-weight:700}
@@ -137,11 +170,11 @@ th{background:#fef3c7;color:#78350f}
 .search input,.search select{flex:1;min-width:180px}
 @media print{header,nav,.no-print{display:none!important}}
 
-/* تصميم واجهة تسجيل الدخول الفخمة الآمنة مع خلفية الدكتات والمكيفات للمكان البني */
+/* تصميم واجهة تسجيل الدخول الفخمة الآمنة مع خلفية الدكتات والمكيفات */
 #loginOverlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(rgba(120, 53, 15, 0.85), rgba(42, 16, 2, 0.92)), url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;
+    background: linear-gradient(135deg, rgba(120, 53, 15, 0.78), rgba(42, 16, 2, 0.85)), url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -282,7 +315,7 @@ th{background:#fef3c7;color:#78350f}
         <i class="fa-regular fa-clock"></i> <span id="clockText">12:00:00 ص</span>
       </div>
       <div style="display: flex; gap: 8px; align-items: center;">
-        <span id="userRoleBadge" style="background:rgba(255,255,255,0.2); padding:5px 10px; border-radius:8px; font-size:0.85rem; font-weight:bold;"></span>
+        <span id="userRoleBadge" style="background:rgba(0,0,0,0.35); padding:5px 10px; border-radius:8px; font-size:0.85rem; font-weight:bold;"></span>
         <button class="btn2" onclick="logout()" style="background:#dc2626; color:#fff; border:none;" title="تسجيل خروج"><i class="fa-solid fa-right-from-bracket"></i></button>
       </div>
     </div>
