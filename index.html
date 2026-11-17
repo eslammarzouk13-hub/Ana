@@ -339,6 +339,7 @@ display: none;
   <button class="nav-btn" onclick="goPage('p4',this)" id="nav4">4. الصيانة الدورية</button>  
   <button class="nav-btn" onclick="goPage('p5',this)" id="nav5">5. الإعدادات والنسخ</button>  
   <button class="nav-btn" onclick="goPage('p6',this)" id="nav6">6. أرشيف صور العملاء</button>  
+  <button class="nav-btn" onclick="goPage('p7',this)" id="nav7">7. مصروفات قسم SP3</button>  
 </nav>  
 
 <!-- صفحة 1 -->  
@@ -566,12 +567,119 @@ display: none;
     </div>  
   </div>  
 </section>  
+
+<!-- صفحة 7: مصروفات قسم SP3 -->
+<section id="p7" class="page">
+  <div class="banner">صفحة مصروفات قسم SP3 - تسجيل مصاريف الوقود وفواتير المشتريات</div>
+  
+  <div class="grid">
+    <!-- القسم الأول: مصاريف وقود السيارة (بنزين / ديزل) -->
+    <div class="card">
+      <h3>1. تسجيل مصاريف وقود السيارة</h3>
+      <form id="fuelForm" onsubmit="handleFuelSubmit(event)">
+        <input type="hidden" id="editFuelIndex" value="-1">
+        <label>تاريخ اليوم (مع التقويم الاختياري)</label>
+        <input type="date" id="fuelDate" required>
+        
+        <label>حدد نوع الوقود</label>
+        <select id="fuelType" required>
+          <option value="بنزين">بنزين</option>
+          <option value="ديزل">ديزل</option>
+        </select>
+
+        <label>المبلغ (ريال)</label>
+        <input type="number" id="fuelAmount" step="0.01" min="0" required placeholder="0.00">
+        
+        <button class="btn" type="submit" id="btnSaveFuel">حفظ مصاريف الوقود</button>
+      </form>
+
+      <div style="margin-top:20px;" class="no-print">
+        <label>استخراج تقرير وطباعة وقود حسب الشهر:</label>
+        <div style="display:flex; gap:8px; margin-top:5px;">
+          <input type="month" id="fuelReportMonth" style="flex:1;">
+          <button class="btn2" style="background:#059669; color:#fff; border:none;" onclick="printFuelReport()"><i class="fa-solid fa-print"></i> طباعة وقود الشهر</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- جدول عرض مصاريف الوقود منفصل تماماً -->
+    <div class="card">
+      <h3>سجل وقود السيارة (بنزين / ديزل)</h3>
+      <div class="table-container-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>التاريخ</th>
+              <th>نوع الوقود</th>
+              <th>المبلغ</th>
+              <th class="no-print">إجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="fuelBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin:20px 0; border-top:3px dashed var(--accent-blue);"></div>
+
+  <div class="grid">
+    <!-- القسم الثاني: إضافة فاتورة مصروفات عامة للقسم (أدوات، مشتريات، إلخ) -->
+    <div class="card">
+      <h3>2. إضافة فاتورة مصروفات عامة للقسم</h3>
+      <form id="expenseForm" onsubmit="handleExpenseSubmit(event)">
+        <input type="hidden" id="editExpenseIndex" value="-1">
+        
+        <label>التاريخ</label>
+        <input type="date" id="expenseDate" required>
+
+        <label>المبلغ</label>
+        <input type="number" id="expenseAmount" step="0.01" min="0" required placeholder="0.00" oninput="calcExpenseTotal()">
+
+        <label>الوصف (مثل: أدوات اشتريها للقسم...)</label>
+        <input type="text" id="expenseDesc" required placeholder="أدخل وصف الفاتورة والمشتريات...">
+
+        <label>الإجمالي</label>
+        <input type="number" id="expenseTotal" step="0.01" readonly style="background:#e2e8f0; font-weight:bold;" placeholder="0.00">
+
+        <button class="btn" type="submit" id="btnSaveExpense">حفظ الفاتورة</button>
+      </form>
+
+      <div style="margin-top:20px;" class="no-print">
+        <label>تقرير مختصر وطباعة فواتير القسم حسب الشهر:</label>
+        <div style="display:flex; gap:8px; margin-top:5px;">
+          <input type="month" id="expenseReportMonth" style="flex:1;">
+          <button class="btn2" style="background:var(--primary-dark); color:#fff; border:none;" onclick="printExpenseReport()"><i class="fa-solid fa-print"></i> طباعة تقرير الفواتير</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- جدول عرض فواتير المصروفات منفصل تماماً -->
+    <div class="card">
+      <h3>سجل فواتير مصروفات القسم</h3>
+      <div class="table-container-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>التاريخ</th>
+              <th>وصف الفاتورة</th>
+              <th>المبلغ / الإجمالي</th>
+              <th class="no-print">إجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="expenseBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
 </div>  
 
 <script>  
 const translations = {  
   ar: {  
-    nav1: "1. العملاء والمبيعات", nav2: "2. البحث", nav3: "3. التقارير الشهرية", nav4: "4. الصيانة الدورية", nav5: "5. الإعدادات والنسخ", nav6: "6. أرشيف صور العملاء",  
+    nav1: "1. العملاء والمبيعات", nav2: "2. البحث", nav3: "3. التقارير الشهرية", nav4: "4. الصيانة الدورية", nav5: "5. الإعدادات والنسخ", nav6: "6. أرشيف صور العملاء", nav7: "7. مصروفات قسم SP3",  
     st1Title: "إجمالي المبيعات", st2Title: "المحصل كاش", st3Title: "المحصل شبكة / تحويل", st4Title: "عدد العملاء",  
     formTitle: "تسجيل عملية صيانة جديدة", lblName: "اسم العميل", lblPhone: "رقم الجوال",  
     lblServ: "حدد الكمية والسعر لكل خدمة (يقبل الهللَات والكسور)", lblStatus: "حالة الخدمة", lblPay: "طريقة الدفع", lblCost: "إجمالي التكلفة (ريال - قابل للتعديل اليدوي)", lblDate: "التاريخ", btnSave: "حفظ البيانات",  
@@ -646,7 +754,19 @@ let salesData = getSharedSales();
 let empData = JSON.parse(localStorage.getItem('tc24_emps')) || [  
   { name: "TC24", pass: "0011", role: "فني تركيبات وصيانة أساسي", phone: "05xxxxxxxx" }  
 ];  
-  
+
+// دوال إدارة مصروفات قسم SP3 (الوقود والفواتير)
+let fuelData = JSON.parse(localStorage.getItem('tc24_sp3_fuel')) || [];
+let expenseData = JSON.parse(localStorage.getItem('tc24_sp3_expenses')) || [];
+
+function saveFuelData() {
+    localStorage.setItem('tc24_sp3_fuel', JSON.stringify(fuelData));
+}
+
+function saveExpenseData() {
+    localStorage.setItem('tc24_sp3_expenses', JSON.stringify(expenseData));
+}
+
 setInterval(() => {  
     let freshData = getSharedSales();  
     if (JSON.stringify(freshData) !== JSON.stringify(salesData)) {  
@@ -659,6 +779,8 @@ function syncDataNow() {
     salesData = getSharedSales();  
     renderSales();  
     renderEmps();  
+    renderFuel();
+    renderExpenses();
     alert('تم تحديث ومزامنة البيانات المشتركة بنجاح!');  
 }  
   
@@ -698,6 +820,8 @@ function initAppSession() {
     }  
     renderSales();  
     renderEmps();  
+    renderFuel();
+    renderExpenses();
     initDB();  
 }  
   
@@ -736,6 +860,11 @@ function initDB() {
   
 const $ = id => document.getElementById(id);  
 if($('serviceDate')) $('serviceDate').valueAsDate = new Date();  
+if($('fuelDate')) $('fuelDate').valueAsDate = new Date();
+if($('expenseDate')) $('expenseDate').valueAsDate = new Date();
+if($('fuelReportMonth')) $('fuelReportMonth').value = new Date().toISOString().slice(0,7);
+if($('expenseReportMonth')) $('expenseReportMonth').value = new Date().toISOString().slice(0,7);
+
 let currentYearMonth = new Date().toISOString().slice(0,7);  
 if($('reportMonthPicker')) $('reportMonthPicker').value = currentYearMonth;  
   
@@ -749,6 +878,7 @@ function goPage(id, btn){
   if(id==='p4') renderMaint();  
   if(id==='p5') renderEmps();  
   if(id==='p6') { renderMedia(); populateClientDropdown(); }  
+  if(id==='p7') { renderFuel(); renderExpenses(); }
   window.scrollTo({top:0,behavior:'smooth'});  
 }  
   
@@ -768,7 +898,12 @@ function calcTotalCost() {
   let total = (dQty * dPrice) + (sQty * sPrice) + (fQty * fPrice) + (mQty * mPrice);  
   if(total > 0) $('serviceCost').value = total.toFixed(2);  
 }  
-  
+
+function calcExpenseTotal() {
+  let amt = parseFloat($('expenseAmount').value) || 0;
+  $('expenseTotal').value = amt.toFixed(2);
+}
+
 function formatServicesText(s) {  
   if (s.servicesObj) {  
     let parts = [];  
@@ -799,6 +934,206 @@ function renderSales(){
   if($('sCard')) $('sCard').innerText = card.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ريال';  
   if($('sCount')) $('sCount').innerText = salesData.length;  
 }  
+
+// دوال إدارة ورندر مصاريف الوقود
+function renderFuel() {
+  fuelData.sort((a, b) => new Date(b.date) - new Date(a.date));
+  let html = '';
+  fuelData.forEach((f, idx) => {
+    let amt = Number(f.amount) || 0;
+    html += `<tr>
+      <td>${f.date}</td>
+      <td><b><span class="badge ${f.type === 'بنزين' ? 'ok' : 'run'}">${f.type}</span></b></td>
+      <td><b>${amt.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</b></td>
+      <td class="no-print">
+        <button class="act edit" onclick="editFuel(${idx})">تعديل</button>
+        <button class="act del" onclick="deleteFuel(${idx})">حذف</button>
+      </td>
+    </tr>`;
+  });
+  if($('fuelBody')) $('fuelBody').innerHTML = html || '<tr><td colspan="4" style="text-align:center">لا توجد مصاريف وقود مسجلة</td></tr>';
+}
+
+if($('fuelForm')) {
+  $('fuelForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    let obj = {
+      date: $('fuelDate').value,
+      type: $('fuelType').value,
+      amount: parseFloat($('fuelAmount').value) || 0
+    };
+    let idx = parseInt($('editFuelIndex').value, 10);
+    if(idx > -1) {
+      fuelData[idx] = obj;
+      $('editFuelIndex').value = "-1";
+      $('btnSaveFuel').innerText = "حفظ مصاريف الوقود";
+    } else {
+      fuelData.push(obj);
+    }
+    saveFuelData();
+    e.target.reset();
+    $('fuelDate').valueAsDate = new Date();
+    renderFuel();
+    alert('تم حفظ مصاريف الوقود بنجاح!');
+  });
+}
+
+function editFuel(idx) {
+  let f = fuelData[idx];
+  $('fuelDate').value = f.date;
+  $('fuelType').value = f.type;
+  $('fuelAmount').value = f.amount;
+  $('editFuelIndex').value = idx;
+  $('btnSaveFuel').innerText = "تعديل مصاريف الوقود";
+}
+
+function deleteFuel(idx) {
+  if(confirm('هل أنت متأكد من حذف تسجيل الوقود هذا؟')) {
+    fuelData.splice(idx, 1);
+    saveFuelData();
+    renderFuel();
+  }
+}
+
+function printFuelReport() {
+  let m = $('fuelReportMonth').value;
+  if(!m){ alert('الرجاء اختيار الشهر أولاً'); return; }
+  let filtered = fuelData.filter(f => f.date && f.date.startsWith(m));
+  if(!filtered.length){ alert('لا توجد مصاريف وقود مسجلة في هذا الشهر ('+m+')'); return; }
+  
+  filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+  let total = 0, rows = '';
+  filtered.forEach((f, i) => {
+    let amt = Number(f.amount) || 0;
+    total += amt;
+    rows += `<tr>
+      <td style="padding:10px;border:1px solid #bae6fd;text-align:center;">${i+1}</td>
+      <td style="padding:10px;border:1px solid #bae6fd;text-align:center;">${f.date}</td>
+      <td style="padding:10px;border:1px solid #bae6fd;text-align:center;font-weight:bold;">${f.type}</td>
+      <td style="padding:10px;border:1px solid #bae6fd;text-align:left;font-weight:bold;">${amt.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</td>
+    </tr>`;
+  });
+
+  let w = window.open('', '_blank', 'width=800,height=700');
+  if(!w) return;
+  w.document.write(`<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>تقرير وقود السيارة - شهر ${m}</title></head>  
+    <body style="font-family:Tahoma;padding:30px;color:#1e293b;">  
+      <div style="max-width:700px;margin:auto;border:2px solid #0369a1;border-radius:12px;padding:25px;">  
+        <h2 style="text-align:center;color:#0369a1;margin-bottom:5px;">TC24 _قسم المكيف SP3 ❄️</h2>  
+        <p style="text-align:center;font-weight:bold;color:#64748b;margin-bottom:20px;">تقرير مصروفات وقود السيارة عن شهر: ${m}</p>  
+        <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">  
+          <thead><tr style="background:#e0f2fe;color:#0369a1;"><th style="padding:10px;border:1px solid #bae6fd;">#</th><th style="padding:10px;border:1px solid #bae6fd;">التاريخ</th><th style="padding:10px;border:1px solid #bae6fd;">نوع الوقود</th><th style="padding:10px;border:1px solid #bae6fd;text-align:left;">المبلغ</th></tr></thead>  
+          <tbody>${rows}</tbody>  
+        </table>  
+        <h3 style="text-align:left;background:#e0f2fe;padding:10px;border-radius:8px;color:#0369a1;">إجمالي مصاريف الوقود: ${total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</h3>  
+        <div style="margin-top:40px;text-align:left;font-weight:bold;font-size:1.1rem;border-top:1px dashed #0369a1;padding-top:15px;">تم بواسطة: إسلام أحمد</div>  
+      </div>  
+    </body></html>`);  
+  w.document.close();  
+  w.focus();  
+  setTimeout(function(){ w.print(); w.close(); }, 400);  
+}
+
+// دوال إدارة ورندر فواتير المصروفات العامة
+function renderExpenses() {
+  expenseData.sort((a, b) => new Date(b.date) - new Date(a.date));
+  let html = '';
+  expenseData.forEach((ex, idx) => {
+    let amt = Number(ex.amount) || 0;
+    html += `<tr>
+      <td>${ex.date}</td>
+      <td><b>${ex.desc}</b></td>
+      <td><b>${amt.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</b></td>
+      <td class="no-print">
+        <button class="act edit" onclick="editExpense(${idx})">تعديل</button>
+        <button class="act del" onclick="deleteExpense(${idx})">حذف</button>
+      </td>
+    </tr>`;
+  });
+  if($('expenseBody')) $('expenseBody').innerHTML = html || '<tr><td colspan="4" style="text-align:center">لا توجد فواتير مصروفات مسجلة</td></tr>';
+}
+
+if($('expenseForm')) {
+  $('expenseForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    let obj = {
+      date: $('expenseDate').value,
+      desc: $('expenseDesc').value.trim(),
+      amount: parseFloat($('expenseAmount').value) || 0
+    };
+    let idx = parseInt($('editExpenseIndex').value, 10);
+    if(idx > -1) {
+      expenseData[idx] = obj;
+      $('editExpenseIndex').value = "-1";
+      $('btnSaveExpense').innerText = "حفظ الفاتورة";
+    } else {
+      expenseData.push(obj);
+    }
+    saveExpenseData();
+    e.target.reset();
+    $('expenseDate').valueAsDate = new Date();
+    $('expenseTotal').value = '';
+    renderExpenses();
+    alert('تم حفظ الفاتورة بنجاح!');
+  });
+}
+
+function editExpense(idx) {
+  let ex = expenseData[idx];
+  $('expenseDate').value = ex.date;
+  $('expenseDesc').value = ex.desc;
+  $('expenseAmount').value = ex.amount;
+  $('expenseTotal').value = ex.amount;
+  $('editExpenseIndex').value = idx;
+  $('btnSaveExpense').innerText = "تعديل الفاتورة";
+}
+
+function deleteExpense(idx) {
+  if(confirm('هل أنت متأكد من حذف هذه الفاتورة؟')) {
+    expenseData.splice(idx, 1);
+    saveExpenseData();
+    renderExpenses();
+  }
+}
+
+function printExpenseReport() {
+  let m = $('expenseReportMonth').value;
+  if(!m){ alert('الرجاء اختيار الشهر أولاً'); return; }
+  let filtered = expenseData.filter(ex => ex.date && ex.date.startsWith(m));
+  if(!filtered.length){ alert('لا توجد فواتير مسجلة في هذا الشهر ('+m+')'); return; }
+  
+  filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+  let total = 0, rows = '';
+  filtered.forEach((ex, i) => {
+    let amt = Number(ex.amount) || 0;
+    total += amt;
+    rows += `<tr>
+      <td style="padding:10px;border:1px solid #bae6fd;text-align:center;">${i+1}</td>
+      <td style="padding:10px;border:1px solid #bae6fd;text-align:center;">${ex.date}</td>
+      <td style="padding:10px;border:1px solid #bae6fd;">${ex.desc}</td>
+      <td style="padding:10px;border:1px solid #bae6fd;text-align:left;font-weight:bold;">${amt.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</td>
+    </tr>`;
+  });
+
+  let w = window.open('', '_blank', 'width=800,height=700');
+  if(!w) return;
+  w.document.write(`<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>تقرير مصروفات القسم - شهر ${m}</title></head>  
+    <body style="font-family:Tahoma;padding:30px;color:#1e293b;">  
+      <div style="max-width:700px;margin:auto;border:2px solid #0369a1;border-radius:12px;padding:25px;">  
+        <h2 style="text-align:center;color:#0369a1;margin-bottom:5px;">TC24 _قسم المكيف SP3 ❄️</h2>  
+        <p style="text-align:center;font-weight:bold;color:#64748b;margin-bottom:20px;">تقرير فواتير ومصروفات القسم المختصر عن شهر: ${m}</p>  
+        <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">  
+          <thead><tr style="background:#e0f2fe;color:#0369a1;"><th style="padding:10px;border:1px solid #bae6fd;">#</th><th style="padding:10px;border:1px solid #bae6fd;">التاريخ</th><th style="padding:10px;border:1px solid #bae6fd;">وصف الفاتورة والمشتريات</th><th style="padding:10px;border:1px solid #bae6fd;text-align:left;">المبلغ / الإجمالي</th></tr></thead>  
+          <tbody>${rows}</tbody>  
+        </table>  
+        <h3 style="text-align:left;background:#e0f2fe;padding:10px;border-radius:8px;color:#0369a1;">إجمالي ما تم صرفه: ${total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</h3>  
+        <div style="margin-top:40px;text-align:left;font-weight:bold;font-size:1.1rem;border-top:1px dashed #0369a1;padding-top:15px;">تم بواسطة: إسلام أحمد</div>  
+      </div>  
+    </body></html>`);  
+  w.document.close();  
+  w.focus();  
+  setTimeout(function(){ w.print(); w.close(); }, 400);  
+}
   
 if($('serviceForm')) {  
   $('serviceForm').addEventListener('submit', function(e){  
@@ -1180,7 +1515,7 @@ function printSingleMonth(){
   
 function backupData(){  
   salesData = getSharedSales();  
-  let json = JSON.stringify({ sales: salesData, emps: empData }, null, 2);  
+  let json = JSON.stringify({ sales: salesData, emps: empData, fuel: fuelData, expenses: expenseData }, null, 2);  
   let blob = new Blob([json], {type:'application/json;charset=utf-8'});  
   let link = document.createElement('a');  
   link.href = URL.createObjectURL(blob);  
@@ -1204,9 +1539,13 @@ function restoreData(event){
       } else if(parsed && typeof parsed === 'object') {  
         if(parsed.sales) { salesData = parsed.sales; saveSharedSales(salesData); }  
         if(parsed.emps) empData = parsed.emps;  
+        if(parsed.fuel) { fuelData = parsed.fuel; saveFuelData(); }
+        if(parsed.expenses) { expenseData = parsed.expenses; saveExpenseData(); }
         renderSales();  
         renderEmps();  
-        alert('تم استعادة البيانات والموظفين بنجاح!');  
+        renderFuel();
+        renderExpenses();
+        alert('تم استعادة البيانات والموظفين والمصروفات بنجاح!');  
       } else { alert('ملف غير صالح!'); }  
     }catch(err){ alert('ملف غير صالح!'); }  
   };  
