@@ -389,7 +389,7 @@ display: none;
     <table>  
       <thead>  
         <tr>  
-          <th id="thCode">INQ</th>  
+          <th id="thCode"></th>  
           <th id="thClient">العميل</th>  
           <th id="thServ">الخدمات والأعداد والأسعار والحالة</th>  
           <th id="thAmount">المبلغ</th>  
@@ -412,7 +412,7 @@ display: none;
       <select id="filterPay" onchange="filterData()"><option value="all" id="fAllPay">جميع طرق الدفع</option><option>كاش / نقدي</option><option>شبكة</option><option>تحويل بنكي</option></select>  
     </div>  
     <div style="overflow-x:auto"><table>  
-      <thead><tr><th id="sthCode">INQ</th><th id="sthClient">العميل</th><th id="sthPhone">الجوال</th><th id="sthServ">الخدمات والأعداد والأسعار</th><th id="sthAmount">المبلغ</th></tr></thead>  
+      <thead><tr><th id="sthCode"></th><th id="sthClient">العميل</th><th id="sthPhone">الجوال</th><th id="sthServ">الخدمات والأعداد والأسعار</th><th id="sthAmount">المبلغ</th></tr></thead>  
       <tbody id="searchBody"></tbody>  
     </table></div>  
   </div>  
@@ -533,8 +533,8 @@ const translations = {
     st1Title: "إجمالي المبيعات", st2Title: "المحصل كاش", st3Title: "المحصل شبكة / تحويل", st4Title: "عدد العملاء",  
     formTitle: "تسجيل عملية صيانة جديدة", lblName: "اسم العميل", lblPhone: "رقم الجوال",  
     lblServ: "حدد الكمية والسعر لكل خدمة (يقبل الهللَات والكسور)", lblStatus: "حالة الخدمة", lblPay: "طريقة الدفع", lblCost: "إجمالي التكلفة (ريال - قابل للتعديل اليدوي)", lblDate: "التاريخ", btnSave: "حفظ البيانات",  
-    tableTitle: "سجل العملاء والمبيعات", thCode: "INQ", thClient: "العميل", thServ: "الخدمات والأعداد والأسعار والحالة", thAmount: "المبلغ", thAction: "إجراءات",  
-    banner2: "صفحة البحث الذكي", searchCardTitle: "البحث والفلترة الذكية", sthCode: "INQ", sthClient: "العميل", sthPhone: "الجوال", sthServ: "الخدمات والأعداد والأسعار", sthAmount: "المبلغ",  
+    tableTitle: "سجل العملاء والمبيعات", thCode: "", thClient: "العميل", thServ: "الخدمات والأعداد والأسعار والحالة", thAmount: "المبلغ", thAction: "إجراءات",  
+    banner2: "صفحة البحث الذكي", searchCardTitle: "البحث والفلترة الذكية", sthCode: "", sthClient: "العميل", sthPhone: "الجوال", sthServ: "الخدمات والأعداد والأسعار", sthAmount: "المبلغ",  
     banner3: "صفحة التقارير - مبيعات الشهور والرسوم البيانية وتقارير الشهر المنفصل", repCardTitle: "استخراج تقارير شهر محدد (Excel أو طباعة)",  
     lblPickMonth: "اختر الشهر والسنة المطلوبة:", btnExcelMonth: "إكسيل الشهر", btnPrintMonth: "طباعة تقرير الشهر",  
     chartCardTitle: "الرسوم البيانية لمبيعات الشهور (أعمدة وخطوط ملونة)", btnBar: "عرض أعمدة", btnLine: "عرض خطوط",  
