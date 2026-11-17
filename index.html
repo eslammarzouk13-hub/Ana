@@ -92,19 +92,17 @@ text-shadow: none;
 }
 
 .online-status-badge {
-background: rgba(255, 255, 255, 0.9);
-border: 1px solid var(--border);
-padding: 6px 14px;
-border-radius: 14px;
-font-size: 0.85rem;
+background: transparent;
+border: none;
+padding: 4px 0;
+font-size: 0.95rem;
 font-weight: bold;
-color: var(--primary-dark);
+color: #ffffff;
 display: flex;
 flex-direction: column;
 align-items: flex-start;
 gap: 2px;
-backdrop-filter: blur(4px);
-box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 line-height: 1.4;
 }
 
@@ -214,11 +212,11 @@ th{background:var(--primary-light);color:var(--primary-dark)}
 .search input,.search select{flex:1;min-width:180px}
 @media print{header,nav,.no-print{display:none!important}}
 
-/* واجهة تسجيل الدخول الفخمة */
+/* واجهة تسجيل الدخول الفخمة مع غلاف الصورة الجديد 1000427338.jpg */
 #loginOverlay {
 position: fixed;
 top: 0; left: 0; width: 100%; height: 100%;
-background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(3, 105, 161, 0.6)), url('1000426910.jpg') center/cover no-repeat;
+background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(3, 105, 161, 0.5)), url('1000427338.jpg') center/cover no-repeat;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -340,15 +338,15 @@ display: none;
 <header>  
   <div class="header-top-row">  
     <div class="online-status-badge">  
-      <div>دخول : ESLAM MARZOUK</div>  
-      <div style="font-size:0.75rem; color:var(--muted); font-weight:normal;">مشرف عام</div>  
+      <div>دخول : ESLAM MARZOUK <span style="display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; background:#0284c7; color:#fff; border-radius:50%; font-size:10px; margin-right:4px;" title="حساب موثق">✓</span></div>  
+      <div style="font-size:0.75rem; color:#ffffff; font-weight:bold; text-shadow:0 1px 3px rgba(0,0,0,0.6);">مشرف القسم</div>  
     </div>  
     <div class="header-left-area">  
       <div class="live-clock" id="liveClockDisplay">  
         <i class="fa-regular fa-clock"></i> <span id="clockText">12:00:00 ص</span>  
       </div>  
       <div style="display: flex; gap: 8px; align-items: center;">  
-        <span id="userRoleBadge" style="background:rgba(255,255,255,0.85); color:var(--primary-dark); padding:5px 10px; border-radius:8px; font-size:0.85rem; font-weight:bold; border:1px solid var(--border);"></span>  
+        <span id="userRoleBadge" style="display:none;"></span>  
         <button class="btn2" onclick="logout()" style="background:#dc2626; color:#fff; border:none;" title="تسجيل خروج"><i class="fa-solid fa-right-from-bracket"></i></button>  
       </div>  
     </div>  
@@ -860,7 +858,6 @@ function initAppSession() {
     document.getElementById('appContainer').style.display = 'block';  
     let roleName = sessionStorage.getItem('tc24_user') || 'المشرف العام';  
     let isAdm = sessionStorage.getItem('tc24_role') === 'admin';  
-    document.getElementById('userRoleBadge').innerText = isAdm ? '⭐ مشرف عام' : `👤 موظف: ${roleName}`;  
     if (!isAdm) {  
         if($('formCardContainer')) $('formCardContainer').style.display = 'none';  
         if($('adminEmpSection')) $('adminEmpSection').style.display = 'none';  
