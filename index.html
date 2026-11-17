@@ -128,96 +128,6 @@ backdrop-filter: blur(4px);
 box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-/* قسم الاستعراض المتحرك للسيارة على الخط الأزرق */
-.showcase-banner {
-  background: linear-gradient(135deg, #0369a1, #0284c7);
-  border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 20px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 8px 20px rgba(3, 105, 161, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.showcase-track {
-  position: relative;
-  height: 90px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-
-/* الخط الأزرق الاستعراضى */
-.blue-road-line {
-  position: absolute;
-  bottom: 15px;
-  left: 0;
-  width: 100%;
-  height: 6px;
-  background: #ffffff;
-  border-radius: 4px;
-  box-shadow: 0 0 12px #ffffff, 0 0 20px #38bdf8;
-  animation: pulseLine 2s infinite alternate;
-}
-
-@keyframes pulseLine {
-  0% { opacity: 0.7; box-shadow: 0 0 8px #ffffff; }
-  100% { opacity: 1; box-shadow: 0 0 20px #ffffff, 0 0 30px #38bdf8; }
-}
-
-/* حاوية سيارة الصيانة المتحركة */
-.moving-car-container {
-  position: absolute;
-  bottom: 12px;
-  right: -120px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  animation: driveCar 9s linear infinite;
-  z-index: 3;
-}
-
-@keyframes driveCar {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-100vw - 150px)); }
-}
-
-.car-body-box {
-  background: #ffffff;
-  padding: 6px 14px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border: 2px solid #bae6fd;
-}
-
-.car-icon-wrap {
-  font-size: 1.8rem;
-  color: var(--primary-dark);
-  animation: bounceCar 0.5s ease infinite alternate;
-}
-
-@keyframes bounceCar {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-3px); }
-}
-
-.car-text-info h4 {
-  font-size: 0.95rem;
-  color: var(--primary-dark);
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.car-text-info span {
-  font-size: 0.75rem;
-  color: var(--muted);
-  font-weight: 700;
-}
-
 nav{
 background: #ffffff;
 border-bottom: 2px solid var(--border);
@@ -445,30 +355,6 @@ display: none;
     <i class="fa-solid fa-snowflake"></i> TC24 _قسم المكيف SP3  
   </div>  
 </header>  
-
-<!-- قسم رسوم متحركة استعراضية: سيارة الصيانة تسير على الخط الأزرق -->
-<div style="max-width:1200px; margin:20px auto 0; padding:0 20px;" class="no-print">
-  <div class="showcase-banner">
-    <div style="display:flex; justify-content:space-between; align-items:center; color:#fff; margin-bottom:10px; position:relative; z-index:2;">
-      <h3 style="margin:0; font-size:1.1rem; display:flex; align-items:center; gap:8px;"><i class="fa-solid fa-truck-fast"></i> استعراض نظام الصيانة - TECHNICAL-24</h3>
-      <span style="font-size:0.85rem; background:rgba(255,255,255,0.2); padding:4px 10px; border-radius:20px;">قسم المكيف SP3</span>
-    </div>
-    <div class="showcase-track">
-      <div class="moving-car-container">
-        <div class="car-body-box">
-          <div class="car-icon-wrap">
-            <i class="fa-solid fa-van-shuttle"></i>
-          </div>
-          <div class="car-text-info">
-            <h4>TECHNICAL-24</h4>
-            <span>صيانة وتركيبات SP3 ❄️</span>
-          </div>
-        </div>
-      </div>
-      <div class="blue-road-line"></div>
-    </div>
-  </div>
-</div>
 
 <nav>  
   <button class="nav-btn active" onclick="goPage('p1',this)" id="nav1">1. العملاء والمبيعات</button>  
