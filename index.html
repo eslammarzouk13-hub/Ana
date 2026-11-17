@@ -335,8 +335,7 @@ display: none;
       <h3 id="formTitle">تسجيل عملية صيانة جديدة</h3>  
       <form id="serviceForm">  
         <input type="hidden" id="editIndex" value="-1">  
-        <label id="lblCode">كود العميل</label>  
-        <div style="display: flex; gap: 8px; align-items: center;">  
+        <div style="display: flex; gap: 8px; align-items: center; margin-top: 12px;">  
           <span style="background: #e3c5a5; color: #451a03; padding: 11px 16px; border-radius: 10px; font-weight: 800; border: 1px solid #d4b28c; font-size: 0.95rem;">INQ</span>  
           <input id="clientCode" required placeholder="أدخل رقم العميل..." style="direction: ltr; text-align: right; flex: 1;" oninput="this.value = this.value.replace(/[^0-9]/g, '')">  
         </div>  <label id="lblName">اسم العميل</label><input id="clientName" required placeholder="أدخل اسم العميل...">  
@@ -390,7 +389,7 @@ display: none;
     <table>  
       <thead>  
         <tr>  
-          <th id="thCode">الكود</th>  
+          <th id="thCode">INQ</th>  
           <th id="thClient">العميل</th>  
           <th id="thServ">الخدمات والأعداد والأسعار والحالة</th>  
           <th id="thAmount">المبلغ</th>  
@@ -413,7 +412,7 @@ display: none;
       <select id="filterPay" onchange="filterData()"><option value="all" id="fAllPay">جميع طرق الدفع</option><option>كاش / نقدي</option><option>شبكة</option><option>تحويل بنكي</option></select>  
     </div>  
     <div style="overflow-x:auto"><table>  
-      <thead><tr><th id="sthCode">الكود</th><th id="sthClient">العميل</th><th id="sthPhone">الجوال</th><th id="sthServ">الخدمات والأعداد والأسعار</th><th id="sthAmount">المبلغ</th></tr></thead>  
+      <thead><tr><th id="sthCode">INQ</th><th id="sthClient">العميل</th><th id="sthPhone">الجوال</th><th id="sthServ">الخدمات والأعداد والأسعار</th><th id="sthAmount">المبلغ</th></tr></thead>  
       <tbody id="searchBody"></tbody>  
     </table></div>  
   </div>  
@@ -442,7 +441,7 @@ display: none;
   <div class="banner" id="banner4">صفحة الصيانة الدورية - العملاء اللي عدى عليهم 6 شهور أو أكثر</div>  
   <div class="card"><h3 id="maintCardTitle">تنبيهات الصيانة الدورية</h3>  
     <div style="overflow-x:auto"><table>  
-      <thead><tr><th id="mthCode">الكود</th><th id="mthClient">العميل</th><th id="mthPhone">الجوال</th><th id="mthDate">آخر صيانة</th><th id="mthServ">الخدمات والأعداد</th></tr></thead>  
+      <thead><tr><th id="mthCode">INQ</th><th id="mthClient">العميل</th><th id="mthPhone">الجوال</th><th id="mthDate">آخر صيانة</th><th id="mthServ">الخدمات والأعداد</th></tr></thead>  
       <tbody id="maintBody"></tbody>  
     </table></div>  
   </div>  
@@ -532,15 +531,15 @@ const translations = {
   ar: {  
     nav1: "1. العملاء والمبيعات", nav2: "2. البحث", nav3: "3. التقارير الشهرية", nav4: "4. الصيانة الدورية", nav5: "5. الإعدادات والنسخ", nav6: "6. أرشيف صور العملاء",  
     st1Title: "إجمالي المبيعات", st2Title: "المحصل كاش", st3Title: "المحصل شبكة / تحويل", st4Title: "عدد العملاء",  
-    formTitle: "تسجيل عملية صيانة جديدة", lblCode: "كود العميل", lblName: "اسم العميل", lblPhone: "رقم الجوال",  
+    formTitle: "تسجيل عملية صيانة جديدة", lblName: "اسم العميل", lblPhone: "رقم الجوال",  
     lblServ: "حدد الكمية والسعر لكل خدمة (يقبل الهللَات والكسور)", lblStatus: "حالة الخدمة", lblPay: "طريقة الدفع", lblCost: "إجمالي التكلفة (ريال - قابل للتعديل اليدوي)", lblDate: "التاريخ", btnSave: "حفظ البيانات",  
-    tableTitle: "سجل العملاء والمبيعات", thCode: "الكود", thClient: "العميل", thServ: "الخدمات والأعداد والأسعار والحالة", thAmount: "المبلغ", thAction: "إجراءات",  
-    banner2: "صفحة البحث الذكي", searchCardTitle: "البحث والفلترة الذكية", sthCode: "الكود", sthClient: "العميل", sthPhone: "الجوال", sthServ: "الخدمات والأعداد والأسعار", sthAmount: "المبلغ",  
+    tableTitle: "سجل العملاء والمبيعات", thCode: "INQ", thClient: "العميل", thServ: "الخدمات والأعداد والأسعار والحالة", thAmount: "المبلغ", thAction: "إجراءات",  
+    banner2: "صفحة البحث الذكي", searchCardTitle: "البحث والفلترة الذكية", sthCode: "INQ", sthClient: "العميل", sthPhone: "الجوال", sthServ: "الخدمات والأعداد والأسعار", sthAmount: "المبلغ",  
     banner3: "صفحة التقارير - مبيعات الشهور والرسوم البيانية وتقارير الشهر المنفصل", repCardTitle: "استخراج تقارير شهر محدد (Excel أو طباعة)",  
     lblPickMonth: "اختر الشهر والسنة المطلوبة:", btnExcelMonth: "إكسيل الشهر", btnPrintMonth: "طباعة تقرير الشهر",  
     chartCardTitle: "الرسوم البيانية لمبيعات الشهور (أعمدة وخطوط ملونة)", btnBar: "عرض أعمدة", btnLine: "عرض خطوط",  
     banner4: "صفحة الصيانة الدورية - العملاء اللي عدى عليهم 6 شهور أو أكثر", maintCardTitle: "تنبيهات الصيانة الدورية",  
-    mthCode: "الكود", mthClient: "العميل", mthPhone: "الجوال", mthDate: "آخر صيانة", mthServ: "الخدمات والأعداد",  
+    mthCode: "INQ", mthClient: "العميل", mthPhone: "الجوال", mthDate: "آخر صيانة", mthServ: "الخدمات والأعداد",  
     banner5: "صفحة الإعدادات - الفنيين والنسخ الاحتياطي", langSettingTitle: "🌐 تغيير لغة التطبيق / Language Settings", lblSelectLang: "اختر اللغة المفضلة:",  
     empCardTitle: "إضافة وإدارة الفنيين والموظفين (أكثر من 10 أفراد)", lblEmpName: "اسم الموظف / اسم الدخول", lblEmpRole: "المسمى الوظيفي", lblEmpPhone: "الجوال", btnSaveEmp: "حفظ الموظف",  
     ethName: "الاسم", ethRole: "الوظيفة", ethPhone: "الجوال", ethAction: "إجراءات", backupCardTitle: "النسخ الاحتياطي للبيانات والتزامن", btnExportAll: "تصدير كافة البيانات Excel", btnBackupJson: "تحميل نسخة احتياطية JSON", lblRestore: "استعادة نسخة احتياطية:"  
@@ -750,7 +749,7 @@ function renderSales(){
     if(s.payMethod==='كاش / نقدي') cash += cost; else card += cost;  
     let servText = formatServicesText(s);  
     let actionButtons = isAdm ? `<div style="display:flex; gap:4px; align-items:center; flex-wrap:nowrap;"><button class="act pr" onclick="printInvoice(${i})">طباعة</button><button class="act edit" onclick="editSale(${i})">تعديل</button><button class="act del" onclick="deleteSale(${i})">حذف</button></div>` : `<div style="display:flex; gap:4px; align-items:center; flex-wrap:nowrap;"><button class="act pr" onclick="printInvoice(${i})">طباعة</button><span style="font-size:0.8rem; color:var(--muted);">(عرض فقط)</span></div>`;  
-    html += '<tr><td><b>INQ'+s.code+'</b><br><small>'+s.date+'</small></td><td><b>'+s.client+'</b><br><small>'+(s.phone||'')+'</small></td><td>'+servText+'<br><span class="badge '+statusClass(s.status)+'">'+(s.status||'مكتمل')+'</span></td><td><b>'+cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ريال</b><br><small>['+s.payMethod+']</small></td><td class="no-print">'+actionButtons+'</td></tr>';  
+    html += '<tr><td><b>INQ: '+s.code+'</b><br><small>'+s.date+'</small></td><td><b>'+s.client+'</b><br><small>'+(s.phone||'')+'</small></td><td>'+servText+'<br><span class="badge '+statusClass(s.status)+'">'+(s.status||'مكتمل')+'</span></td><td><b>'+cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ريال</b><br><small>['+s.payMethod+']</small></td><td class="no-print">'+actionButtons+'</td></tr>';  
   });  
   if($('salesBody')) $('salesBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا توجد بيانات بعد</td></tr>';  
   if($('sTotal')) $('sTotal').innerText = total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ريال';  
@@ -839,7 +838,7 @@ function filterData(){
   let pay = $('filterPay').value;  
   let html = '';  
   salesData.forEach((s)=>{  
-    let fullCode = 'INQ' + s.code;  
+    let fullCode = 'INQ: ' + s.code;  
     let matchQ = s.client.toLowerCase().includes(q) || fullCode.toLowerCase().includes(q) || s.code.toLowerCase().includes(q) || (s.phone||'').includes(q);  
     let matchS = st==='all' || s.status===st;  
     let matchP = pay==='all' || s.payMethod===pay;  
@@ -859,7 +858,7 @@ function renderMaint(){
   salesData.forEach((s)=>{  
     if(s.date && new Date(s.date) <= ago){  
       let servText = formatServicesText(s);  
-      html += '<tr><td>INQ'+s.code+'</td><td>'+s.client+'</td><td>'+(s.phone||'-')+'</td><td style="color:#dc2626;font-weight:800">'+s.date+'</td><td>'+servText+'</td></tr>';  
+      html += '<tr><td>INQ: '+s.code+'</td><td>'+s.client+'</td><td>'+(s.phone||'-')+'</td><td style="color:#dc2626;font-weight:800">'+s.date+'</td><td>'+servText+'</td></tr>';  
     }  
   });  
   $('maintBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا يوجد عملاء يستحقون الصيانة حالياً</td></tr>';  
@@ -923,14 +922,14 @@ function populateClientDropdown() {
   salesData = getSharedSales();  
   let html = '<option value="">-- اختر العميل --</option>';  
   salesData.forEach(s => {  
-    html += `<option value="${s.code}" data-name="${s.client}" data-phone="${s.phone || ''}">كود: INQ${s.code} - ${s.client}</option>`;  
+    html += `<option value="${s.code}" data-name="${s.client}" data-phone="${s.phone || ''}">كود: INQ: ${s.code} - ${s.client}</option>`;  
   });  
   select.innerHTML = html;  
 }  
   
 function fillClientCodeForMedia(select) {  
   let codeInput = $('mediaClientCode');  
-  if(select.value) codeInput.value = 'INQ' + select.value;  
+  if(select.value) codeInput.value = 'INQ: ' + select.value;  
   else codeInput.value = '';  
 }  
   
@@ -958,17 +957,18 @@ function renderMedia(){
     let foundAny = false;  
   
     for(let code in folders) {  
-      let fullCode = code.startsWith('INQ') ? code : ('INQ' + code);  
-      if(searchQuery && !fullCode.toLowerCase().includes(searchQuery) && !code.toLowerCase().includes(searchQuery) && !folders[code].clientName.toLowerCase().includes(searchQuery)) continue;  
+      let cleanCode = code.replace(/^INQ:\s*/i, '');  
+      let fullCode = 'INQ: ' + cleanCode;  
+      if(searchQuery && !fullCode.toLowerCase().includes(searchQuery) && !cleanCode.toLowerCase().includes(searchQuery) && !folders[code].clientName.toLowerCase().includes(searchQuery)) continue;  
       foundAny = true;  
       let folderData = folders[code];  
-      let clientObj = salesData.find(s => s.code === code);  
+      let clientObj = salesData.find(s => s.code === cleanCode);  
       let clientName = clientObj ? clientObj.client : folderData.clientName;  
       let clientPhone = clientObj ? clientObj.phone : '';  
   
       html += `<div style="background:#fff; border:2px solid #d4b28c; border-radius:14px; padding:16px; box-shadow:0 4px 6px rgba(0,0,0,0.05);">  
         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #e3c5a5; padding-bottom:8px; margin-bottom:12px; flex-wrap:wrap; gap:8px;">  
-          <div><h4 style="color:#78350f; font-size:1.1rem; margin:0;"><i class="fa-solid fa-folder-open" style="color:#d97706;"></i> كود العميل: ${fullCode} - ${clientName}</h4>  
+          <div><h4 style="color:#78350f; font-size:1.1rem; margin:0;"><i class="fa-solid fa-folder-open" style="color:#d97706;"></i> الكود: ${fullCode} - ${clientName}</h4>  
           <small style="color:var(--muted);">رقم الجوال: ${clientPhone || 'غير متوفر'} | إجمالي الملفات: ${folderData.items.length}</small></div>  
           <span class="badge run">فولدر العميل</span>  
         </div>  
@@ -1003,7 +1003,7 @@ function handleMediaSubmit(e){
   if(!db) return;  
   let fileInput = $('mediaFile');  
   let desc = $('mediaDesc').value.trim();  
-  let clientCode = $('mediaClientCode').value.trim().replace(/^INQ/i, '');  
+  let clientCode = $('mediaClientCode').value.trim().replace(/^INQ:\s*/i, '').replace(/^INQ/i, '');  
   let clientSelect = $('mediaClientSelect');  
   let selectedOption = clientSelect.options[clientSelect.selectedIndex];  
   let clientName = selectedOption ? selectedOption.getAttribute('data-name') : '';  
@@ -1061,8 +1061,8 @@ function shareMedia(id){
       let clientObj = salesData.find(s => s.code === m.clientCode);  
       let phone = clientObj ? clientObj.phone : '';  
       let cName = clientObj ? clientObj.client : (m.clientName || 'عميل');  
-      let fullCode = m.clientCode ? ('INQ' + m.clientCode) : '-';  
-      let text = `❄️ شركة تكنيكال 24 - توثيق صيانة المكيفات ❄️\n━━━━━━━━━━━━━━━━━━━\n👤 اسم العميل: ${cName}\n📌 كود العميل: ${fullCode}\n📞 الجوال: ${phone || '-'}\n🛠️ وصف الشغل: ${m.desc}\n📅 التاريخ: ${m.date}\n━━━━━━━━━━━━━━━━━━━\nنسعد دائماً بخدمتكم!`;  
+      let fullCode = m.clientCode ? ('INQ: ' + m.clientCode) : '-';  
+      let text = `❄️ شركة تكنيكال 24 - توثيق صيانة المكيفات ❄️\n━━━━━━━━━━━━━━━━━━━\n👤 اسم العميل: ${cName}\n📌 الكود: ${fullCode}\n📞 الجوال: ${phone || '-'}\n🛠️ وصف الشغل: ${m.desc}\n📅 التاريخ: ${m.date}\n━━━━━━━━━━━━━━━━━━━\nنسعد دائماً بخدمتكم!`;  
       if (navigator.canShare && navigator.canShare({ files: [new File([m.blob], m.blob.name || 'media', { type: m.type })] })) {  
         navigator.share({ files: [new File([m.blob], m.blob.name || 'media', { type: m.type })], title: 'تكنيكال 24', text: text }).catch(err => {});  
       } else {  
@@ -1078,7 +1078,7 @@ function exportExcel(){
   let csv = '\uFEFFكود العميل,اسم العميل,رقم الجوال,التاريخ,الخدمات والأعداد والأسعار,الحالة,طريقة الدفع,التكلفة\n';  
   salesData.forEach(s=>{  
     let servText = formatServicesText(s);  
-    csv += '"INQ'+s.code+'","'+s.client+'","'+(s.phone||'')+'","'+s.date+'","'+servText+'","'+(s.status||'مكتمل')+'","'+s.payMethod+'","'+s.cost+'"\n';  
+    csv += '"INQ: '+s.code+'","'+s.client+'","'+(s.phone||'')+'","'+s.date+'","'+servText+'","'+(s.status||'مكتمل')+'","'+s.payMethod+'","'+s.cost+'"\n';  
   });  
   let link = document.createElement('a');  
   link.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8;'}));  
@@ -1095,7 +1095,7 @@ function exportSingleMonthExcel(){
   let csv = '\uFEFFكود العميل,اسم العميل,رقم الجوال,التاريخ,الخدمات والأعداد والأسعار,الحالة,طريقة الدفع,التكلفة\n';  
   filtered.forEach(s=>{  
     let servText = formatServicesText(s);  
-    csv += '"INQ'+s.code+'","'+s.client+'","'+(s.phone||'')+'","'+s.date+'","'+servText+'","'+(s.status||'مكتمل')+'","'+s.payMethod+'","'+s.cost+'"\n';  
+    csv += '"INQ: '+s.code+'","'+s.client+'","'+(s.phone||'')+'","'+s.date+'","'+servText+'","'+(s.status||'مكتمل')+'","'+s.payMethod+'","'+s.cost+'"\n';  
   });  
   let link = document.createElement('a');  
   link.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8;'}));  
@@ -1114,7 +1114,7 @@ function printSingleMonth(){
     let cost = Number(s.cost) || 0;  
     totalMonth += cost;  
     let servText = formatServicesText(s);  
-    rowsHtml += '<tr><td>'+(idx+1)+'</td><td>INQ'+s.code+'</td><td>'+s.client+'</td><td>'+s.date+'</td><td>'+servText+'</td><td>'+s.payMethod+'</td><td>'+cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ريال</td></tr>';  
+    rowsHtml += '<tr><td>'+(idx+1)+'</td><td>INQ: '+s.code+'</td><td>'+s.client+'</td><td>'+s.date+'</td><td>'+servText+'</td><td>'+s.payMethod+'</td><td>'+cost.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+' ريال</td></tr>';  
   });  
   let w = window.open('', '_blank', 'width=800,height=700');  
   if(!w) return;  
@@ -1124,7 +1124,7 @@ function printSingleMonth(){
         <h2 style="text-align:center;color:#78350f;margin-bottom:5px;">TC24 _قسم المكيف SP3 - تقرير المبيعات الشهري</h2>  
         <p style="text-align:center;font-weight:bold;color:#6b7280;margin-bottom:20px;">عن شهر: ${m}</p>  
         <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">  
-          <thead><tr style="background:#e3c5a5;color:#451a03;"><th style="padding:8px;border:1px solid #ddd;">#</th><th style="padding:8px;border:1px solid #ddd;">الكود</th><th style="padding:8px;border:1px solid #ddd;">العميل</th><th style="padding:8px;border:1px solid #ddd;">التاريخ</th><th style="padding:8px;border:1px solid #ddd;">الخدمات</th><th style="padding:8px;border:1px solid #ddd;">الدفع</th><th style="padding:8px;border:1px solid #ddd;">المبلغ</th></tr></thead>  
+          <thead><tr style="background:#e3c5a5;color:#451a03;"><th style="padding:8px;border:1px solid #ddd;">#</th><th style="padding:8px;border:1px solid #ddd;">INQ</th><th style="padding:8px;border:1px solid #ddd;">العميل</th><th style="padding:8px;border:1px solid #ddd;">التاريخ</th><th style="padding:8px;border:1px solid #ddd;">الخدمات</th><th style="padding:8px;border:1px solid #ddd;">الدفع</th><th style="padding:8px;border:1px solid #ddd;">المبلغ</th></tr></thead>  
           <tbody>${rowsHtml}</tbody>  
         </table>  
         <h3 style="text-align:left;background:#e3c5a5;padding:10px;border-radius:8px;color:#451a03;">إجمالي مبيعات الشهر: ${totalMonth.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</h3>  
@@ -1185,7 +1185,7 @@ function printInvoice(i){
   }  
   let w = window.open('', '_blank', 'width=750,height=700');  
   if(!w) return;  
-  w.document.write(`<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>فاتورة صيانة - INQ${s.code}</title></head>  
+  w.document.write(`<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>فاتورة صيانة - INQ: ${s.code}</title></head>  
     <body style="font-family:Tahoma;background:#fdfbf7;padding:30px;color:#1f2937;">  
       <div style="max-width:650px;margin:auto;background:#fff;border:2px solid #78350f;border-radius:16px;padding:30px;box-shadow:0 10px 25px rgba(0,0,0,0.1);">  
         <div style="text-align:center;border-bottom:2px solid #e3c5a5;padding-bottom:15px;margin-bottom:20px;">  
@@ -1193,7 +1193,7 @@ function printInvoice(i){
           <p style="color:#6b7280;font-size:1.05rem;font-weight:bold;">فاتوره العميل</p>  
         </div>  
         <div style="display:flex;justify-content:space-between;margin-bottom:20px;font-size:0.95rem;background:#e3c5a5;padding:12px;border-radius:10px;color:#451a03;">  
-          <div><b>كود العميل:</b> INQ${s.code}</div><div><b>التاريخ:</b> ${s.date}</div>  
+          <div><b>INQ:</b> ${s.code}</div><div><b>التاريخ:</b> ${s.date}</div>  
         </div>  
         <div style="margin-bottom:20px;font-size:0.95rem;">  
           <p style="margin-bottom:6px;"><b>اسم العميل:</b> ${s.client}</p>  
