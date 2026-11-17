@@ -1,25 +1,28 @@
-<!DOCTYPE html>  <html lang="ar" dir="rtl" id="htmlRoot">  
+<!DOCTYPE html>  
+<html lang="ar" dir="rtl" id="htmlRoot">  
 <head>  
 <meta charset="UTF-8">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title id="appTitle">TC24 | نظام الصيانة والمبيعات</title>  <!-- الأيقونات الحديثة للشاشة الرئيسية (PWA & Apple Touch Icon) -->  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2225%22 fill=%22%230284c7%22/><text x=%2250%%22 y=%2255%%22 font-size=%2255%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>❄️</text></svg>">  
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2225%22 fill=%22%230284c7%22/><text x=%2250%%22 y=%2255%%22 font-size=%2255%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>❄️</text></svg>">  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">  
+<title id="appTitle">TC24 | نظام الصيانة والمبيعات</title>  
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2225%22 fill=%22%230284c7%22/><text x=%2250%%22 y=%2255%%22 font-size=%2255%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>❄️</text></svg>">  
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2225%22 fill=%22%230284c7%22/><text x=%2250%%22 y=%2255%%22 font-size=%2255%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>❄️</text></svg>">  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">  
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
 <style>  
-:root{--bg:#fdfbf7;--card:#fff;--brown:#78350f;--gold:#d97706;--green:#059669;--blue:#0284c7;--muted:#6b7280;--border:#e5e7eb}  
+:root{--bg:#f0f4f8;--card:#fff;--primary:#0284c7;--primary-dark:#0369a1;--gold:#d97706;--green:#059669;--muted:#64748b;--border:#e2e8f0}  
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,sans-serif}  
-body{background:var(--bg);color:#1f2937;line-height:1.6;overflow-x:hidden;}  /* غلاف / هيدر راقٍ وفتيح تظهر فيه الصورة بوضوح مع تدرج خفيف جداً يضمن قراءة النصوص */
+body{background:var(--bg);color:#1e293b;line-height:1.6;overflow-x:hidden;padding-bottom:70px;}  
+
+/* هيدر عصري متناسق مع التصميم الجديد */
 header{
-background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(120, 53, 15, 0.35)), url('1000426910.jpg') center/cover no-repeat;
-color:#1f2937;
-padding:18px 24px;
+background: linear-gradient(135deg, #0284c7, #0369a1), url('1000426910.jpg') center/cover no-repeat;
+color:#fff;
+padding:16px 20px;
 display:flex;
 flex-direction:column;
-align-items:center;
-gap:12px;
-text-align:center;
+gap:10px;
 position:relative;
-box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+box-shadow: 0 4px 20px rgba(2, 132, 199, 0.25);
 border-bottom: 3px solid var(--gold);
 }
 
@@ -32,249 +35,284 @@ flex-wrap: wrap;
 gap: 10px;
 }
 .header-center-title {
-font-size: 1.5rem;
+font-size: 1.4rem;
 font-weight: 800;
-color: #78350f;
+color: #fff;
 display: flex;
 align-items: center;
 gap: 8px;
 justify-content: center;
-text-shadow: 0 1px 3px rgba(255,255,255,0.9);
-background: rgba(255, 255, 255, 0.75);
-padding: 6px 18px;
+text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+background: rgba(255, 255, 255, 0.15);
+padding: 6px 16px;
 border-radius: 20px;
 backdrop-filter: blur(6px);
-border: 1px solid rgba(217, 119, 6, 0.3);
+border: 1px solid rgba(255, 255, 255, 0.2);
 }
-.header-center-title i{color:#d97706}
+.header-center-title i{color:#ffb703}
 .online-status-badge {
-background: rgba(255, 255, 255, 0.85);
+background: rgba(16, 185, 129, 0.2);
 border: 1px solid #34d399;
-padding: 5px 14px;
+padding: 4px 12px;
 border-radius: 20px;
-font-size: 0.85rem;
+font-size: 0.8rem;
 font-weight: bold;
-color: #065f46;
+color: #d1fae5;
 display: flex;
 align-items: center;
 gap: 6px;
 backdrop-filter: blur(4px);
-box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 .online-dot {
-width: 9px;
-height: 9px;
-background-color: #10b981;
+width: 8px;
+height: 8px;
+background-color: #34d399;
 border-radius: 50%;
-box-shadow: 0 0 8px #10b981;
+box-shadow: 0 0 8px #34d399;
 }
 .header-left-area {
 display: flex;
 align-items: center;
-gap: 15px;
+gap: 10px;
 flex-wrap: wrap;
 }
 .live-clock {
-background: rgba(255, 255, 255, 0.85);
-padding: 6px 14px;
-border-radius: 20px;
+background: rgba(255, 255, 255, 0.15);
+padding: 4px 10px;
+border-radius: 15px;
 font-weight: bold;
-font-size: 0.95rem;
-color: #78350f;
-border: 1px solid rgba(217, 119, 6, 0.4);
-letter-spacing: 0.5px;
+font-size: 0.85rem;
+color: #fff;
+border: 1px solid rgba(255, 255, 255, 0.2);
 display: flex;
 align-items: center;
-gap: 6px;
+gap: 5px;
 backdrop-filter: blur(4px);
-box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-/* شريط التنقل العلوي في الجزء الأبيض أسفل الهيدر */
+/* شريط التنقل السفلي والعلوي الفاخر (Bottom & Top Nav) */
 nav{
 background: #ffffff;
-border-bottom: 2px solid var(--border);
-padding: 10px 14px;
+border-top: 1px solid var(--border);
+padding: 8px 12px;
 display: flex;
-gap: 8px;
-overflow-x: auto;
-position: sticky;
-top: 0;
-z-index: 10;
-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+justify-content: space-around;
+align-items: center;
+position: fixed;
+bottom: 0;
+left: 0;
+width: 100%;
+z-index: 1000;
+box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08);
 }
 .nav-btn{
 flex: 1;
-white-space: nowrap;
-padding: 11px 14px;
-border: 1px solid var(--border);
-background: #f9fafb;
-border-radius: 10px;
-font-weight: 800;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 3px;
+background: transparent;
+border: none;
+font-weight: 700;
 cursor: pointer;
 color: var(--muted);
+font-size: 0.75rem;
 transition: all 0.2s;
-box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+padding: 6px 0;
 }
-.nav-btn:hover{
-background: #f3f4f6;
-color: var(--brown);
-}
+.nav-btn i { font-size: 1.2rem; }
+.nav-btn:hover{ color: var(--primary); }
 .nav-btn.active{
-background: var(--brown);
-color: #fff;
-border-color: var(--brown);
-box-shadow: 0 4px 10px rgba(120, 53, 15, 0.3);
+color: var(--primary);
+position: relative;
+}
+.nav-btn.active::after {
+content: '';
+position: absolute;
+bottom: 0;
+width: 25px;
+height: 3px;
+background: var(--primary);
+border-radius: 3px;
 }
 
-.page{display:none;padding:20px;max-width:1200px;margin:auto}
+/* زر رئيسي بارز في المنتصف (زر الإضافة) */
+.nav-btn-center {
+background: linear-gradient(135deg, #0284c7, #0369a1);
+color: #fff !important;
+width: 48px;
+height: 48px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);
+margin-top: -18px;
+border: 3px solid #fff;
+}
+.nav-btn-center i { font-size: 1.4rem; color: #fff; }
+
+.page{display:none;padding:16px;max-width:1200px;margin:auto}
 .page.active{display:block}
 
-/* تم تغيير اللون الأصفر إلى بيج غامق راقٍ ومريح للعين هنا */
-.banner{background:#e3c5a5;border:1px solid #d4b28c;color:#451a03;padding:12px 16px;border-radius:12px;margin-bottom:16px;font-weight:700}
+/* بنر عصري بستايل كروت أبل */
+.banner{background:linear-gradient(135deg, #e0f2fe, #bae6fd);border:1px solid #7dd3fc;color:#0369a1;padding:14px 18px;border-radius:14px;margin-bottom:16px;font-weight:700;box-shadow:0 2px 8px rgba(2,132,199,0.08);}
 
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px}
-.stat{background:#fff;padding:18px;border-radius:14px;border:1px solid var(--border);border-right:6px solid var(--brown)}
-.stat b{font-size:1.35rem;color:var(--brown)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+.stat{background:#fff;padding:16px;border-radius:14px;border:1px solid var(--border);border-right:5px solid var(--primary);box-shadow:0 2px 6px rgba(0,0,0,0.02);transition:transform 0.2s;}
+.stat:hover{transform:translateY(-2px);}
+.stat b{font-size:1.25rem;color:var(--primary-dark)}
 .grid{display:grid;grid-template-columns:1fr 2fr;gap:20px;align-items:start;}
 @media(max-width:900px){.grid{grid-template-columns:1fr}}
-.card{background:#fff;padding:22px;border-radius:16px;border:1px solid var(--border);margin-bottom:20px}
-.card h3{color:var(--brown);margin-bottom:16px;border-bottom:2px solid #e3c5a5;padding-bottom:8px}
+.card{background:#fff;padding:20px;border-radius:16px;border:1px solid var(--border);margin-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,0.03)}
+.card h3{color:var(--primary-dark);margin-bottom:16px;border-bottom:2px solid #e0f2fe;padding-bottom:8px;font-size:1.15rem;}
 
 .table-container-scroll {
 max-height: 480px;
 overflow-y: auto;
 border: 1px solid var(--border);
-border-radius: 10px;
+border-radius: 12px;
 background: #fff;
 }
 .table-container-scroll thead th {
 position: sticky;
 top: 0;
 z-index: 5;
-background: #e3c5a5; /* تم التعديل هنا أيضاً ليصبح بيج غامق متناسق */
-color: #451a03;
+background: #f1f5f9;
+color: var(--primary-dark);
 }
 
-label{display:block;font-weight:700;font-size:.9rem;margin:12px 0 5px}
-input,select{width:100%;padding:11px;border:1px solid var(--border);border-radius:10px;background:#fafafa;font-size:.95rem}
-.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#fcf8f2;padding:14px;border:1px solid #d4b28c;border-radius:12px}
-.service-item{display:flex;flex-direction:column;gap:4px;background:#fff;padding:8px;border-radius:8px;border:1px solid #d4b28c}
-.service-item label{font-size:0.8rem;color:#78350f;margin:0}
+label{display:block;font-weight:700;font-size:0.85rem;margin:12px 0 5px;color:#334155}
+input,select{width:100%;padding:12px;border:1px solid var(--border);border-radius:12px;background:#f8fafc;font-size:0.95rem;transition:all 0.2s;}
+input:focus,select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(2,132,199,0.15);background:#fff;outline:none;}
+
+.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;background:#f0f9ff;padding:14px;border:1px solid #bae6fd;border-radius:12px}
+.service-item{display:flex;flex-direction:column;gap:4px;background:#fff;padding:8px;border-radius:10px;border:1px solid #e0f2fe}
+.service-item label{font-size:0.75rem;color:var(--primary-dark);margin:0}
 .service-inputs{display:flex;gap:6px}
-.service-inputs input{padding:7px;text-align:center;font-weight:bold;font-size:0.9rem}
-.btn{width:100%;padding:12px;background:var(--brown);color:#fff;border:none;border-radius:10px;font-weight:800;cursor:pointer;margin-top:14px}
-.btn2{width:auto;padding:9px 14px;background:#fff;color:var(--brown);border:2px solid #d4b28c;border-radius:10px;font-weight:800;cursor:pointer}
+.service-inputs input{padding:8px;text-align:center;font-weight:bold;font-size:0.9rem}
+.btn{width:100%;padding:13px;background:linear-gradient(135deg, #0284c7, #0369a1);color:#fff;border:none;border-radius:12px;font-weight:800;cursor:pointer;margin-top:16px;box-shadow:0 4px 12px rgba(2,132,199,0.3);transition:opacity 0.2s;}
+.btn:hover{opacity:0.95;}
+.btn2{width:auto;padding:10px 16px;background:#fff;color:var(--primary);border:2px solid #bae6fd;border-radius:10px;font-weight:800;cursor:pointer;transition:all 0.2s;}
+.btn2:hover{background:#f0f9ff;}
+
 table{width:100%;border-collapse:collapse}
-th,td{padding:11px;border-bottom:1px solid var(--border);text-align:right;font-size:.9rem}
-th{background:#e3c5a5;color:#451a03} /* تم التعديل هنا أيضاً لرؤوس الجداول */
-.badge{padding:4px 8px;border-radius:6px;font-size:.8rem;font-weight:800}
-.ok{background:#dcfce7;color:#166534}.wait{background:#fef9c3;color:#854d0e}.run{background:#e0f2fe;color:#075985}
-.act{border:none;padding:6px 10px;border-radius:6px;color:#fff;cursor:pointer;font-weight:bold;font-size:0.85rem;white-space:nowrap;}
+th,td{padding:12px;border-bottom:1px solid var(--border);text-align:right;font-size:.9rem}
+th{background:#f8fafc;color:var(--primary-dark);font-weight:700}
+.badge{padding:4px 10px;border-radius:20px;font-size:0.75rem;font-weight:800}
+.ok{background:#dcfce7;color:#166534}.wait{background:#fef9c3;color:#854d0e}.run{background:#e0f2fe;color:#0369a1}
+.act{border:none;padding:6px 12px;border-radius:8px;color:#fff;cursor:pointer;font-weight:bold;font-size:0.8rem;white-space:nowrap;transition:opacity 0.2s;}
+.act:hover{opacity:0.9;}
 .edit{background:#d97706}.del{background:#dc2626}.pr{background:#059669}.wa{background:#25D366}
 .search{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
 .search input,.search select{flex:1;min-width:180px}
 @media print{header,nav,.no-print{display:none!important}}
 
-/* واجهة تسجيل الدخول الفخمة */
+/* واجهة تسجيل الدخول الزجاجية الفخمة */
 #loginOverlay {
 position: fixed;
 top: 0; left: 0; width: 100%; height: 100%;
-background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(120, 53, 15, 0.6)), url('1000426910.jpg') center/cover no-repeat;
+background: linear-gradient(135deg, rgba(2, 132, 199, 0.85), rgba(3, 105, 161, 0.9)), url('1000426910.jpg') center/cover no-repeat;
 display: flex;
 justify-content: center;
 align-items: center;
 z-index: 9999;
 padding: 20px;
+backdrop-filter: blur(8px);
 }
 .login-card {
 background: rgba(255, 255, 255, 0.95);
-padding: 40px 32px;
-border-radius: 28px;
+padding: 36px 28px;
+border-radius: 24px;
 width: 100%;
-max-width: 420px;
+max-width: 400px;
 box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3);
 text-align: center;
 position: relative;
 z-index: 2;
-border: 1px solid #d4b28c;
-backdrop-filter: blur(10px);
+border: 1px solid rgba(255,255,255,0.4);
 }
 .login-icon-box {
-width: 72px;
-height: 72px;
+width: 68px;
+height: 68px;
 margin: 0 auto 16px;
+background: #e0f2fe;
+border-radius: 50%;
 display: flex;
 align-items: center;
 justify-content: center;
+box-shadow: 0 8px 16px rgba(2,132,199,0.15);
 }
 .login-icon-box i {
-font-size: 3.5rem;
-color: #92400e;
+font-size: 2.2rem;
+color: var(--primary);
 }
 .login-card h2 {
 color: #0f172a;
 margin-bottom: 6px;
-font-size: 1.8rem;
+font-size: 1.6rem;
 font-weight: 800;
 }
 .login-card p {
-color: #64748b;
-font-size: 0.95rem;
-margin-bottom: 28px;
+color: var(--muted);
+font-size: 0.9rem;
+margin-bottom: 24px;
 font-weight: 600;
 }
 .input-group {
 position: relative;
-margin-bottom: 16px;
+margin-bottom: 14px;
 }
 .input-group i {
 position: absolute;
 left: 16px;
 top: 50%;
 transform: translateY(-50%);
-color: #64748b;
+color: var(--muted);
 font-size: 1.1rem;
 }
 .input-group input {
 width: 100%;
-padding: 14px 16px 14px 46px;
-border: 1px solid #e2e8f0;
-border-radius: 14px;
-background: #ffffff;
+padding: 13px 16px 13px 46px;
+border: 1px solid var(--border);
+border-radius: 12px;
+background: #f8fafc;
 font-size: 1rem;
 color: #1e293b;
 outline: none;
-transition: all 0.2s ease;
+transition: all 0.2s;
 }
 .input-group input:focus {
-border-color: #d97706;
-box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
+border-color: var(--primary);
+box-shadow: 0 0 0 3px rgba(2,132,199,0.15);
+background: #fff;
 }
 .login-btn-main {
 width: 100%;
-padding: 15px;
-background: linear-gradient(135deg, #78350f, #542307);
+padding: 14px;
+background: linear-gradient(135deg, #0284c7, #0369a1);
 color: #fff;
 border: none;
-border-radius: 16px;
-font-size: 1.1rem;
+border-radius: 12px;
+font-size: 1.05rem;
 font-weight: 800;
 cursor: pointer;
 margin-top: 10px;
-box-shadow: 0 10px 20px rgba(120, 53, 15, 0.3);
+box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);
 }
 .login-error {
 color: #dc2626;
-font-size: 0.9rem;
-margin-top: 14px;
+font-size: 0.85rem;
+margin-top: 12px;
 font-weight: 700;
 display: none;
 }
 </style>
-
 </head>  
-<body>  <!-- واجهة تسجيل الدخول الآمنة النظيفة -->  <div id="loginOverlay">  
+<body>  
+
+<!-- واجهة تسجيل الدخول الآمنة النظيفة -->  
+<div id="loginOverlay">  
     <div class="login-card">  
         <div class="login-icon-box">  
             <i class="fa-solid fa-snowflake"></i>  
@@ -294,9 +332,11 @@ display: none;
             <div id="loginError" class="login-error">اسم المستخدم أو الرقم السري غير صحيح!</div>  
         </form>  
     </div>  
-</div>  <!-- المحتوى الأصلي للتطبيق -->  <div id="appContainer" style="display: none;">  
+</div>  
+
+<!-- المحتوى الأصلي للتطبيق -->  
+<div id="appContainer" style="display: none;">  
 <header>  
-  <!-- الصف العلوي: الحالة يمينًا والساعة والتحكم يسارًا -->  
   <div class="header-top-row">  
     <div class="online-status-badge">  
       <span class="online-dot"></span> دخول : ESLAM MARZOUK <i class="fa-solid fa-circle-check" style="color: #34d399;"></i> (متصل)  
@@ -305,24 +345,42 @@ display: none;
       <div class="live-clock" id="liveClockDisplay">  
         <i class="fa-regular fa-clock"></i> <span id="clockText">12:00:00 ص</span>  
       </div>  
-      <div style="display: flex; gap: 8px; align-items: center;">  
-        <span id="userRoleBadge" style="background:rgba(255,255,255,0.85); color:#78350f; padding:5px 10px; border-radius:8px; font-size:0.85rem; font-weight:bold; border:1px solid #d4b28c;"></span>  
-        <button class="btn2" onclick="logout()" style="background:#dc2626; color:#fff; border:none;" title="تسجيل خروج"><i class="fa-solid fa-right-from-bracket"></i></button>  
+      <div style="display: flex; gap: 6px; align-items: center;">  
+        <span id="userRoleBadge" style="background:rgba(255,255,255,0.2); color:#fff; padding:4px 10px; border-radius:8px; font-size:0.8rem; font-weight:bold; border:1px solid rgba(255,255,255,0.3);"></span>  
+        <button class="btn2" onclick="logout()" style="background:#dc2626; color:#fff; border:none; padding:4px 10px; font-size:0.8rem;" title="تسجيل خروج"><i class="fa-solid fa-right-from-bracket"></i></button>  
       </div>  
     </div>  
   </div>  
-  <!-- العنوان في منتصف الغلاف تماماً بتصميم زاهٍ وواضح -->  
   <div class="header-center-title">  
     <i class="fa-solid fa-snowflake"></i> TC24 _قسم المكيف SP3  
   </div>  
-</header>  <nav>  
-  <button class="nav-btn active" onclick="goPage('p1',this)" id="nav1">1. العملاء والمبيعات</button>  
-  <button class="nav-btn" onclick="goPage('p2',this)" id="nav2">2. البحث</button>  
-  <button class="nav-btn" onclick="goPage('p3',this)" id="nav3">3. التقارير الشهرية</button>  
-  <button class="nav-btn" onclick="goPage('p4',this)" id="nav4">4. الصيانة الدورية</button>  
-  <button class="nav-btn" onclick="goPage('p5',this)" id="nav5">5. الإعدادات والنسخ</button>  
-  <button class="nav-btn" onclick="goPage('p6',this)" id="nav6">6. أرشيف صور العملاء</button>  
-</nav>  <!-- صفحة 1 -->  <section id="p1" class="page active">  
+</header>  
+
+<!-- شريط التنقل السفلي الاحترافي المطابق للصورة -->  
+<nav>  
+  <button class="nav-btn active" onclick="goPage('p1',this)" id="nav1">  
+    <i class="fa-solid fa-house"></i>  
+    <span id="navTxt1">الرئيسية</span>  
+  </button>  
+  <button class="nav-btn" onclick="goPage('p2',this)" id="nav2">  
+    <i class="fa-solid fa-cart-shopping"></i>  
+    <span id="navTxt2">المبيعات</span>  
+  </button>  
+  <button class="nav-btn nav-btn-center" onclick="goPage('p1',document.querySelectorAll('.nav-btn')[0])" title="إضافة عملية جديدة">  
+    <i class="fa-solid fa-plus"></i>  
+  </button>  
+  <button class="nav-btn" onclick="goPage('p2',this)" id="navSearch">  
+    <i class="fa-solid fa-users"></i>  
+    <span id="navTxt3">العملاء</span>  
+  </button>  
+  <button class="nav-btn" onclick="goPage('p3',this)" id="nav3">  
+    <i class="fa-solid fa-chart-pie"></i>  
+    <span id="navTxt4">التقارير</span>  
+  </button>  
+</nav>  
+
+<!-- صفحة 1 -->  
+<section id="p1" class="page active">  
   <div class="banner" id="banner1">هلا وسهلا بيك، مساكم الله بالخير 🤚 - صفحة العملاء والمبيعات</div>  
   <div class="stats">  
     <div class="stat"><span id="st1Title">إجمالي المبيعات</span><br><b id="sTotal">0 ريال</b></div>  
@@ -336,73 +394,76 @@ display: none;
       <form id="serviceForm">  
         <input type="hidden" id="editIndex" value="-1">  
         <div style="display: flex; gap: 8px; align-items: center; margin-top: 12px;">  
-          <span style="background: #e3c5a5; color: #451a03; padding: 11px 16px; border-radius: 10px; font-weight: 800; border: 1px solid #d4b28c; font-size: 0.95rem;">INQ</span>  
+          <span style="background: #e0f2fe; color: var(--primary-dark); padding: 11px 16px; border-radius: 12px; font-weight: 800; border: 1px solid #bae6fd; font-size: 0.95rem;">INQ</span>  
           <input id="clientCode" required placeholder="أدخل رقم العميل..." style="direction: ltr; text-align: right; flex: 1;" oninput="this.value = this.value.replace(/[^0-9]/g, '')">  
-        </div>  <label id="lblName">اسم العميل</label><input id="clientName" required placeholder="أدخل اسم العميل...">  
-    <label id="lblPhone">رقم الجوال</label><input id="clientPhone" required placeholder="أدخل رقم الجوال...">  
-      
-    <label id="lblServ">حدد الكمية والسعر لكل خدمة (يقبل الهللَات والكسور)</label>  
-    <div class="services-grid">  
-      <div class="service-item">  
-        <label>الدكت (العدد / السعر)</label>  
-        <div class="service-inputs">  
-          <input type="number" id="qtyDuct" min="0" step="1" placeholder="العدد" oninput="calcTotalCost()">  
-          <input type="number" id="priceDuct" min="0" step="0.01" placeholder="السعر" oninput="calcTotalCost()">  
         </div>  
-      </div>  
-      <div class="service-item">  
-        <label>الاسبلت (العدد / السعر)</label>  
-        <div class="service-inputs">  
-          <input type="number" id="qtySplit" min="0" step="1" placeholder="العدد" oninput="calcTotalCost()">  
-          <input type="number" id="priceSplit" min="0" step="0.01" placeholder="السعر" oninput="calcTotalCost()">  
+        <label id="lblName">اسم العميل</label><input id="clientName" required placeholder="أدخل اسم العميل...">  
+        <label id="lblPhone">رقم الجوال</label><input id="clientPhone" required placeholder="أدخل رقم الجوال...">  
+        
+        <label id="lblServ">حدد الكمية والسعر لكل خدمة (يقبل الهللَات والكسور)</label>  
+        <div class="services-grid">  
+          <div class="service-item">  
+            <label>الدكت (العدد / السعر)</label>  
+            <div class="service-inputs">  
+              <input type="number" id="qtyDuct" min="0" step="1" placeholder="العدد" oninput="calcTotalCost()">  
+              <input type="number" id="priceDuct" min="0" step="0.01" placeholder="السعر" oninput="calcTotalCost()">  
+            </div>  
+          </div>  
+          <div class="service-item">  
+            <label>الاسبلت (العدد / السعر)</label>  
+            <div class="service-inputs">  
+              <input type="number" id="qtySplit" min="0" step="1" placeholder="العدد" oninput="calcTotalCost()">  
+              <input type="number" id="priceSplit" min="0" step="0.01" placeholder="السعر" oninput="calcTotalCost()">  
+            </div>  
+          </div>  
+          <div class="service-item">  
+            <label>الفلتر (العدد / السعر)</label>  
+            <div class="service-inputs">  
+              <input type="number" id="qtyFilter" min="0" step="1" placeholder="العدد" oninput="calcTotalCost()">  
+              <input type="number" id="priceFilter" min="0" step="0.01" placeholder="السعر" oninput="calcTotalCost()">  
+            </div>  
+          </div>  
+          <div class="service-item">  
+            <label>الماكينة (العدد / السعر)</label>  
+            <div class="service-inputs">  
+              <input type="number" id="qtyMachine" min="0" step="1" placeholder="العدد" oninput="calcTotalCost()">  
+              <input type="number" id="priceMachine" min="0" step="0.01" placeholder="السعر" oninput="calcTotalCost()">  
+            </div>  
+          </div>  
         </div>  
-      </div>  
-      <div class="service-item">  
-        <label>الفلتر (العدد / السعر)</label>  
-        <div class="service-inputs">  
-          <input type="number" id="qtyFilter" min="0" step="1" placeholder="العدد" oninput="calcTotalCost()">  
-          <input type="number" id="priceFilter" min="0" step="0.01" placeholder="السعر" oninput="calcTotalCost()">  
-        </div>  
-      </div>  
-      <div class="service-item">  
-        <label>الماكينة (العدد / السعر)</label>  
-        <div class="service-inputs">  
-          <input type="number" id="qtyMachine" min="0" step="1" placeholder="العدد" oninput="calcTotalCost()">  
-          <input type="number" id="priceMachine" min="0" step="0.01" placeholder="السعر" oninput="calcTotalCost()">  
-        </div>  
+
+        <label id="lblStatus">حالة الخدمة</label>  
+        <select id="serviceStatus"><option id="optComplete">مكتمل</option><option id="optProgress">قيد التنفيذ</option><option id="optPending">معلق</option></select>  
+        <label id="lblPay">طريقة الدفع</label>  
+        <select id="payMethod"><option id="payCash">كاش / نقدي</option><option id="payCard">شبكة</option><option id="payTransfer">تحويل بنكي</option></select>  
+        <label id="lblCost">إجمالي التكلفة (ريال - قابل للتعديل اليدوي أو الحساب التلقائي)</label><input type="number" id="serviceCost" step="0.01" required placeholder="0.00">  
+        <label id="lblDate">التاريخ</label><input type="date" id="serviceDate" required>  
+        <button class="btn" type="submit" id="btnSave">حفظ البيانات</button>  
+      </form>  
+    </div>  
+  
+    <div class="card">  
+      <h3 id="tableTitle">سجل العملاء والمبيعات</h3>  
+      <div class="table-container-scroll">  
+        <table>  
+          <thead>  
+            <tr>  
+              <th id="thCode">INQ</th>  
+              <th id="thClient">العميل</th>  
+              <th id="thServ">الخدمات والأعداد والأسعار والحالة</th>  
+              <th id="thAmount">المبلغ</th>  
+              <th class="no-print" id="thAction">إجراءات</th>  
+            </tr>  
+          </thead>  
+          <tbody id="salesBody"></tbody>  
+        </table>  
       </div>  
     </div>  
-
-    <label id="lblStatus">حالة الخدمة</label>  
-    <select id="serviceStatus"><option id="optComplete">مكتمل</option><option id="optProgress">قيد التنفيذ</option><option id="optPending">معلق</option></select>  
-    <label id="lblPay">طريقة الدفع</label>  
-    <select id="payMethod"><option id="payCash">كاش / نقدي</option><option id="payCard">شبكة</option><option id="payTransfer">تحويل بنكي</option></select>  
-    <label id="lblCost">إجمالي التكلفة (ريال - قابل للتعديل اليدوي أو الحساب التلقائي)</label><input type="number" id="serviceCost" step="0.01" required placeholder="0.00">  
-    <label id="lblDate">التاريخ</label><input type="date" id="serviceDate" required>  
-    <button class="btn" type="submit" id="btnSave">حفظ البيانات</button>  
-  </form>  
-</div>  
-  
-<div class="card">  
-  <h3 id="tableTitle">سجل العملاء والمبيعات</h3>  
-  <div class="table-container-scroll">  
-    <table>  
-      <thead>  
-        <tr>  
-          <th id="thCode">INQ</th>  
-          <th id="thClient">العميل</th>  
-          <th id="thServ">الخدمات والأعداد والأسعار والحالة</th>  
-          <th id="thAmount">المبلغ</th>  
-          <th class="no-print" id="thAction">إجراءات</th>  
-        </tr>  
-      </thead>  
-      <tbody id="salesBody"></tbody>  
-    </table>  
   </div>  
-</div>
+</section>  
 
-  </div>  
-</section>  <!-- صفحة 2 -->  <section id="p2" class="page">  
+<!-- صفحة 2 -->  
+<section id="p2" class="page">  
   <div class="banner" id="banner2">صفحة البحث الذكي</div>  
   <div class="card">  
     <h3 id="searchCardTitle">البحث والفلترة الذكية</h3>  
@@ -416,8 +477,12 @@ display: none;
       <tbody id="searchBody"></tbody>  
     </table></div>  
   </div>  
-</section>  <!-- صفحة 3 -->  <section id="p3" class="page">  
-  <div class="banner" id="banner3">صفحة التقارير - مبيعات الشهور والرسوم البيانية وتقارير الشهر المنفصل</div>    <div class="card no-print">  
+</section>  
+
+<!-- صفحة 3 -->  
+<section id="p3" class="page">  
+  <div class="banner" id="banner3">صفحة التقارير - مبيعات الشهور والرسوم البيانية وتقارير الشهر المنفصل</div>  
+  <div class="card no-print">  
     <h3 id="repCardTitle">استخراج تقارير شهر محدد (Excel أو طباعة)</h3>  
     <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">  
       <div style="flex:1; min-width:200px;">  
@@ -426,10 +491,11 @@ display: none;
       </div>  
       <div style="display:flex; gap:8px; margin-top:24px;">  
         <button class="btn2" style="background:#059669; color:#fff; border:none;" onclick="exportSingleMonthExcel()" id="btnExcelMonth"><i class="fa-solid fa-file-excel"></i> إكسيل الشهر</button>  
-        <button class="btn2" style="background:#78350f; color:#fff; border:none;" onclick="printSingleMonth()" id="btnPrintMonth"><i class="fa-solid fa-print"></i> طباعة تقرير الشهر</button>  
+        <button class="btn2" style="background:var(--primary); color:#fff; border:none;" onclick="printSingleMonth()" id="btnPrintMonth"><i class="fa-solid fa-print"></i> طباعة تقرير الشهر</button>  
       </div>  
     </div>  
-  </div>    <div class="card">  
+  </div>  
+  <div class="card">  
     <h3 id="chartCardTitle">الرسوم البيانية لمبيعات الشهور (أعمدة وخطوط ملونة)</h3>  
     <div style="display:flex; gap:10px; margin-bottom:12px;" class="no-print">  
       <button class="btn2" onclick="switchChartType('bar')" id="btnBar">عرض أعمدة</button>  
@@ -437,7 +503,10 @@ display: none;
     </div>  
     <div style="height:380px"><canvas id="monthlyChart"></canvas></div>  
   </div>  
-</section>  <!-- صفحة 4 -->  <section id="p4" class="page">  
+</section>  
+
+<!-- صفحة 4 -->  
+<section id="p4" class="page">  
   <div class="banner" id="banner4">صفحة الصيانة الدورية - العملاء اللي عدى عليهم 6 شهور أو أكثر</div>  
   <div class="card"><h3 id="maintCardTitle">تنبيهات الصيانة الدورية</h3>  
     <div style="overflow-x:auto"><table>  
@@ -445,7 +514,10 @@ display: none;
       <tbody id="maintBody"></tbody>  
     </table></div>  
   </div>  
-</section>  <!-- صفحة 5 -->  <section id="p5" class="page">  
+</section>  
+
+<!-- صفحة 5 -->  
+<section id="p5" class="page">  
   <div class="banner" id="banner5">صفحة الإعدادات - الفنيين والنسخ الاحتياطي والمزامنة</div>  
   <div class="grid">  
     <div class="card">  
@@ -458,78 +530,80 @@ display: none;
         <option value="hi">हिन्दी (Hindi)</option>  
         <option value="bn">বাংলা (Bengali)</option>  
         <option value="fr">Français (French)</option>  
-      </select>  <div id="adminEmpSection">  
-    <h3 id="empCardTitle">إضافة وإدارة الفنيين والموظفين (أكثر من 10 أفراد)</h3>  
-    <form id="empForm">  
-      <input type="hidden" id="editEmpIndex" value="-1">  
-      <label id="lblEmpName">اسم الموظف / اسم الدخول (مثال: فني 1)</label><input id="empName" required placeholder="مثال: فني 1">  
-      <label style="margin-top:8px;">الرقم السري الخاص بالموظف</label><input type="text" id="empPass" required placeholder="أدخل الرقم السري">  
-      <label id="lblEmpRole">المسمى الوظيفي</label><input id="empRole" required placeholder="فني صيانة وتكييف">  
-      <label id="lblEmpPhone">الجوال</label><input id="empPhone" placeholder="05xxxxxxxx">  
-      <button class="btn" type="submit" id="btnSaveEmp">حفظ الموظف الجديد</button>  
-    </form>  
+      </select>  
+      <div id="adminEmpSection">  
+        <h3 id="empCardTitle">إضافة وإدارة الفنيين والموظفين (أكثر من 10 أفراد)</h3>  
+        <form id="empForm">  
+          <input type="hidden" id="editEmpIndex" value="-1">  
+          <label id="lblEmpName">اسم الموظف / اسم الدخول (مثال: فني 1)</label><input id="empName" required placeholder="مثال: فني 1">  
+          <label style="margin-top:8px;">الرقم السري الخاص بالموظف</label><input type="text" id="empPass" required placeholder="أدخل الرقم السري">  
+          <label id="lblEmpRole">المسمى الوظيفي</label><input id="empRole" required placeholder="فني صيانة وتكييف">  
+          <label id="lblEmpPhone">الجوال</label><input id="empPhone" placeholder="05xxxxxxxx">  
+          <button class="btn" type="submit" id="btnSaveEmp">حفظ الموظف الجديد</button>  
+        </form>  
+      </div>  
+      <table style="margin-top:14px">  
+        <thead>  
+          <tr>  
+            <th id="ethName">الاسم</th>  
+            <th id="ethRole">الوظيفة</th>  
+            <th id="ethPhone">الجوال</th>  
+            <th id="ethAction">إجراءات</th>  
+          </tr>  
+        </thead>  
+        <tbody id="empBody"></tbody>  
+      </table>  
+    </div>  
+    <div class="card"><h3 id="backupCardTitle">النسخ الاحتياطي للبيانات والتزامن المشترك</h3>  
+      <button class="btn" type="button" onclick="syncDataNow()" style="background:#059669; margin-bottom:10px;"><i class="fa-solid fa-sync"></i> تحديث ومزامنة البيانات الآن</button>  
+      <button class="btn" type="button" onclick="exportExcel()" id="btnExportAll">تصدير كافة البيانات Excel</button>  
+      <button class="btn" type="button" style="background:#0284c7; margin-top:10px;" onclick="backupData()" id="btnBackupJson">تحميل نسخة احتياطية JSON</button>  
+      <label id="lblRestore" style="margin-top:12px;">استعادة نسخة احتياطية:</label>  
+      <input type="file" accept=".json" onchange="restoreData(event)">  
+    </div>  
   </div>  
+</section>  
 
-  <table style="margin-top:14px">  
-    <thead>  
-      <tr>  
-        <th id="ethName">الاسم</th>  
-        <th id="ethRole">الوظيفة</th>  
-        <th id="ethPhone">الجوال</th>  
-        <th id="ethAction">إجراءات</th>  
-      </tr>  
-    </thead>  
-    <tbody id="empBody"></tbody>  
-  </table>  
-</div>  
-<div class="card"><h3 id="backupCardTitle">النسخ الاحتياطي للبيانات والتزامن المشترك</h3>  
-  <button class="btn" type="button" onclick="syncDataNow()" style="background:#059669; margin-bottom:10px;"><i class="fa-solid fa-sync"></i> تحديث ومزامنة البيانات الآن</button>  
-  <button class="btn" type="button" onclick="exportExcel()" id="btnExportAll">تصدير كافة البيانات Excel</button>  
-  <button class="btn" type="button" style="background:#0284c7; margin-top:10px;" onclick="backupData()" id="btnBackupJson">تحميل نسخة احتياطية JSON</button>  
-  <label id="lblRestore" style="margin-top:12px;">استعادة نسخة احتياطية:</label>  
-  <input type="file" accept=".json" onchange="restoreData(event)">  
-</div>
-
-  </div>  
-</section>  <!-- صفحة 6 -->  <section id="p6" class="page">  
-  <div class="banner">📁 أرشيف وملفات العملاء (صور وفيديوهات) - البحث برقم الكود والمشاركة مع تفاصيل الشغل</div>    <div class="card no-print" style="background:#fcf8f2; border:1px solid #d4b28c;">  
-    <h3 style="color:#78350f; margin-bottom:10px;"><i class="fa-solid fa-magnifying-glass"></i> البحث في فولدرات العملاء</h3>  
+<!-- صفحة 6 -->  
+<section id="p6" class="page">  
+  <div class="banner">📁 أرشيف وملفات العملاء (صور وفيديوهات) - البحث برقم الكود والمشاركة مع تفاصيل الشغل</div>  
+  <div class="card no-print" style="background:#f0f9ff; border:1px solid #bae6fd;">  
+    <h3 style="color:var(--primary-dark); margin-bottom:10px;"><i class="fa-solid fa-magnifying-glass"></i> البحث في فولدرات العملاء</h3>  
     <div style="display:flex; gap:10px; flex-wrap:wrap;">  
       <input type="text" id="mediaSearchInput" placeholder="ابحث برقم كود العميل أو اسم العميل..." oninput="renderMedia()" style="background:#fff; flex:1; min-width:220px;">  
-      <button class="btn2" onclick="document.getElementById('mediaSearchInput').value=''; renderMedia();" style="background:#fff; color:#78350f;">عرض الكل</button>  
+      <button class="btn2" onclick="document.getElementById('mediaSearchInput').value=''; renderMedia();" style="background:#fff; color:var(--primary);">عرض الكل</button>  
     </div>  
-  </div>    <div class="grid">  
+  </div>  
+  <div class="grid">  
     <div class="card" id="mediaFormCard">  
       <h3 id="mediaFormTitle">إضافة صورة أو فيديو لملف العميل</h3>  
       <form id="mediaForm" onsubmit="handleMediaSubmit(event)">  
-        <input type="hidden" id="editMediaId" value="">  <label>اختر العميل المسجل مسبقاً</label>  
-    <select id="mediaClientSelect" required onchange="fillClientCodeForMedia(this)">  
-      <option value="">-- اختر العميل --</option>  
-    </select>  
-
-    <label style="margin-top:10px;">كود العميل (للبحث والفلترة)</label>  
-    <input type="text" id="mediaClientCode" required readonly style="background:#e5e7eb; font-weight:bold;" placeholder="سيتم تعبئة الكود تلقائياً...">  
-
-    <label style="margin-top:10px;">اختر الوسائط (صورة أو فيديو من الكاميرا أو الألبوم)</label>  
-    <input type="file" id="mediaFile" accept="image/*,video/*" style="padding:8px;">  
-
-    <label style="margin-top:10px;">وصف الشغل / الصيانة (مثال: تنظيف مكيفات اسبلت وصيانة الدكت)</label>  
-    <input type="text" id="mediaDesc" required placeholder="أدخل وصف الشغل...">  
-
-    <button class="btn" type="submit" id="btnSaveMedia">حفظ في ملف العميل</button>  
-  </form>  
+        <input type="hidden" id="editMediaId" value="">  
+        <label>اختر العميل المسجل مسبقاً</label>  
+        <select id="mediaClientSelect" required onchange="fillClientCodeForMedia(this)">  
+          <option value="">-- اختر العميل --</option>  
+        </select>  
+        <label style="margin-top:10px;">كود العميل (للبحث والفلترة)</label>  
+        <input type="text" id="mediaClientCode" required readonly style="background:#e2e8f0; font-weight:bold;" placeholder="سيتم تعبئة الكود تلقائياً...">  
+        <label style="margin-top:10px;">اختر الوسائط (صورة أو فيديو من الكاميرا أو الألبوم)</label>  
+        <input type="file" id="mediaFile" accept="image/*,video/*" style="padding:8px;">  
+        <label style="margin-top:10px;">وصف الشغل / الصيانة (مثال: تنظيف مكيفات اسبلت وصيانة الدكت)</label>  
+        <input type="text" id="mediaDesc" required placeholder="أدخل وصف الشغل...">  
+        <button class="btn" type="submit" id="btnSaveMedia">حفظ في ملف العميل</button>  
+      </form>  
+    </div>  
+    <div class="card">  
+      <h3>فولدرات وأرشيف وسائط العملاء</h3>  
+      <div id="mediaGrid" style="display: flex; flex-direction: column; gap: 20px; margin-top: 10px;"></div>  
+    </div>  
+  </div>  
+</section>  
 </div>  
 
-<div class="card">  
-  <h3>فولدرات وأرشيف وسائط العملاء</h3>  
-  <div id="mediaGrid" style="display: flex; flex-direction: column; gap: 20px; margin-top: 10px;"></div>  
-</div>
-
-  </div>  
-</section>  </div>  <script>  
+<script>  
 const translations = {  
   ar: {  
-    nav1: "1. العملاء والمبيعات", nav2: "2. البحث", nav3: "3. التقارير الشهرية", nav4: "4. الصيانة الدورية", nav5: "5. الإعدادات والنسخ", nav6: "6. أرشيف صور العملاء",  
+    navTxt1: "الرئيسية", navTxt2: "المبيعات", navTxt3: "العملاء", navTxt4: "التقارير",  
     st1Title: "إجمالي المبيعات", st2Title: "المحصل كاش", st3Title: "المحصل شبكة / تحويل", st4Title: "عدد العملاء",  
     formTitle: "تسجيل عملية صيانة جديدة", lblName: "اسم العميل", lblPhone: "رقم الجوال",  
     lblServ: "حدد الكمية والسعر لكل خدمة (يقبل الهللَات والكسور)", lblStatus: "حالة الخدمة", lblPay: "طريقة الدفع", lblCost: "إجمالي التكلفة (ريال - قابل للتعديل اليدوي)", lblDate: "التاريخ", btnSave: "حفظ البيانات",  
@@ -545,7 +619,7 @@ const translations = {
     ethName: "الاسم", ethRole: "الوظيفة", ethPhone: "الجوال", ethAction: "إجراءات", backupCardTitle: "النسخ الاحتياطي للبيانات والتزامن", btnExportAll: "تصدير كافة البيانات Excel", btnBackupJson: "تحميل نسخة احتياطية JSON", lblRestore: "استعادة نسخة احتياطية:"  
   }  
 };  
-  
+
 function changeLanguage(lang) {  
   let t = translations[lang] || translations['ar'];  
   document.getElementById('htmlRoot').setAttribute('lang', lang);  
@@ -556,7 +630,7 @@ function changeLanguage(lang) {
     if (el) el.innerText = t[key];  
   }  
 }  
-  
+
 function updateLiveClock() {  
   let now = new Date();  
   let hours = now.getHours();  
@@ -578,7 +652,7 @@ function updateLiveClock() {
   }  
 }  
 setInterval(updateLiveClock, 1000);  
-  
+
 function getSharedSales() {  
     let masterData = localStorage.getItem('tc24_sales_master');  
     let oldData = localStorage.getItem('tc24_sales');  
@@ -594,17 +668,17 @@ function getSharedSales() {
     });  
     return combined.length > 0 ? combined : parsedOld;  
 }  
-  
+
 function saveSharedSales(data) {  
     localStorage.setItem('tc24_sales_master', JSON.stringify(data));  
     localStorage.setItem('tc24_sales', JSON.stringify(data));  
 }  
-  
+
 let salesData = getSharedSales();  
 let empData = JSON.parse(localStorage.getItem('tc24_emps')) || [  
   { name: "TC24", pass: "0011", role: "فني تركيبات وصيانة أساسي", phone: "05xxxxxxxx" }  
 ];  
-  
+
 setInterval(() => {  
     let freshData = getSharedSales();  
     if (JSON.stringify(freshData) !== JSON.stringify(salesData)) {  
@@ -612,14 +686,14 @@ setInterval(() => {
         renderSales();  
     }  
 }, 3000);  
-  
+
 function syncDataNow() {  
     salesData = getSharedSales();  
     renderSales();  
     renderEmps();  
     alert('تم تحديث ومزامنة البيانات المشتركة بنجاح!');  
 }  
-  
+
 function handleLogin(e) {  
     e.preventDefault();  
     let u = document.getElementById('loginUser').value.trim();  
@@ -642,7 +716,7 @@ function handleLogin(e) {
         document.getElementById('loginError').style.display = 'block';  
     }  
 }  
-  
+
 function initAppSession() {  
     document.getElementById('loginOverlay').style.display = 'none';  
     document.getElementById('appContainer').style.display = 'block';  
@@ -658,12 +732,12 @@ function initAppSession() {
     renderEmps();  
     initDB();  
 }  
-  
+
 function logout() {  
     sessionStorage.clear();  
     location.reload();  
 }  
-  
+
 window.addEventListener('DOMContentLoaded', () => {  
     let savedLang = localStorage.getItem('tc24_lang') || 'ar';  
     if(document.getElementById('appLangSelect')) {  
@@ -675,7 +749,7 @@ window.addEventListener('DOMContentLoaded', () => {
         initAppSession();  
     }  
 });  
-  
+
 let db = null;  
 function initDB() {  
     let request = indexedDB.open("TC24_MediaDB", 1);  
@@ -691,16 +765,16 @@ function initDB() {
         }  
     };  
 }  
-  
+
 const $ = id => document.getElementById(id);  
 if($('serviceDate')) $('serviceDate').valueAsDate = new Date();  
 let currentYearMonth = new Date().toISOString().slice(0,7);  
 if($('reportMonthPicker')) $('reportMonthPicker').value = currentYearMonth;  
-  
+
 function goPage(id, btn){  
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));  
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));  
-  btn.classList.add('active');  
+  if(btn) btn.classList.add('active');  
   $(id).classList.add('active');  
   if(id==='p3') renderChart('bar');  
   if(id==='p2') filterData();  
@@ -709,11 +783,11 @@ function goPage(id, btn){
   if(id==='p6') { renderMedia(); populateClientDropdown(); }  
   window.scrollTo({top:0,behavior:'smooth'});  
 }  
-  
+
 function statusClass(s){  
   return s==='مكتمل' ? 'ok' : s==='قيد التنفيذ' ? 'run' : 'wait';  
 }  
-  
+
 function calcTotalCost() {  
   let dQty = parseFloat($('qtyDuct').value) || 0;  
   let dPrice = parseFloat($('priceDuct').value) || 0;  
@@ -726,7 +800,7 @@ function calcTotalCost() {
   let total = (dQty * dPrice) + (sQty * sPrice) + (fQty * fPrice) + (mQty * mPrice);  
   if(total > 0) $('serviceCost').value = total.toFixed(2);  
 }  
-  
+
 function formatServicesText(s) {  
   if (s.servicesObj) {  
     let parts = [];  
@@ -738,7 +812,7 @@ function formatServicesText(s) {
   }  
   return Array.isArray(s.servicesList) ? s.servicesList.join('، ') : (s.service || '');  
 }  
-  
+
 function renderSales(){  
   salesData = getSharedSales();  
   let total=0, cash=0, card=0, html='';  
@@ -757,7 +831,7 @@ function renderSales(){
   if($('sCard')) $('sCard').innerText = card.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ريال';  
   if($('sCount')) $('sCount').innerText = salesData.length;  
 }  
-  
+
 if($('serviceForm')) {  
   $('serviceForm').addEventListener('submit', function(e){  
     e.preventDefault();  
@@ -800,7 +874,7 @@ if($('serviceForm')) {
     alert('تم حفظ وتحديث البيانات بنجاح!');  
   });  
 }  
-  
+
 function editSale(i){  
   salesData = getSharedSales();  
   let s = salesData[i];  
@@ -821,7 +895,7 @@ function editSale(i){
   $('formTitle').innerText = 'تعديل بيانات العميل';  
   goPage('p1', document.querySelectorAll('.nav-btn')[0]);  
 }  
-  
+
 function deleteSale(i){  
   if(confirm('هل أنت متأكد من حذف بيانات هذا العميل؟')){  
     salesData = getSharedSales();  
@@ -830,7 +904,7 @@ function deleteSale(i){
     renderSales();  
   }  
 }  
-  
+
 function filterData(){  
   salesData = getSharedSales();  
   let q = $('searchInput').value.toLowerCase();  
@@ -849,7 +923,7 @@ function filterData(){
   });  
   $('searchBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا توجد نتائج</td></tr>';  
 }  
-  
+
 function renderMaint(){  
   salesData = getSharedSales();  
   let ago = new Date();  
@@ -863,7 +937,7 @@ function renderMaint(){
   });  
   $('maintBody').innerHTML = html || '<tr><td colspan="5" style="text-align:center">لا يوجد عملاء يستحقون الصيانة حالياً</td></tr>';  
 }  
-  
+
 function renderEmps(){  
   if($('empBody')) {  
     let html = '';  
@@ -876,7 +950,7 @@ function renderEmps(){
     localStorage.setItem('tc24_emps', JSON.stringify(empData));  
   }  
 }  
-  
+
 if($('empForm')) {  
   $('empForm').addEventListener('submit', function(e){  
     e.preventDefault();  
@@ -897,7 +971,7 @@ if($('empForm')) {
     alert('تم حفظ بيانات الموظف بنجاح!');  
   });  
 }  
-  
+
 function editEmp(idx){  
   let e = empData[idx];  
   $('empName').value = e.name;  
@@ -908,14 +982,14 @@ function editEmp(idx){
   $('btnSaveEmp').innerText = "تعديل بيانات الموظف";  
   window.scrollTo({top:0, behavior:'smooth'});  
 }  
-  
+
 function deleteEmp(idx){  
   if(confirm('هل أنت متأكد من حذف هذا الموظف؟')){  
     empData.splice(idx, 1);  
     renderEmps();  
   }  
 }  
-  
+
 function populateClientDropdown() {  
   let select = $('mediaClientSelect');  
   if(!select) return;  
@@ -926,13 +1000,13 @@ function populateClientDropdown() {
   });  
   select.innerHTML = html;  
 }  
-  
+
 function fillClientCodeForMedia(select) {  
   let codeInput = $('mediaClientCode');  
   if(select.value) codeInput.value = 'INQ: ' + select.value;  
   else codeInput.value = '';  
 }  
-  
+
 function renderMedia(){  
   if(!db) return;  
   let grid = $('mediaGrid');  
@@ -966,9 +1040,9 @@ function renderMedia(){
       let clientName = clientObj ? clientObj.client : folderData.clientName;  
       let clientPhone = clientObj ? clientObj.phone : '';  
   
-      html += `<div style="background:#fff; border:2px solid #d4b28c; border-radius:14px; padding:16px; box-shadow:0 4px 6px rgba(0,0,0,0.05);">  
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #e3c5a5; padding-bottom:8px; margin-bottom:12px; flex-wrap:wrap; gap:8px;">  
-          <div><h4 style="color:#78350f; font-size:1.1rem; margin:0;"><i class="fa-solid fa-folder-open" style="color:#d97706;"></i> الكود: ${fullCode} - ${clientName}</h4>  
+      html += `<div style="background:#fff; border:2px solid #bae6fd; border-radius:14px; padding:16px; box-shadow:0 4px 6px rgba(0,0,0,0.05);">  
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #e0f2fe; padding-bottom:8px; margin-bottom:12px; flex-wrap:wrap; gap:8px;">  
+          <div><h4 style="color:var(--primary-dark); font-size:1.1rem; margin:0;"><i class="fa-solid fa-folder-open" style="color:var(--gold);"></i> الكود: ${fullCode} - ${clientName}</h4>  
           <small style="color:var(--muted);">رقم الجوال: ${clientPhone || 'غير متوفر'} | إجمالي الملفات: ${folderData.items.length}</small></div>  
           <span class="badge run">فولدر العميل</span>  
         </div>  
@@ -980,11 +1054,11 @@ function renderMedia(){
         let safeDesc = m.desc.replace(/'/g, "\\'");  
         let adminButtons = isAdm ? `<button class="act edit" style="flex:1;" onclick="editMedia(${m.id}, '${safeDesc}')">تعديل</button><button class="act del" style="flex:1;" onclick="deleteMedia(${m.id})">حذف</button>` : '';  
   
-        html += `<div style="background:#f9fafb; border:1px solid var(--border); border-radius:10px; padding:8px; display:flex; flex-direction:column; gap:6px;">  
+        html += `<div style="background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:8px; display:flex; flex-direction:column; gap:6px;">  
           <div style="width:100%; height:140px; background:#000; border-radius:8px; overflow:hidden; display:flex; align-items:center; justify-content:center;">  
             ${isVideo ? `<video src="${blobUrl}" controls style="width:100%; height:100%; object-fit:cover;"></video>` : `<img src="${blobUrl}" style="width:100%; height:100%; object-fit:cover;">`}  
           </div>  
-          <p style="font-size:0.85rem; font-weight:bold; color:#1f2937; margin:0; word-break:break-word;">${m.desc}</p>  
+          <p style="font-size:0.85rem; font-weight:bold; color:#1e293b; margin:0; word-break:break-word;">${m.desc}</p>  
           <small style="color:var(--muted);">التاريخ: ${m.date}</small>  
           <div style="display:flex; gap:4px; margin-top:4px;">  
             <button class="act wa" style="flex:1;" onclick="shareMedia(${m.id})"><i class="fa-brands fa-whatsapp"></i> واتساب</button>  
@@ -997,7 +1071,7 @@ function renderMedia(){
     grid.innerHTML = foundAny ? html : '<p style="text-align:center; color:var(--muted); padding:20px;">لا توجد ملفات أو صور مطابقة للبحث</p>';  
   };  
 }  
-  
+
 function handleMediaSubmit(e){  
   e.preventDefault();  
   if(!db) return;  
@@ -1039,20 +1113,20 @@ function handleMediaSubmit(e){
     } else { alert('الرجاء اختيار ملف صورة أو فيديو!'); }  
   }  
 }  
-  
+
 function editMedia(id, currentDesc){  
   $('mediaDesc').value = currentDesc;  
   $('editMediaId').value = id;  
   $('mediaFormTitle').innerText = "تعديل وصف الوسائط";  
   window.scrollTo({top:0, behavior:'smooth'});  
 }  
-  
+
 function deleteMedia(id){  
   if(confirm('هل أنت متأكد من حذف هذه الوسائط نهائياً؟')){  
     db.transaction(["mediaStore"], "readwrite").objectStore("mediaStore").delete(id).onsuccess = function() { renderMedia(); };  
   }  
 }  
-  
+
 function shareMedia(id){  
   db.transaction(["mediaStore"], "readonly").objectStore("mediaStore").get(id).onsuccess = function(event) {  
     let m = event.target.result;  
@@ -1071,7 +1145,7 @@ function shareMedia(id){
     }  
   };  
 }  
-  
+
 function exportExcel(){  
   salesData = getSharedSales();  
   if(!salesData.length){ alert('لا توجد بيانات للتصدير!'); return; }  
@@ -1085,7 +1159,7 @@ function exportExcel(){
   link.download = 'TC24_All_Customers.csv';  
   link.click();  
 }  
-  
+
 function exportSingleMonthExcel(){  
   salesData = getSharedSales();  
   let m = $('reportMonthPicker').value;  
@@ -1102,7 +1176,7 @@ function exportSingleMonthExcel(){
   link.download = 'TC24_Report_'+m+'.csv';  
   link.click();  
 }  
-  
+
 function printSingleMonth(){  
   salesData = getSharedSales();  
   let m = $('reportMonthPicker').value;  
@@ -1119,23 +1193,23 @@ function printSingleMonth(){
   let w = window.open('', '_blank', 'width=800,height=700');  
   if(!w) return;  
   w.document.write(`<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>تقرير شهر ${m}</title></head>  
-    <body style="font-family:Tahoma;padding:30px;color:#1f2937;">  
-      <div style="max-width:700px;margin:auto;border:2px solid #78350f;border-radius:12px;padding:25px;">  
-        <h2 style="text-align:center;color:#78350f;margin-bottom:5px;">TC24 _قسم المكيف SP3 - تقرير المبيعات الشهري</h2>  
-        <p style="text-align:center;font-weight:bold;color:#6b7280;margin-bottom:20px;">عن شهر: ${m}</p>  
+    <body style="font-family:Tahoma;padding:30px;color:#1e293b;">  
+      <div style="max-width:700px;margin:auto;border:2px solid var(--primary);border-radius:12px;padding:25px;">  
+        <h2 style="text-align:center;color:var(--primary-dark);margin-bottom:5px;">TC24 _قسم المكيف SP3 - تقرير المبيعات الشهري</h2>  
+        <p style="text-align:center;font-weight:bold;color:var(--muted);margin-bottom:20px;">عن شهر: ${m}</p>  
         <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">  
-          <thead><tr style="background:#e3c5a5;color:#451a03;"><th style="padding:8px;border:1px solid #ddd;">#</th><th style="padding:8px;border:1px solid #ddd;">INQ</th><th style="padding:8px;border:1px solid #ddd;">العميل</th><th style="padding:8px;border:1px solid #ddd;">التاريخ</th><th style="padding:8px;border:1px solid #ddd;">الخدمات</th><th style="padding:8px;border:1px solid #ddd;">الدفع</th><th style="padding:8px;border:1px solid #ddd;">المبلغ</th></tr></thead>  
+          <thead><tr style="background:#e0f2fe;color:var(--primary-dark);"><th style="padding:8px;border:1px solid #ddd;">#</th><th style="padding:8px;border:1px solid #ddd;">INQ</th><th style="padding:8px;border:1px solid #ddd;">العميل</th><th style="padding:8px;border:1px solid #ddd;">التاريخ</th><th style="padding:8px;border:1px solid #ddd;">الخدمات</th><th style="padding:8px;border:1px solid #ddd;">الدفع</th><th style="padding:8px;border:1px solid #ddd;">المبلغ</th></tr></thead>  
           <tbody>${rowsHtml}</tbody>  
         </table>  
-        <h3 style="text-align:left;background:#e3c5a5;padding:10px;border-radius:8px;color:#451a03;">إجمالي مبيعات الشهر: ${totalMonth.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</h3>  
-        <div style="margin-top:40px;text-align:left;font-weight:bold;font-size:1.1rem;border-top:1px dashed #78350f;padding-top:15px;">تم بواسطة: إسلام أحمد</div>  
+        <h3 style="text-align:left;background:#e0f2fe;padding:10px;border-radius:8px;color:var(--primary-dark);">إجمالي مبيعات الشهر: ${totalMonth.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</h3>  
+        <div style="margin-top:40px;text-align:left;font-weight:bold;font-size:1.1rem;border-top:1px dashed var(--primary);padding-top:15px;">تم بواسطة: إسلام أحمد</div>  
       </div>  
     </body></html>`);  
   w.document.close();  
   w.focus();  
   setTimeout(function(){ w.print(); w.close(); }, 400);  
 }  
-  
+
 function backupData(){  
   salesData = getSharedSales();  
   let json = JSON.stringify({ sales: salesData, emps: empData }, null, 2);  
@@ -1146,7 +1220,7 @@ function backupData(){
   link.click();  
   link.remove();  
 }  
-  
+
 function restoreData(event){  
   let file = event.target.files[0];  
   if(!file) return;  
@@ -1170,7 +1244,7 @@ function restoreData(event){
   };  
   reader.readAsText(file);  
 }  
-  
+
 function printInvoice(i){  
   salesData = getSharedSales();  
   let s = salesData[i];  
@@ -1186,13 +1260,13 @@ function printInvoice(i){
   let w = window.open('', '_blank', 'width=750,height=700');  
   if(!w) return;  
   w.document.write(`<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>فاتورة صيانة - INQ: ${s.code}</title></head>  
-    <body style="font-family:Tahoma;background:#fdfbf7;padding:30px;color:#1f2937;">  
-      <div style="max-width:650px;margin:auto;background:#fff;border:2px solid #78350f;border-radius:16px;padding:30px;box-shadow:0 10px 25px rgba(0,0,0,0.1);">  
-        <div style="text-align:center;border-bottom:2px solid #e3c5a5;padding-bottom:15px;margin-bottom:20px;">  
-          <h2 style="color:#78350f;margin-bottom:5px;">TC24 _قسم المكيف SP3 ❄️</h2>  
-          <p style="color:#6b7280;font-size:1.05rem;font-weight:bold;">فاتوره العميل</p>  
+    <body style="font-family:Tahoma;background:#f8fafc;padding:30px;color:#1e293b;">  
+      <div style="max-width:650px;margin:auto;background:#fff;border:2px solid var(--primary);border-radius:16px;padding:30px;box-shadow:0 10px 25px rgba(0,0,0,0.1);">  
+        <div style="text-align:center;border-bottom:2px solid #e0f2fe;padding-bottom:15px;margin-bottom:20px;">  
+          <h2 style="color:var(--primary-dark);margin-bottom:5px;">TC24 _قسم المكيف SP3 ❄️</h2>  
+          <p style="color:var(--muted);font-size:1.05rem;font-weight:bold;">فاتورة العميل</p>  
         </div>  
-        <div style="display:flex;justify-content:space-between;margin-bottom:20px;font-size:0.95rem;background:#e3c5a5;padding:12px;border-radius:10px;color:#451a03;">  
+        <div style="display:flex;justify-content:space-between;margin-bottom:20px;font-size:0.95rem;background:#e0f2fe;padding:12px;border-radius:10px;color:var(--primary-dark);">  
           <div><b>INQ:</b> ${s.code}</div><div><b>التاريخ:</b> ${s.date}</div>  
         </div>  
         <div style="margin-bottom:20px;font-size:0.95rem;">  
@@ -1202,18 +1276,18 @@ function printInvoice(i){
           <p style="margin-bottom:6px;"><b>حالة الخدمة:</b> ${s.status||'مكتمل'}</p>  
         </div>  
         <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">  
-          <thead><tr style="background:#78350f;color:#fff;"><th style="padding:10px;text-align:right;">الخدمة المطلوبة</th><th style="padding:10px;text-align:center;">العدد</th><th style="padding:10px;text-align:center;">السعر الفردي</th><th style="padding:10px;text-align:left;">الإجمالي</th></tr></thead>  
+          <thead><tr style="background:var(--primary);color:#fff;"><th style="padding:10px;text-align:right;">الخدمة المطلوبة</th><th style="padding:10px;text-align:center;">العدد</th><th style="padding:10px;text-align:center;">السعر الفردي</th><th style="padding:10px;text-align:left;">الإجمالي</th></tr></thead>  
           <tbody>${rowsPrint}</tbody>  
         </table>  
-        <div style="text-align:left;background:#e3c5a5;padding:14px;border-radius:10px;font-size:1.2rem;font-weight:bold;color:#451a03;margin-bottom:30px;">إجمالي المبلغ: ${(Number(s.cost)||0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</div>  
-        <div style="text-align:left;font-weight:bold;font-size:1.05rem;border-top:1px dashed #78350f;padding-top:15px;color:#451a03;">تم بواسطة: إسلام أحمد</div>  
+        <div style="text-align:left;background:#e0f2fe;padding:14px;border-radius:10px;font-size:1.2rem;font-weight:bold;color:var(--primary-dark);margin-bottom:30px;">إجمالي المبلغ: ${(Number(s.cost)||0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ريال</div>  
+        <div style="text-align:left;font-weight:bold;font-size:1.05rem;border-top:1px dashed var(--primary);padding-top:15px;color:var(--primary-dark);">تم بواسطة: إسلام أحمد</div>  
       </div>  
     </body></html>`);  
   w.document.close();  
   w.focus();  
   setTimeout(function(){ w.print(); w.close(); }, 400);  
 }  
-  
+
 let chartInstance = null;  
 function renderChart(type = 'bar'){  
   salesData = getSharedSales();  
@@ -1225,16 +1299,17 @@ function renderChart(type = 'bar'){
   });  
   let labels = Object.keys(months).sort();  
   let data = labels.map(l=>months[l]);  
-  let bgColors = ['#78350f', '#d97706', '#059669', '#0284c7', '#9333ea', '#db2777', '#4f46e5'];  
+  let bgColors = ['#0284c7', '#d97706', '#059669', '#0369a1', '#9333ea', '#db2777', '#4f46e5'];  
   let ctx = $('monthlyChart').getContext('2d');  
   if(chartInstance) chartInstance.destroy();  
   chartInstance = new Chart(ctx, {  
     type: type,  
-    data:{ labels: labels, datasets:[{ label: 'إجمالي المبيعات الشهري (ريال)', data: data, backgroundColor: bgColors, borderColor: '#78350f', borderWidth: 2, tension: 0.3, borderRadius: type==='bar'? 8 : 0 }] },  
+    data:{ labels: labels, datasets:[{ label: 'إجمالي المبيعات الشهري (ريال)', data: data, backgroundColor: bgColors, borderColor: '#0284c7', borderWidth: 2, tension: 0.3, borderRadius: type==='bar'? 8 : 0 }] },  
     options:{responsive:true, maintainAspectRatio:false, scales:{y:{beginAtZero:true}}}  
   });  
 }  
-  
+
 function switchChartType(type){ renderChart(type); }  
-</script>  </body>  
+</script>  
+</body>  
 </html>
