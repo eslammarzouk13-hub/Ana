@@ -3,7 +3,7 @@
 <head>  
 <meta charset="UTF-8">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title id="appTitle">TC24 | نظام الصيانة والمبيعات</title>  
+<title id="appTitle">TECHNICAL_24 | نظام الصيانة والمبيعات</title>  
 <!-- الأيقونات الحديثة للشاشة الرئيسية (PWA & Apple Touch Icon) -->  
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2225%22 fill=%22%230284c7%22/><text x=%2250%%22 y=%2255%%22 font-size=%2255%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>❄️</text></svg>">  
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2225%22 fill=%22%230284c7%22/><text x=%2250%%22 y=%2255%%22 font-size=%2255%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>❄️</text></svg>">  
@@ -27,7 +27,7 @@ body{background:var(--bg);color:#1e293b;line-height:1.6;overflow-x:hidden;}
 header{
 background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(3, 105, 161, 0.35)), url('1000426910.jpg') center/cover no-repeat;
 color:#1e293b;
-padding:18px 24px;
+padding:18px 24px 44px;
 display:flex;
 flex-direction:column;
 align-items:center;
@@ -37,6 +37,28 @@ position:relative;
 box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 border-bottom: 3px solid var(--accent-blue);
 overflow: hidden;
+}
+
+.banner-car-logo {
+position: absolute;
+bottom: 8px;
+right: 14px;
+z-index: 3;
+background: rgba(255, 255, 255, 0.94);
+border: 1.5px solid rgba(2, 132, 199, 0.45);
+border-radius: 12px;
+padding: 4px 10px;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+pointer-events: none;
+}
+
+.banner-car-logo svg {
+height: 36px;
+width: auto;
+display: block;
 }
 
 .snowflake {
@@ -326,7 +348,7 @@ display: none;
         <div class="login-icon-box">  
             <i class="fa-solid fa-snowflake"></i>  
         </div>  
-        <h2>TC24 _قسم المكيف SP3</h2>  
+        <h2>TECHNICAL_24 _قسم المكيف SP3</h2>  
         <p>نظام الصيانة والمبيعات الموحد</p>  
         <form id="loginForm" onsubmit="handleLogin(event)">  
             <div class="input-group">  
@@ -362,8 +384,34 @@ display: none;
     </div>  
   </div>  
   <div class="header-center-title">  
-    <i class="fa-solid fa-snowflake"></i> TC24 _قسم المكيف SP3  
+    <i class="fa-solid fa-snowflake"></i> TECHNICAL_24 _قسم المكيف SP3  
   </div>  
+  <div class="banner-car-logo" aria-label="شعار سيارة TECHNICAL_24">
+    <svg viewBox="0 0 210 78" xmlns="http://www.w3.org/2000/svg">
+      <!-- خطوط السرعة -->
+      <rect x="4" y="18" width="44" height="6" rx="3" fill="#0284c7"/>
+      <rect x="0" y="31" width="48" height="6" rx="3" fill="#0284c7"/>
+      <rect x="8" y="44" width="40" height="6" rx="3" fill="#0284c7"/>
+      <!-- هيكل السيارة والشاحنة -->
+      <path d="M54 10 H142 V36 H156 L176 20 L198 40 V56 H184 A18 18 0 0 0 148 56 H92 A18 18 0 0 0 56 56 H42 V48 H54 Z" fill="#0369a1"/>
+      <!-- نافذة الكابينة -->
+      <polygon points="158,25 174,25 188,38 158,38" fill="#ffffff"/>
+      <!-- شعار الشركة داخل السيارة (مفتاح ربط ومصافحة) -->
+      <g transform="translate(82, 13)">
+        <path d="M8 14 L22 4 L26 8 L14 18 L18 22 L30 12 L34 16 L20 26 L12 18 Z" fill="#84cc16"/>
+        <circle cx="8" cy="14" r="5" fill="#84cc16"/>
+        <circle cx="32" cy="14" r="5" fill="#84cc16"/>
+        <path d="M4 22 L14 14 L22 22 L12 30 Z" fill="#ffffff"/>
+      </g>
+      <!-- نص الشركة داخل السيارة -->
+      <text x="102" y="48" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-weight="900" font-size="11.5">TECHNICAL_24</text>
+      <!-- العجلات -->
+      <circle cx="74" cy="57" r="14" fill="#0369a1"/>
+      <circle cx="74" cy="57" r="6.5" fill="#ffffff"/>
+      <circle cx="166" cy="57" r="14" fill="#0369a1"/>
+      <circle cx="166" cy="57" r="6.5" fill="#ffffff"/>
+    </svg>
+  </div>
 </header>  
 
 <nav>  
@@ -862,7 +910,7 @@ function changeLanguage(lang) {
   let t = translations[lang] || translations['ar'];  
   document.getElementById('htmlRoot').setAttribute('lang', lang);  
   document.getElementById('htmlRoot').setAttribute('dir', (lang === 'ar' || lang === 'ur') ? 'rtl' : 'ltr');  
-  localStorage.setItem('tc24_lang', lang);  
+  localStorage.setItem('TECHNICAL_24_lang', lang);  
   for (let key in t) {  
     let el = document.getElementById(key);  
     if (el) el.innerText = t[key];  
@@ -937,7 +985,7 @@ function saveSharedSales(data) {
   
 let salesData = getSharedSales();  
 let empData = JSON.parse(localStorage.getItem('tc24_emps')) || [  
-  { name: "TC24", pass: "0011", role: "فني تركيبات وصيانة أساسي", phone: "05xxxxxxxx" }  
+  { name: "TECHNICAL_24", pass: "0011", role: "فني تركيبات وصيانة أساسي", phone: "05xxxxxxxx" }  
 ];  
 
 let fuelData = JSON.parse(localStorage.getItem('tc24_sp3_fuel')) || [];
@@ -1015,18 +1063,18 @@ function handleLogin(e) {
     let u = document.getElementById('loginUser').value.trim();  
     let p = document.getElementById('loginPass').value.trim();  
     if (u === 'admin' && p === '1234') {  
-        sessionStorage.setItem('tc24_logged', 'true');  
-        sessionStorage.setItem('tc24_role', 'admin');  
-        sessionStorage.setItem('tc24_user', 'المشرف العام (أبو ريان)');  
+        sessionStorage.setItem('TECHNICAL_24_logged', 'true');  
+        sessionStorage.setItem('TECHNICAL_24_role', 'admin');  
+        sessionStorage.setItem('TECHNICAL_24_user', 'المشرف العام (أبو ريان)');  
         initAppSession();  
         return;  
     }  
-    let isDefaultEmp = (u.toUpperCase() === 'TC24' && p === '0011');  
+    let isDefaultEmp = (u.toUpperCase() === 'TECHNICAL_24' && p === '0011');  
     let foundEmp = empData.find(emp => emp.name.toLowerCase() === u.toLowerCase() && emp.pass === p);  
     if (isDefaultEmp || foundEmp) {  
-        sessionStorage.setItem('tc24_logged', 'true');  
-        sessionStorage.setItem('tc24_role', 'employee');  
-        sessionStorage.setItem('tc24_user', isDefaultEmp ? 'TC24 (موظف)' : foundEmp.name);  
+        sessionStorage.setItem('TECHNICAL_24_logged', 'true');  
+        sessionStorage.setItem('TECHNICAL_24_role', 'employee');  
+        sessionStorage.setItem('TECHNICAL_24_user', isDefaultEmp ? 'TECHNICAL_24 (موظف)' : foundEmp.name);  
         initAppSession();  
     } else {  
         document.getElementById('loginError').style.display = 'block';  
@@ -1036,8 +1084,8 @@ function handleLogin(e) {
 function initAppSession() {  
     document.getElementById('loginOverlay').style.display = 'none';  
     document.getElementById('appContainer').style.display = 'block';  
-    let roleName = sessionStorage.getItem('tc24_user') || 'المشرف العام';  
-    let isAdm = sessionStorage.getItem('tc24_role') === 'admin';  
+    let roleName = sessionStorage.getItem('TECHNICAL_24_user') || 'المشرف العام';  
+    let isAdm = sessionStorage.getItem('TECHNICAL_24_role') === 'admin';  
     if (!isAdm) {  
         if($('formCardContainer')) $('formCardContainer').style.display = 'none';  
         if($('adminEmpSection')) $('adminEmpSection').style.display = 'none';  
@@ -1058,13 +1106,13 @@ function logout() {
 }  
   
 window.addEventListener('DOMContentLoaded', () => {  
-    let savedLang = localStorage.getItem('tc24_lang') || 'ar';  
+    let savedLang = localStorage.getItem('TECHNICAL_24_lang') || 'ar';  
     if(document.getElementById('appLangSelect')) {  
         document.getElementById('appLangSelect').value = savedLang;  
         changeLanguage(savedLang);  
     }  
     updateLiveClock();  
-    if (sessionStorage.getItem('tc24_logged') === 'true') {  
+    if (sessionStorage.getItem('TECHNICAL_24_logged') === 'true') {  
         initAppSession();  
     }  
 });  
@@ -1338,7 +1386,7 @@ function buildInspectionSummaryText() {
     .replace('PM', 'م');
 
   let lines = [];
-  lines.push('❄️ TC24 | قسم المكيف SP3');
+  lines.push('❄️ TECHNICAL_24 | قسم المكيف SP3');
   lines.push(`معاينه (${currentType})`);
   lines.push(` INQ: ${inqVal}`);
   lines.push(`التاريخ: ${dateStr}`);
@@ -1414,7 +1462,7 @@ function printInspectionSheet() {
   w.document.write(`<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>معاينة (${currentType}) - ${inqDisplay}</title></head>
     <body style="font-family:Tahoma;padding:30px;color:#1e293b;">
       <div style="max-width:760px;margin:auto;border:2px solid #0369a1;border-radius:12px;padding:25px;">
-        <h2 style="text-align:center;color:#0369a1;margin-bottom:5px;">TC24 _قسم المكيف SP3 ❄️</h2>
+        <h2 style="text-align:center;color:#0369a1;margin-bottom:5px;">TECHNICAL_24 _قسم المكيف SP3 ❄️</h2>
         <p style="text-align:center;font-weight:bold;color:#0369a1;font-size:1.05rem;margin-bottom:18px;">ورقة معاينة - ${currentType}</p>
         <div style="display:flex;justify-content:space-between;background:#e0f2fe;padding:10px 14px;border-radius:8px;color:#0369a1;font-weight:bold;margin-bottom:18px;">
           <div>${inqDisplay}</div>
@@ -1462,7 +1510,7 @@ function formatServicesText(s) {
 function renderSales(){  
   salesData = getSharedSales();  
   let total=0, cash=0, card=0, html='';  
-  let isAdm = sessionStorage.getItem('tc24_role') === 'admin';  
+  let isAdm = sessionStorage.getItem('TECHNICAL_24_role') === 'admin';  
   salesData.forEach((s,i)=>{  
     let cost = Number(s.cost) || 0;  
     total += cost;  
@@ -1569,7 +1617,7 @@ function printFuelReport() {
   w.document.write(`<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>تقرير وقود السيارة - شهر ${m}</title></head>  
     <body style="font-family:Tahoma;padding:30px;color:#1e293b;">  
       <div style="max-width:750px;margin:auto;border:2px solid #0369a1;border-radius:12px;padding:25px;">  
-        <h2 style="text-align:center;color:#0369a1;margin-bottom:5px;">TC24 _قسم المكيف SP3 ❄️</h2>  
+        <h2 style="text-align:center;color:#0369a1;margin-bottom:5px;">TECHNICAL_24 _قسم المكيف SP3 ❄️</h2>  
         <p style="text-align:center;font-weight:bold;color:#64748b;margin-bottom:20px;">تقرير مصروفات وقود السيارة عن شهر: ${m}</p>  
         <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">  
           <thead><tr style="background:#e0f2fe;color:#0369a1;"><th style="padding:10px;border:1px solid #bae6fd;">#</th><th style="padding:10px;border:1px solid #bae6fd;">التاريخ</th><th style="padding:10px;border:1px solid #bae6fd;">نوع الوقود</th><th style="padding:10px;border:1px solid #bae6fd;">الوصف / ملاحظة</th><th style="padding:10px;border:1px solid #bae6fd;text-align:left;">المبلغ</th></tr></thead>  
@@ -1669,7 +1717,7 @@ function printExpenseReport() {
   w.document.write(`<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>تقرير مصروفات القسم - شهر ${m}</title></head>  
     <body style="font-family:Tahoma;padding:30px;color:#1e293b;">  
       <div style="max-width:700px;margin:auto;border:2px solid #0369a1;border-radius:12px;padding:25px;">  
-        <h2 style="text-align:center;color:#0369a1;margin-bottom:5px;">TC24 _قسم المكيف SP3 ❄️</h2>  
+        <h2 style="text-align:center;color:#0369a1;margin-bottom:5px;">TECHNICAL_24 _قسم المكيف SP3 ❄️</h2>  
         <p style="text-align:center;font-weight:bold;color:#64748b;margin-bottom:20px;">تقرير فواتير ومصروفات القسم المختصر عن شهر: ${m}</p>  
         <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">  
           <thead><tr style="background:#e0f2fe;color:#0369a1;"><th style="padding:10px;border:1px solid #bae6fd;">#</th><th style="padding:10px;border:1px solid #bae6fd;">التاريخ</th><th style="padding:10px;border:1px solid #bae6fd;">وصف الفاتورة والمشتريات</th><th style="padding:10px;border:1px solid #bae6fd;text-align:left;">المبلغ / الإجمالي</th></tr></thead>  
@@ -1793,7 +1841,7 @@ function renderMaint(){
 function renderEmps(){  
   if($('empBody')) {  
     let html = '';  
-    let isAdm = sessionStorage.getItem('tc24_role') === 'admin';  
+    let isAdm = sessionStorage.getItem('TECHNICAL_24_role') === 'admin';  
     empData.forEach((e, idx)=>{  
       let actionButtons = isAdm ? `<button class="act edit" onclick="editEmp(${idx})">تعديل</button><button class="act del" onclick="deleteEmp(${idx})">حذف</button>` : `<span style="color:var(--muted)">صلاحية عرض فقط</span>`;  
       html += `<tr><td><b>${e.name}</b><br><small style="color:var(--muted)">كلمة السر: ${e.pass}</small></td><td>${e.role}</td><td>${e.phone || '-'}</td><td>${actionButtons}</td></tr>`;  
@@ -1867,7 +1915,7 @@ function renderMedia(){
   let transaction = db.transaction(["mediaStore"], "readonly");  
   let store = transaction.objectStore("mediaStore");  
   let request = store.getAll();  
-  let isAdm = sessionStorage.getItem('tc24_role') === 'admin';  
+  let isAdm = sessionStorage.getItem('TECHNICAL_24_role') === 'admin';  
   
   request.onsuccess = function(event) {  
     let items = event.target.result;  
@@ -2008,7 +2056,7 @@ function exportExcel(){
   });  
   let link = document.createElement('a');  
   link.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8;'}));  
-  link.download = 'TC24_All_Customers.csv';  
+  link.download = 'TECHNICAL_24_All_Customers.csv';  
   link.click();  
 }  
   
@@ -2025,7 +2073,7 @@ function exportSingleMonthExcel(){
   });  
   let link = document.createElement('a');  
   link.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8;'}));  
-  link.download = 'TC24_Report_'+m+'.csv';  
+  link.download = 'TECHNICAL_24_Report_'+m+'.csv';  
   link.click();  
 }  
   
@@ -2047,7 +2095,7 @@ function printSingleMonth(){
   w.document.write(`<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>تقرير شهر ${m}</title></head>  
     <body style="font-family:Tahoma;padding:30px;color:#1e293b;">  
       <div style="max-width:700px;margin:auto;border:2px solid #0369a1;border-radius:12px;padding:25px;">  
-        <h2 style="text-align:center;color:#0369a1;margin-bottom:5px;">TC24 _قسم المكيف SP3 - تقرير المبيعات الشهري</h2>  
+        <h2 style="text-align:center;color:#0369a1;margin-bottom:5px;">TECHNICAL_24 _قسم المكيف SP3 - تقرير المبيعات الشهري</h2>  
         <p style="text-align:center;font-weight:bold;color:#64748b;margin-bottom:20px;">عن شهر: ${m}</p>  
         <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">  
           <thead><tr style="background:#e0f2fe;color:#0369a1;"><th style="padding:8px;border:1px solid #bae6fd;">#</th><th style="padding:8px;border:1px solid #bae6fd;">INQ</th><th style="padding:8px;border:1px solid #bae6fd;">العميل</th><th style="padding:8px;border:1px solid #bae6fd;">التاريخ</th><th style="padding:8px;border:1px solid #bae6fd;">الخدمات</th><th style="padding:8px;border:1px solid #bae6fd;">الدفع</th><th style="padding:8px;border:1px solid #bae6fd;">المبلغ</th></tr></thead>  
@@ -2068,7 +2116,7 @@ function backupData(){
   let blob = new Blob([json], {type:'application/json;charset=utf-8'});  
   let link = document.createElement('a');  
   link.href = URL.createObjectURL(blob);  
-  link.download = 'TC24_Backup_' + new Date().toISOString().slice(0,10) + '.json';  
+  link.download = 'TECHNICAL_24_Backup_' + new Date().toISOString().slice(0,10) + '.json';  
   link.click();  
   link.remove();  
 }  
@@ -2122,7 +2170,7 @@ function printInvoice(i){
     <body style="font-family:Tahoma;background:#f0f8ff;padding:30px;color:#1e293b;">  
       <div style="max-width:650px;margin:auto;background:#fff;border:2px solid #0369a1;border-radius:16px;padding:30px;box-shadow:0 10px 25px rgba(0,0,0,0.1);">  
         <div style="text-align:center;border-bottom:2px solid #e0f2fe;padding-bottom:15px;margin-bottom:20px;">  
-          <h2 style="color:#0369a1;margin-bottom:5px;">TC24 _قسم المكيف SP3 ❄️</h2>  
+          <h2 style="color:#0369a1;margin-bottom:5px;">TECHNICAL_24 _قسم المكيف SP3 ❄️</h2>  
           <p style="color:#64748b;font-size:1.05rem;font-weight:bold;">فاتوره العميل</p>  
         </div>  
         <div style="display:flex;justify-content:space-between;margin-bottom:20px;font-size:0.95rem;background:#e0f2fe;padding:12px;border-radius:10px;color:#0369a1;">  
