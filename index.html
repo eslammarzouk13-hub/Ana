@@ -1325,36 +1325,41 @@ if ($('inspInq')) {
 }
 
 function buildInspectionSummaryText() {
-  let inqDisplay = inspectionState.inq ? ('INQ: ' + inspectionState.inq) : 'بدون رقم INQ';
+  let inqVal = inspectionState.inq || '';
   let currentType = $('inspSiteType') ? $('inspSiteType').value : (inspectionState.siteType || 'منزل');
-  let isOffice = currentType === 'مكاتب';
-  let noteLbl = isOffice ? 'وصف' : 'ملاحظة';
-  let ductLbl = isOffice ? 'عدد مجري الدكت' : 'عدد الدكت';
-  let splitLbl = isOffice ? 'غسيل الاسبليت' : 'عدد الاسبليت';
-  let outLbl = 'عدد غسيل ماكينة خارجية';
   let tots = calcInspectionTotals();
+  let now = new Date();
+  let dateStr = now.toLocaleDateString('ar-SA');
+  let timeStr = now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
   let lines = [];
-  lines.push(`❄️ TC24 _قسم المكيف SP3 - معاينة (${currentType}) ❄️`);
-  lines.push('━━━━━━━━━━━━━━━━━━━');
-  lines.push('📌 ' + inqDisplay);
-  lines.push('🏢 نوع الموقع: ' + currentType);
-  lines.push('📅 التاريخ: ' + new Date().toLocaleDateString('ar-SA'));
-  lines.push('━━━━━━━━━━━━━━━━━━━');
+  lines.push(`معاينه (${currentType})`);
+  lines.push('');
+  lines.push(`تاريخ المعاينه : ${dateStr}`);
+  lines.push(`الوقت : ${timeStr}`);
+  lines.push(`INQ:  ${inqVal}`);
+  lines.push('');
+  lines.push(`نوع الموقع / ${currentType}`);
+  lines.push('ترتيب عدد الغرف او الاماكن وتسجيل كالاتي  ');
+  lines.push('');
 
   inspectionState.items.forEach((it, idx) => {
-    let noteVal = it.note ? it.note : '-';
-    lines.push(`${idx + 1}) ${noteLbl}: ${noteVal}`);
-    lines.push(`   • ${ductLbl}: ${it.duct} | ${splitLbl}: ${it.split} | ${outLbl}: ${it.outdoor}`);
+    let labelVal = it.note ? it.note : '';
+    let d = parseInt(it.duct, 10) || 0;
+    let sp = parseInt(it.split, 10) || 0;
+    let out = parseInt(it.outdoor, 10) || 0;
+    lines.push(`${idx + 1} _${labelVal}  `);
+    lines.push(` مجري دكت ${d}`);
+    lines.push(`_غسيل اسبليت ${sp} `);
+    lines.push(`_غسيل ماكينه خارجيه ${out}`);
+    lines.push('_____________________');
   });
 
-  lines.push('━━━━━━━━━━━━━━━━━━━');
-  lines.push('📊 التوتل الإجمالي:');
-  lines.push(`• إجمالي ${ductLbl}: ${tots.tDuct}`);
-  lines.push(`• إجمالي ${splitLbl}: ${tots.tSplit}`);
-  lines.push(`• إجمالي غسيل ماكينة خارجية: ${tots.tOutdoor}`);
-  lines.push(`• التوتل الإجمالي للأعداد: ${tots.grandTotal}`);
-  lines.push('━━━━━━━━━━━━━━━━━━━');
-  lines.push('تم بواسطة: إسلام أحمد');
+  lines.push('اجماللي ');
+  lines.push(` عدد/مجري الدكت   : ${tots.tDuct}`);
+  lines.push(`عدد/ غسيل الاسبليت  : ${tots.tSplit}`);
+  lines.push(`عدد/ غسيل الماكينه   : ${tots.tOutdoor}`);
+  lines.push('');
+  lines.push(`الاجمالي النهائي بعد المعاينه: ${tots.grandTotal}`);
   return lines.join('\n');
 }
 
