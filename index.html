@@ -1325,42 +1325,43 @@ if ($('inspInq')) {
 }
 
 function buildInspectionSummaryText() {
-  let inqVal = inspectionState.inq || '';
+  let inqVal = (inspectionState.inq || '').trim();
   let currentType = $('inspSiteType') ? $('inspSiteType').value : (inspectionState.siteType || 'منزل');
   let tots = calcInspectionTotals();
   let now = new Date();
-  let dateStr = now.toLocaleDateString('ar-SA');
-  let timeStr = now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
+  let y = now.getFullYear();
+  let m = String(now.getMonth() + 1).padStart(2, '0');
+  let day = String(now.getDate()).padStart(2, '0');
+  let dateStr = `${y}/${m}/${day}`;
+  let timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })
+    .replace('AM', 'ص')
+    .replace('PM', 'م');
+
   let lines = [];
-  lines.push(`معاينه (${currentType})`);
-  lines.push('');
-  lines.push(`تاريخ المعاينه : ${dateStr}`);
-  lines.push(`الوقت : ${timeStr}`);
-  lines.push(`INQ:  ${inqVal}`);
-  lines.push('');
-  lines.push(`نوع الموقع / ${currentType}`);
-  lines.push('ترتيب عدد الغرف او الاماكن وتسجيل كالاتي  ');
+  lines.push('❄️ TC24 | قسم المكيف SP3');
+  lines.push(`معاينه (${currentType}) - INQ: ${inqVal}`);
+  lines.push(`التاريخ: ${dateStr}`);
+  lines.push(`الوقت: ${timeStr}`);
   lines.push('');
 
   inspectionState.items.forEach((it, idx) => {
-    let labelVal = it.note ? it.note : '';
+    let labelVal = it.note ? it.note : '-';
     let d = parseInt(it.duct, 10) || 0;
     let sp = parseInt(it.split, 10) || 0;
     let out = parseInt(it.outdoor, 10) || 0;
-    lines.push(`${idx + 1} _${labelVal}  `);
-    lines.push(` مجري دكت ${d}`);
-    lines.push(`_غسيل اسبليت ${sp} `);
-    lines.push(`_غسيل ماكينه خارجيه ${out}`);
-    lines.push('_____________________');
+    lines.push(`${idx + 1} _${labelVal}`);
+    lines.push(`دكت: ${d}`);
+    lines.push(`اسبليت: ${sp}`);
+    lines.push(`ماكينه: ${out}`);
+    lines.push('');
   });
 
-  lines.push('اجماللي ');
-  lines.push(` عدد/مجري الدكت   : ${tots.tDuct}`);
-  lines.push(`عدد/ غسيل الاسبليت  : ${tots.tSplit}`);
-  lines.push(`عدد/ غسيل الماكينه   : ${tots.tOutdoor}`);
-  lines.push('');
+  lines.push('اجماللي:');
+  lines.push(`دكت: ${tots.tDuct}`);
+  lines.push(`اسبليت: ${tots.tSplit}`);
+  lines.push(`ماكينه: ${tots.tOutdoor}`);
   lines.push(`الاجمالي النهائي بعد المعاينه: ${tots.grandTotal}`);
-  return lines.join('\n');
+  return lines.join('\n').trim();
 }
 
 function sendInspectionToWhatsApp() {
