@@ -212,6 +212,14 @@ th{background:var(--primary-light);color:var(--primary-dark)}
 .edit{background:#0284c7}.del{background:#dc2626}.pr{background:#059669}.wa{background:#25D366}
 .search{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
 .search input,.search select{flex:1;min-width:180px}
+.inq-row{display:flex;gap:8px;align-items:center;margin-top:12px}
+.inq-prefix{background:var(--primary-light);color:var(--primary-dark);padding:11px 16px;border-radius:10px;font-weight:800;border:1px solid var(--border);font-size:0.95rem}
+.grid-3-insp{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+@media(max-width:600px){.grid-3-insp{grid-template-columns:1fr}}
+.insp-totals-box{background:var(--primary-light);border:1px solid var(--border);border-radius:12px;padding:14px;margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;text-align:center;font-weight:800;color:var(--primary-dark)}
+.insp-totals-box b{display:block;font-size:1.25rem;color:#0f172a}
+.insp-actions-bar{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.insp-actions-bar button{flex:1;min-width:160px;margin-top:0}
 @media print{header,nav,.no-print{display:none!important}}
 
 /* واجهة تسجيل الدخول الفخمة مع غلاف الصورة الجديد 1000427338_3.jpg */
@@ -366,6 +374,7 @@ display: none;
   <button class="nav-btn" onclick="goPage('p5',this)" id="nav5">5. الإعدادات والنسخ</button>  
   <button class="nav-btn" onclick="goPage('p6',this)" id="nav6">6. أرشيف صور العملاء</button>  
   <button class="nav-btn" onclick="goPage('p7',this)" id="nav7">7. مصروفات قسم SP3</button>  
+  <button class="nav-btn" onclick="goPage('p8',this)" id="nav8">8. معاينة</button>  
 </nav>  
 
 <!-- صفحة 1 -->  
@@ -732,12 +741,105 @@ display: none;
   </div>
 </section>
 
+<!-- صفحة 8: معاينة -->
+<section id="p8" class="page">
+  <div class="banner">صفحة معاينة - تسجيل عد الدكت والاسبليت وغسيل الماكينة الخارجية وحساب التوتل وطباعة وإرسال واتساب</div>
+
+  <div class="grid">
+    <div class="card no-print">
+      <h3 id="inspFormTitle">تسجيل معاينة جديدة</h3>
+      <form id="inspForm" onsubmit="handleInspSubmit(event)">
+        <input type="hidden" id="editInspItemIndex" value="-1">
+
+        <div class="inq-row">
+          <span class="inq-prefix">INQ</span>
+          <input type="text" id="inspInq" placeholder="" style="direction: ltr; text-align: right; flex: 1;">
+        </div>
+
+        <label>نوع الموقع</label>
+        <select id="inspSiteType" onchange="switchInspFields()">
+          <option value="منزل">منزل</option>
+          <option value="مبنى">مبنى</option>
+          <option value="مكاتب">مكاتب</option>
+        </select>
+
+        <label id="inspNoteLabel">ملاحظة</label>
+        <input type="text" id="inspNote" placeholder="">
+
+        <div class="grid-3-insp">
+          <div>
+            <label id="inspDuctLabel">عدد الدكت</label>
+            <input type="number" id="inspDuct" min="0" step="1" value="0" placeholder="0" oninput="if(this.value < 0) this.value = 0;">
+          </div>
+          <div>
+            <label id="inspSplitLabel">عدد الاسبليت</label>
+            <input type="number" id="inspSplit" min="0" step="1" value="0" placeholder="0" oninput="if(this.value < 0) this.value = 0;">
+          </div>
+          <div>
+            <label id="inspOutdoorLabel">عدد غسيل ماكينة خارجية</label>
+            <input type="number" id="inspOutdoor" min="0" step="1" value="0" placeholder="0" oninput="if(this.value < 0) this.value = 0;">
+          </div>
+        </div>
+
+        <button class="btn" type="submit" id="btnAddInspItem">إضافة البند</button>
+        <button class="btn2" type="button" onclick="resetInspForm()" style="width:100%; margin-top:8px;">تفريغ الخانات</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>بنود المعاينة والتوتل الإجمالي</h3>
+
+      <div class="table-container-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>النوع</th>
+              <th id="inspThNote">ملاحظة</th>
+              <th id="inspThDuct">عدد الدكت</th>
+              <th id="inspThSplit">عدد الاسبليت</th>
+              <th id="inspThOutdoor">عدد غسيل ماكينة خارجية</th>
+              <th class="no-print">إجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="inspBody"></tbody>
+        </table>
+      </div>
+
+      <div class="insp-totals-box">
+        <div>
+          <span id="inspTotDuctLabel">إجمالي عدد الدكت</span>
+          <b id="inspTotalDuct">0</b>
+        </div>
+        <div>
+          <span id="inspTotSplitLabel">إجمالي عدد الاسبليت</span>
+          <b id="inspTotalSplit">0</b>
+        </div>
+        <div>
+          <span id="inspTotOutdoorLabel">إجمالي غسيل ماكينة خارجية</span>
+          <b id="inspTotalOutdoor">0</b>
+        </div>
+        <div>
+          <span>التوتل الإجمالي للأعداد</span>
+          <b id="inspGrandTotal">0</b>
+        </div>
+      </div>
+
+      <div class="insp-actions-bar no-print">
+        <button class="btn" type="button" style="background: var(--green);" onclick="printInspectionSheet()"><i class="fa-solid fa-print"></i> طباعة الورقة</button>
+        <button class="btn" type="button" style="background: #25D366;" onclick="sendInspectionToWhatsApp()"><i class="fa-brands fa-whatsapp"></i> إرسال للجروب واتساب</button>
+        <button class="btn" type="button" style="background: #dc2626;" onclick="clearAllInspectionItems()"><i class="fa-solid fa-trash"></i> مسح الكل</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 </div>  
 
 <script>  
 const translations = {  
   ar: {  
-    nav1: "1. العملاء والمبيعات", nav2: "2. البحث", nav3: "3. التقارير الشهرية", nav4: "4. الصيانة الدورية", nav5: "5. الإعدادات والنسخ", nav6: "6. أرشيف صور العملاء", nav7: "7. مصروفات قسم SP3",  
+    nav1: "1. العملاء والمبيعات", nav2: "2. البحث", nav3: "3. التقارير الشهرية", nav4: "4. الصيانة الدورية", nav5: "5. الإعدادات والنسخ", nav6: "6. أرشيف صور العملاء", nav7: "7. مصروفات قسم SP3", nav8: "8. معاينة",
     st1Title: "إجمالي المبيعات", st2Title: "المحصل كاش", st3Title: "المحصل شبكة / تحويل", st4Title: "عدد العملاء",  
     formTitle: "تسجيل عملية صيانة جديدة", lblName: "اسم العميل", lblPhone: "رقم الجوال",  
     lblServ: "حدد الكمية والسعر لكل خدمة (يقبل الهللَات والكسور)", lblStatus: "حالة الخدمة", lblPay: "طريقة الدفع", lblCost: "إجمالي التكلفة (ريال - قابل للتعديل اليدوي)", lblDate: "التاريخ", btnSave: "حفظ البيانات",  
@@ -838,6 +940,14 @@ let empData = JSON.parse(localStorage.getItem('tc24_emps')) || [
 
 let fuelData = JSON.parse(localStorage.getItem('tc24_sp3_fuel')) || [];
 let expenseData = JSON.parse(localStorage.getItem('tc24_sp3_expenses')) || [];
+let inspectionState = JSON.parse(localStorage.getItem('tc24_sp3_inspection_p8')) || { inq: '', items: [] };
+if (!inspectionState || !Array.isArray(inspectionState.items)) {
+  inspectionState = { inq: '', items: [] };
+}
+
+function saveInspectionState() {
+  localStorage.setItem('tc24_sp3_inspection_p8', JSON.stringify(inspectionState));
+}
 
 function saveFuelData() {
     localStorage.setItem('tc24_sp3_fuel', JSON.stringify(fuelData));
@@ -890,6 +1000,7 @@ function syncDataNow() {
     renderEmps();  
     renderFuel();
     renderExpenses();
+    renderInspection();
     updateExpenseStats();
     alert('تم تحديث ومزامنة البيانات المشتركة بنجاح!');  
 }  
@@ -931,6 +1042,7 @@ function initAppSession() {
     renderEmps();  
     renderFuel();
     renderExpenses();
+    renderInspection();
     updateExpenseStats();
     initDB();  
 }  
@@ -989,6 +1101,7 @@ function goPage(id, btn){
   if(id==='p5') renderEmps();  
   if(id==='p6') { renderMedia(); populateClientDropdown(); }  
   if(id==='p7') { renderFuel(); renderExpenses(); updateExpenseStats(); }
+  if(id==='p8') { renderInspection(); }
   window.scrollTo({top:0,behavior:'smooth'});  
 }  
   
@@ -1028,6 +1141,273 @@ function onFuelTypeChange() {
     $('fuelDesc').value = 'غسيل سيارة';
   }
 }
+
+/* ==================== دوال صفحة 8: معاينة ==================== */
+function switchInspFields() {
+  let type = $('inspSiteType') ? $('inspSiteType').value : 'منزل';
+  if (type === 'مكاتب') {
+    if ($('inspNoteLabel')) $('inspNoteLabel').innerText = 'وصف';
+    if ($('inspDuctLabel')) $('inspDuctLabel').innerText = 'عدد مجري الدكت';
+    if ($('inspSplitLabel')) $('inspSplitLabel').innerText = 'عدد غسيل الاسبليت';
+    if ($('inspOutdoorLabel')) $('inspOutdoorLabel').innerText = 'عدد غسيل ماكينة خارجية';
+    if ($('inspThNote')) $('inspThNote').innerText = 'وصف';
+    if ($('inspThDuct')) $('inspThDuct').innerText = 'عدد مجري الدكت';
+    if ($('inspThSplit')) $('inspThSplit').innerText = 'عدد غسيل الاسبليت';
+    if ($('inspThOutdoor')) $('inspThOutdoor').innerText = 'عدد غسيل ماكينة خارجية';
+    if ($('inspTotDuctLabel')) $('inspTotDuctLabel').innerText = 'إجمالي مجري الدكت';
+    if ($('inspTotSplitLabel')) $('inspTotSplitLabel').innerText = 'إجمالي غسيل الاسبليت';
+    if ($('inspTotOutdoorLabel')) $('inspTotOutdoorLabel').innerText = 'إجمالي غسيل ماكينة خارجية';
+  } else {
+    if ($('inspNoteLabel')) $('inspNoteLabel').innerText = 'ملاحظة';
+    if ($('inspDuctLabel')) $('inspDuctLabel').innerText = 'عدد الدكت';
+    if ($('inspSplitLabel')) $('inspSplitLabel').innerText = 'عدد الاسبليت';
+    if ($('inspOutdoorLabel')) $('inspOutdoorLabel').innerText = 'عدد غسيل ماكينة خارجية';
+    if ($('inspThNote')) $('inspThNote').innerText = 'ملاحظة';
+    if ($('inspThDuct')) $('inspThDuct').innerText = 'عدد الدكت';
+    if ($('inspThSplit')) $('inspThSplit').innerText = 'عدد الاسبليت';
+    if ($('inspThOutdoor')) $('inspThOutdoor').innerText = 'عدد غسيل ماكينة خارجية';
+    if ($('inspTotDuctLabel')) $('inspTotDuctLabel').innerText = 'إجمالي عدد الدكت';
+    if ($('inspTotSplitLabel')) $('inspTotSplitLabel').innerText = 'إجمالي عدد الاسبليت';
+    if ($('inspTotOutdoorLabel')) $('inspTotOutdoorLabel').innerText = 'إجمالي غسيل ماكينة خارجية';
+  }
+}
+
+function resetInspForm() {
+  if ($('editInspItemIndex')) $('editInspItemIndex').value = '-1';
+  if ($('inspFormTitle')) $('inspFormTitle').innerText = 'تسجيل معاينة جديدة';
+  if ($('btnAddInspItem')) $('btnAddInspItem').innerText = 'إضافة البند';
+  if ($('inspNote')) $('inspNote').value = '';
+  if ($('inspDuct')) $('inspDuct').value = '0';
+  if ($('inspSplit')) $('inspSplit').value = '0';
+  if ($('inspOutdoor')) $('inspOutdoor').value = '0';
+}
+
+function handleInspSubmit(e) {
+  e.preventDefault();
+  let inqVal = $('inspInq') ? $('inspInq').value.trim() : '';
+  let siteType = $('inspSiteType') ? $('inspSiteType').value : 'منزل';
+  let noteVal = $('inspNote') ? $('inspNote').value.trim() : '';
+  let ductVal = Math.max(0, parseInt($('inspDuct').value, 10) || 0);
+  let splitVal = Math.max(0, parseInt($('inspSplit').value, 10) || 0);
+  let outdoorVal = Math.max(0, parseInt($('inspOutdoor').value, 10) || 0);
+
+  inspectionState.inq = inqVal;
+  let itemObj = {
+    siteType: siteType,
+    note: noteVal,
+    duct: ductVal,
+    split: splitVal,
+    outdoor: outdoorVal
+  };
+
+  let idx = parseInt($('editInspItemIndex').value, 10);
+  if (idx > -1 && inspectionState.items[idx]) {
+    inspectionState.items[idx] = itemObj;
+  } else {
+    inspectionState.items.push(itemObj);
+  }
+
+  saveInspectionState();
+  resetInspForm();
+  renderInspection();
+}
+
+function editInspectionItem(idx) {
+  let item = inspectionState.items[idx];
+  if (!item) return;
+  if ($('inspInq')) $('inspInq').value = inspectionState.inq || '';
+  if ($('inspSiteType')) {
+    $('inspSiteType').value = item.siteType || 'منزل';
+    switchInspFields();
+  }
+  if ($('inspNote')) $('inspNote').value = item.note || '';
+  if ($('inspDuct')) $('inspDuct').value = item.duct || 0;
+  if ($('inspSplit')) $('inspSplit').value = item.split || 0;
+  if ($('inspOutdoor')) $('inspOutdoor').value = item.outdoor || 0;
+  if ($('editInspItemIndex')) $('editInspItemIndex').value = idx;
+  if ($('inspFormTitle')) $('inspFormTitle').innerText = 'تعديل بند المعاينة';
+  if ($('btnAddInspItem')) $('btnAddInspItem').innerText = 'حفظ التعديل';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function deleteInspectionItem(idx) {
+  if (confirm('هل أنت متأكد من حذف هذا البند من المعاينة؟')) {
+    inspectionState.items.splice(idx, 1);
+    let editIdx = parseInt($('editInspItemIndex').value, 10);
+    if (editIdx === idx) resetInspForm();
+    saveInspectionState();
+    renderInspection();
+  }
+}
+
+function clearAllInspectionItems() {
+  if (!inspectionState.items.length && !(inspectionState.inq && inspectionState.inq.trim())) return;
+  if (confirm('هل أنت متأكد من مسح جميع بنود المعاينة ورقم INQ؟')) {
+    inspectionState = { inq: '', items: [] };
+    if ($('inspInq')) $('inspInq').value = '';
+    resetInspForm();
+    saveInspectionState();
+    renderInspection();
+  }
+}
+
+function calcInspectionTotals() {
+  let tDuct = 0, tSplit = 0, tOutdoor = 0;
+  inspectionState.items.forEach(it => {
+    tDuct += (parseInt(it.duct, 10) || 0);
+    tSplit += (parseInt(it.split, 10) || 0);
+    tOutdoor += (parseInt(it.outdoor, 10) || 0);
+  });
+  return { tDuct, tSplit, tOutdoor, grandTotal: tDuct + tSplit + tOutdoor };
+}
+
+function renderInspection() {
+  if ($('inspInq') && document.activeElement !== $('inspInq')) {
+    $('inspInq').value = inspectionState.inq || '';
+  }
+  switchInspFields();
+
+  let html = '';
+  inspectionState.items.forEach((it, idx) => {
+    let d = parseInt(it.duct, 10) || 0;
+    let sp = parseInt(it.split, 10) || 0;
+    let out = parseInt(it.outdoor, 10) || 0;
+    html += `<tr>
+      <td>${idx + 1}</td>
+      <td><span class="badge run">${it.siteType}</span></td>
+      <td>${it.note ? it.note : '-'}</td>
+      <td><b>${d}</b></td>
+      <td><b>${sp}</b></td>
+      <td><b>${out}</b></td>
+      <td class="no-print">
+        <div style="display:flex; gap:4px; flex-wrap:nowrap;">
+          <button class="act edit" onclick="editInspectionItem(${idx})">تعديل</button>
+          <button class="act del" onclick="deleteInspectionItem(${idx})">حذف</button>
+        </div>
+      </td>
+    </tr>`;
+  });
+
+  if ($('inspBody')) {
+    $('inspBody').innerHTML = html || '<tr><td colspan="7" style="text-align:center">لا توجد بنود مسجلة بعد</td></tr>';
+  }
+
+  let tots = calcInspectionTotals();
+  if ($('inspTotalDuct')) $('inspTotalDuct').innerText = tots.tDuct;
+  if ($('inspTotalSplit')) $('inspTotalSplit').innerText = tots.tSplit;
+  if ($('inspTotalOutdoor')) $('inspTotalOutdoor').innerText = tots.tOutdoor;
+  if ($('inspGrandTotal')) $('inspGrandTotal').innerText = tots.grandTotal;
+}
+
+if ($('inspInq')) {
+  $('inspInq').addEventListener('input', function() {
+    inspectionState.inq = this.value.trim();
+    saveInspectionState();
+  });
+}
+
+function buildInspectionSummaryText() {
+  let inqDisplay = inspectionState.inq ? ('INQ: ' + inspectionState.inq) : 'بدون رقم INQ';
+  let tots = calcInspectionTotals();
+  let lines = [];
+  lines.push('❄️ TC24 _قسم المكيف SP3 - معاينة ❄️');
+  lines.push('━━━━━━━━━━━━━━━━━━━');
+  lines.push('📌 ' + inqDisplay);
+  lines.push('📅 التاريخ: ' + new Date().toLocaleDateString('ar-SA'));
+  lines.push('━━━━━━━━━━━━━━━━━━━');
+
+  inspectionState.items.forEach((it, idx) => {
+    let isOffice = it.siteType === 'مكاتب';
+    let noteLbl = isOffice ? 'وصف' : 'ملاحظة';
+    let ductLbl = isOffice ? 'مجري الدكت' : 'الدكت';
+    let splitLbl = isOffice ? 'غسيل الاسبليت' : 'الاسبليت';
+    let outLbl = 'غسيل ماكينة خارجية';
+    let noteVal = it.note ? it.note : '-';
+    lines.push(`${idx + 1}) [${it.siteType}] ${noteLbl}: ${noteVal}`);
+    lines.push(`   • ${ductLbl}: ${it.duct} | ${splitLbl}: ${it.split} | ${outLbl}: ${it.outdoor}`);
+  });
+
+  lines.push('━━━━━━━━━━━━━━━━━━━');
+  lines.push('📊 التوتل الإجمالي:');
+  lines.push(`• إجمالي الدكت / مجري الدكت: ${tots.tDuct}`);
+  lines.push(`• إجمالي الاسبليت / غسيل الاسبليت: ${tots.tSplit}`);
+  lines.push(`• إجمالي غسيل ماكينة خارجية: ${tots.tOutdoor}`);
+  lines.push(`• التوتل الإجمالي للأعداد: ${tots.grandTotal}`);
+  lines.push('━━━━━━━━━━━━━━━━━━━');
+  lines.push('تم بواسطة: إسلام أحمد');
+  return lines.join('\n');
+}
+
+function sendInspectionToWhatsApp() {
+  if (!inspectionState.items.length) {
+    alert('الرجاء إضافة بند واحد على الأقل قبل الإرسال للواتساب');
+    return;
+  }
+  let msg = buildInspectionSummaryText();
+  window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(msg), '_blank');
+}
+
+function printInspectionSheet() {
+  if (!inspectionState.items.length) {
+    alert('الرجاء إضافة بند واحد على الأقل قبل الطباعة');
+    return;
+  }
+  let tots = calcInspectionTotals();
+  let inqDisplay = inspectionState.inq ? ('INQ: ' + inspectionState.inq) : '-';
+  let rowsHtml = '';
+
+  inspectionState.items.forEach((it, idx) => {
+    let isOffice = it.siteType === 'مكاتب';
+    let ductHdr = isOffice ? `${it.duct} (مجري دكت)` : `${it.duct} (دكت)`;
+    let splitHdr = isOffice ? `${it.split} (غسيل اسبليت)` : `${it.split} (اسبليت)`;
+    rowsHtml += `<tr>
+      <td style="padding:9px;border:1px solid #bae6fd;text-align:center;">${idx + 1}</td>
+      <td style="padding:9px;border:1px solid #bae6fd;text-align:center;font-weight:bold;">${it.siteType}</td>
+      <td style="padding:9px;border:1px solid #bae6fd;">${it.note ? it.note : '-'}</td>
+      <td style="padding:9px;border:1px solid #bae6fd;text-align:center;font-weight:bold;">${ductHdr}</td>
+      <td style="padding:9px;border:1px solid #bae6fd;text-align:center;font-weight:bold;">${splitHdr}</td>
+      <td style="padding:9px;border:1px solid #bae6fd;text-align:center;font-weight:bold;">${it.outdoor}</td>
+    </tr>`;
+  });
+
+  let w = window.open('', '_blank', 'width=820,height=740');
+  if (!w) return;
+  w.document.write(`<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>معاينة - ${inqDisplay}</title></head>
+    <body style="font-family:Tahoma;padding:30px;color:#1e293b;">
+      <div style="max-width:760px;margin:auto;border:2px solid #0369a1;border-radius:12px;padding:25px;">
+        <h2 style="text-align:center;color:#0369a1;margin-bottom:5px;">TC24 _قسم المكيف SP3 ❄️</h2>
+        <p style="text-align:center;font-weight:bold;color:#64748b;margin-bottom:18px;">ورقة معاينة</p>
+        <div style="display:flex;justify-content:space-between;background:#e0f2fe;padding:10px 14px;border-radius:8px;color:#0369a1;font-weight:bold;margin-bottom:18px;">
+          <div>${inqDisplay}</div>
+          <div>التاريخ: ${new Date().toLocaleDateString('ar-SA')}</div>
+        </div>
+        <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
+          <thead>
+            <tr style="background:#e0f2fe;color:#0369a1;">
+              <th style="padding:9px;border:1px solid #bae6fd;">#</th>
+              <th style="padding:9px;border:1px solid #bae6fd;">النوع</th>
+              <th style="padding:9px;border:1px solid #bae6fd;">ملاحظة / وصف</th>
+              <th style="padding:9px;border:1px solid #bae6fd;">الدكت / مجري الدكت</th>
+              <th style="padding:9px;border:1px solid #bae6fd;">الاسبليت / غسيل الاسبليت</th>
+              <th style="padding:9px;border:1px solid #bae6fd;">غسيل ماكينة خارجية</th>
+            </tr>
+          </thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+        <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:14px;font-weight:bold;color:#0369a1;">
+          <div style="margin-bottom:6px;">إجمالي الدكت / مجري الدكت: ${tots.tDuct}</div>
+          <div style="margin-bottom:6px;">إجمالي الاسبليت / غسيل الاسبليت: ${tots.tSplit}</div>
+          <div style="margin-bottom:6px;">إجمالي غسيل ماكينة خارجية: ${tots.tOutdoor}</div>
+          <div style="font-size:1.1rem;border-top:1px solid #bae6fd;padding-top:8px;margin-top:8px;">التوتل الإجمالي للأعداد: ${tots.grandTotal}</div>
+        </div>
+        <div style="margin-top:35px;text-align:left;font-weight:bold;font-size:1.1rem;border-top:1px dashed #0369a1;padding-top:15px;">تم بواسطة: إسلام أحمد</div>
+      </div>
+    </body></html>`);
+  w.document.close();
+  w.focus();
+  setTimeout(function(){ w.print(); w.close(); }, 400);
+}
+/* ================================================== */
 
 function formatServicesText(s) {  
   if (s.servicesObj) {  
@@ -1646,7 +2026,7 @@ function printSingleMonth(){
   
 function backupData(){  
   salesData = getSharedSales();  
-  let json = JSON.stringify({ sales: salesData, emps: empData, fuel: fuelData, expenses: expenseData }, null, 2);  
+  let json = JSON.stringify({ sales: salesData, emps: empData, fuel: fuelData, expenses: expenseData, inspection: inspectionState }, null, 2);  
   let blob = new Blob([json], {type:'application/json;charset=utf-8'});  
   let link = document.createElement('a');  
   link.href = URL.createObjectURL(blob);  
@@ -1672,10 +2052,12 @@ function restoreData(event){
         if(parsed.emps) empData = parsed.emps;  
         if(parsed.fuel) { fuelData = parsed.fuel; saveFuelData(); }
         if(parsed.expenses) { expenseData = parsed.expenses; saveExpenseData(); }
+        if(parsed.inspection && Array.isArray(parsed.inspection.items)) { inspectionState = parsed.inspection; saveInspectionState(); }
         renderSales();  
         renderEmps();  
         renderFuel();
         renderExpenses();
+        renderInspection();
         updateExpenseStats();
         alert('تم استعادة البيانات والموظفين والمصروفات بنجاح!');  
       } else { alert('ملف غير صالح!'); }  
