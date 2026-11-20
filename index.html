@@ -1339,29 +1339,39 @@ function buildInspectionSummaryText() {
 
   let lines = [];
   lines.push('❄️ TC24 | قسم المكيف SP3');
-  lines.push(`معاينه (${currentType}) - INQ: ${inqVal}`);
+  lines.push(`معاينه (${currentType})`);
+  lines.push(` INQ: ${inqVal}`);
   lines.push(`التاريخ: ${dateStr}`);
-  lines.push(`الوقت: ${timeStr}`);
   lines.push('');
+  lines.push(`الوقت: ${timeStr}`);
+  lines.push('~~~~~~~~~~~~');
 
-  inspectionState.items.forEach((it, idx) => {
+  inspectionState.items.forEach((it) => {
     let labelVal = it.note ? it.note : '-';
+    let itemType = it.siteType || currentType;
+    let isOffice = itemType === 'مكاتب';
+    let ductLabel = isOffice ? 'عدد مجري دكت' : 'عدد دكت';
+    let splitLabel = isOffice ? 'غسيل اسبليت' : 'عدد اسبليت';
+    let outdoorLabel = 'غسيل ماكينه خارجيه';
+
     let d = parseInt(it.duct, 10) || 0;
     let sp = parseInt(it.split, 10) || 0;
     let out = parseInt(it.outdoor, 10) || 0;
-    lines.push(`${idx + 1} _${labelVal}`);
-    lines.push(`دكت: ${d}`);
-    lines.push(`اسبليت: ${sp}`);
-    lines.push(`ماكينه: ${out}`);
-    lines.push('');
+
+    lines.push(`○  ${labelVal}`);
+    if (d > 0) lines.push(`${ductLabel} : ${d}`);
+    if (sp > 0) lines.push(`${splitLabel} : ${sp}`);
+    if (out > 0) lines.push(`${outdoorLabel} : ${out}`);
+    lines.push('~~~~~~~~~~~~~~~~');
   });
 
-  lines.push('اجماللي:');
-  lines.push(`دكت: ${tots.tDuct}`);
-  lines.push(`اسبليت: ${tots.tSplit}`);
-  lines.push(`ماكينه: ${tots.tOutdoor}`);
+  lines.push('اجمالي');
+  if (tots.tDuct > 0) lines.push(`دكت: ${tots.tDuct}`);
+  if (tots.tSplit > 0) lines.push(`اسبليت: ${tots.tSplit}`);
+  if (tots.tOutdoor > 0) lines.push(`ماكينه خارجيه: ${tots.tOutdoor}`);
+  lines.push('~~~~~~~~~~~~~~~~');
   lines.push(`الاجمالي النهائي بعد المعاينه: ${tots.grandTotal}`);
-  return lines.join('\n').trim();
+  return lines.join('\n');
 }
 
 function sendInspectionToWhatsApp() {
