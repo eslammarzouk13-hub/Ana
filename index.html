@@ -25,7 +25,7 @@
 body{background:var(--bg);color:#1e293b;line-height:1.6;overflow-x:hidden;}
 
 header{
-background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(3, 105, 161, 0.45)), url('1795227075986.jpeg') center/cover no-repeat;
+background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(3, 105, 161, 0.42)), url('1795228227842.jpeg') center 32%/cover no-repeat;
 color:#1e293b;
 padding:18px 24px 44px;
 display:flex;
@@ -34,7 +34,8 @@ align-items:center;
 gap:12px;
 text-align:center;
 position:relative;
-box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+min-height:195px;
+box-shadow: 0 4px 15px rgba(0,0,0,0.12);
 border-bottom: 3px solid var(--accent-blue);
 overflow: hidden;
 }
@@ -113,9 +114,10 @@ text-shadow: none;
 }
 
 .online-status-badge {
-background: transparent;
-border: none;
-padding: 4px 0;
+background: rgba(15, 23, 42, 0.42);
+border: 1px solid rgba(255, 255, 255, 0.25);
+border-radius: 12px;
+padding: 5px 12px;
 font-size: 0.95rem;
 font-weight: bold;
 color: #ffffff;
@@ -123,6 +125,7 @@ display: flex;
 flex-direction: column;
 align-items: flex-start;
 gap: 2px;
+backdrop-filter: blur(4px);
 text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 line-height: 1.4;
 }
@@ -134,7 +137,7 @@ gap: 15px;
 flex-wrap: wrap;
 }
 .live-clock {
-background: rgba(255, 255, 255, 0.85);
+background: rgba(255, 255, 255, 0.88);
 padding: 6px 14px;
 border-radius: 20px;
 font-weight: bold;
@@ -244,6 +247,32 @@ th{background:var(--primary-light);color:var(--primary-dark)}
 @media print{header,nav,.no-print{display:none!important}}
 
 /* تنسيقات صفحة 9: إرشادات القسم */
+.guide-showcase-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.guide-showcase-thumb {
+  width: 84px;
+  height: 64px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid var(--accent-blue);
+  background: #ffffff;
+  flex-shrink: 0;
+}
+.guide-showcase-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 .guide-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -1009,6 +1038,20 @@ display: none;
     <div class="card">
       <h3>ملفات وصور وفيديوهات الإرشادات المحفوظة</h3>
 
+      <div class="guide-showcase-banner">
+        <div class="guide-showcase-thumb">
+          <img src="1795228227842.jpeg" alt="صورة إرشادات قسم المكيف SP3" onerror="this.style.display='none';">
+        </div>
+        <div style="flex:1; min-width:180px;">
+          <div style="font-weight:800; color:var(--primary-dark); font-size:0.95rem;">
+            <i class="fa-solid fa-circle-info"></i> دليل إرشادات قسم المكيف SP3
+          </div>
+          <div style="font-size:0.82rem; color:#334155;">
+            أضف تعليمات العمل والصور والملفات PDF والفيديوهات، وحدد عنصراً أو أكثر لإرساله مباشرة عبر واتساب.
+          </div>
+        </div>
+      </div>
+
       <div class="guide-toolbar no-print">
         <div class="guide-filter-group">
           <button type="button" class="guide-filter-btn active" id="gFilterAll" onclick="setGuideFilter('all')">الكل</button>
@@ -1037,6 +1080,8 @@ display: none;
 </div>
 
 <script>
+const $ = id => document.getElementById(id);
+
 const translations = {
   ar: {
     nav1: "1. العملاء والمبيعات", nav2: "2. البحث", nav3: "3. التقارير الشهرية", nav4: "4. الصيانة الدورية", nav5: "5. الإعدادات والنسخ", nav6: "6. أرشيف صور العملاء", nav7: "7. مصروفات قسم SP3", nav8: "8. معاينة", nav9: "9. ارشادات القسم",
@@ -1269,13 +1314,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 let db = null;
 function initDB() {
-    let request = indexedDB.open("TC24_MediaDB", 2);
-    request.onsuccess = function(event) {
-        db = event.target.result;
-        renderMedia();
-        populateClientDropdown();
-        renderGuideItems();
-    };
+    let request = indexedDB.open("TC24_MediaDB", 3);
     request.onupgradeneeded = function(event) {
         let dbInstance = event.target.result;
         if (!dbInstance.objectStoreNames.contains("mediaStore")) {
@@ -1285,9 +1324,39 @@ function initDB() {
             dbInstance.createObjectStore("deptGuidesStore", { keyPath: "id", autoIncrement: true });
         }
     };
+    request.onsuccess = function(event) {
+        db = event.target.result;
+        if (!db.objectStoreNames.contains("deptGuidesStore")) {
+            const nextVer = db.version + 1;
+            db.close();
+            const upgradeReq = indexedDB.open("TC24_MediaDB", nextVer);
+            upgradeReq.onupgradeneeded = function(ev) {
+                const upDb = ev.target.result;
+                if (!upDb.objectStoreNames.contains("mediaStore")) {
+                    upDb.createObjectStore("mediaStore", { keyPath: "id", autoIncrement: true });
+                }
+                if (!upDb.objectStoreNames.contains("deptGuidesStore")) {
+                    upDb.createObjectStore("deptGuidesStore", { keyPath: "id", autoIncrement: true });
+                }
+            };
+            upgradeReq.onsuccess = function(ev) {
+                db = ev.target.result;
+                renderMedia();
+                populateClientDropdown();
+                renderGuideItems();
+            };
+            return;
+        }
+        renderMedia();
+        populateClientDropdown();
+        renderGuideItems();
+    };
+    request.onerror = function(event) {
+        console.error("IndexedDB error:", event.target.error);
+        alert("تعذر فتح قاعدة بيانات الملفات في المتصفح.");
+    };
 }
 
-const $ = id => document.getElementById(id);
 if($('serviceDate')) $('serviceDate').valueAsDate = new Date();
 if($('fuelDate')) $('fuelDate').valueAsDate = new Date();
 if($('expenseDate')) $('expenseDate').valueAsDate = new Date();
