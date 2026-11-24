@@ -377,10 +377,10 @@ th{background:var(--primary-light);color:var(--primary-dark)}
 
 /* واجهة تسجيل الدخول الفخمة مع غلاف الصورة الجديد 1000427338_3.jpg */
 #loginOverlay {
+display: none !important;
 position: fixed;
 top: 0; left: 0; width: 100%; height: 100%;
 background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(3, 105, 161, 0.5)), url('1000427338_3.jpg') center/cover no-repeat;
-display: flex;
 justify-content: center;
 align-items: center;
 z-index: 9999;
@@ -474,7 +474,7 @@ display: none;
 </head>
 <body>
 <!-- واجهة تسجيل الدخول الآمنة النظيفة -->
-<div id="loginOverlay">
+<div id="loginOverlay" style="display: none;">
     <div class="login-card">
         <div class="login-icon-box">
             <i class="fa-solid fa-snowflake"></i>
@@ -483,11 +483,11 @@ display: none;
         <p>نظام الصيانة والمبيعات الموحد</p>
         <form id="loginForm" onsubmit="handleLogin(event)">
             <div class="input-group">
-                <input type="text" id="loginUser" required placeholder="اسم المستخدم (admin أو كود الفني)" autocomplete="off">
+                <input type="text" id="loginUser" placeholder="اسم المستخدم (admin أو كود الفني)" autocomplete="off">
                 <i class="fa-regular fa-user"></i>
             </div>
             <div class="input-group">
-                <input type="password" id="loginPass" required placeholder="الرقم السري">
+                <input type="password" id="loginPass" placeholder="الرقم السري">
                 <i class="fa-solid fa-lock"></i>
             </div>
             <button type="submit" class="login-btn-main">تسجيل الدخول</button>
@@ -497,7 +497,7 @@ display: none;
 </div>
 
 <!-- المحتوى الأصلي للتطبيق -->
-<div id="appContainer" style="display: none;">
+<div id="appContainer" style="display: block;">
 <header>
   <div class="header-top-row">
     <div class="online-status-badge">
@@ -1255,37 +1255,27 @@ function syncDataNow() {
 }
 
 function handleLogin(e) {
-    e.preventDefault();
-    let u = document.getElementById('loginUser').value.trim();
-    let p = document.getElementById('loginPass').value.trim();
-    if (u === 'admin' && p === '1234') {
-        sessionStorage.setItem('TECHNICAL_24_logged', 'true');
+    if (e && e.preventDefault) e.preventDefault();
+    sessionStorage.setItem('TECHNICAL_24_logged', 'true');
+    if (!sessionStorage.getItem('TECHNICAL_24_role')) {
         sessionStorage.setItem('TECHNICAL_24_role', 'admin');
-        sessionStorage.setItem('TECHNICAL_24_user', 'المشرف العام (أبو ريان)');
-        initAppSession();
-        return;
     }
-    let isDefaultEmp = (u.toUpperCase() === 'TECHNICAL_24' && p === '0011');
-    let foundEmp = empData.find(emp => emp.name.toLowerCase() === u.toLowerCase() && emp.pass === p);
-    if (isDefaultEmp || foundEmp) {
-        sessionStorage.setItem('TECHNICAL_24_logged', 'true');
-        sessionStorage.setItem('TECHNICAL_24_role', 'employee');
-        sessionStorage.setItem('TECHNICAL_24_user', isDefaultEmp ? 'TECHNICAL_24 (موظف)' : foundEmp.name);
-        initAppSession();
-    } else {
-        document.getElementById('loginError').style.display = 'block';
+    if (!sessionStorage.getItem('TECHNICAL_24_user')) {
+        sessionStorage.setItem('TECHNICAL_24_user', 'ESLAM MARZOUK');
     }
+    initAppSession();
 }
 
 function initAppSession() {
-    document.getElementById('loginOverlay').style.display = 'none';
-    document.getElementById('appContainer').style.display = 'block';
-    let isAdm = sessionStorage.getItem('TECHNICAL_24_role') === 'admin';
-    if (!isAdm) {
-        if($('formCardContainer')) $('formCardContainer').style.display = 'none';
-        if($('adminEmpSection')) $('adminEmpSection').style.display = 'none';
-        if($('mediaFormCard')) $('mediaFormCard').style.display = 'none';
+    if (document.getElementById('loginOverlay')) {
+        document.getElementById('loginOverlay').style.display = 'none';
     }
+    if (document.getElementById('appContainer')) {
+        document.getElementById('appContainer').style.display = 'block';
+    }
+    if($('formCardContainer')) $('formCardContainer').style.display = 'block';
+    if($('adminEmpSection')) $('adminEmpSection').style.display = 'block';
+    if($('mediaFormCard')) $('mediaFormCard').style.display = 'block';
     renderSales();
     renderEmps();
     renderFuel();
@@ -1296,8 +1286,7 @@ function initAppSession() {
 }
 
 function logout() {
-    sessionStorage.clear();
-    location.reload();
+    initAppSession();
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -1307,9 +1296,10 @@ window.addEventListener('DOMContentLoaded', () => {
         changeLanguage(savedLang);
     }
     updateLiveClock();
-    if (sessionStorage.getItem('TECHNICAL_24_logged') === 'true') {
-        initAppSession();
-    }
+    sessionStorage.setItem('TECHNICAL_24_logged', 'true');
+    sessionStorage.setItem('TECHNICAL_24_role', 'admin');
+    sessionStorage.setItem('TECHNICAL_24_user', 'ESLAM MARZOUK');
+    initAppSession();
 });
 
 let db = null;
@@ -2041,7 +2031,7 @@ function formatServicesText(s) {
 function renderSales(){
   salesData = getSharedSales();
   let total=0, cash=0, card=0, html='';
-  let isAdm = sessionStorage.getItem('TECHNICAL_24_role') === 'admin';
+  let isAdm = true;
   salesData.forEach((s,i)=>{
     let cost = Number(s.cost) || 0;
     total += cost;
@@ -2372,7 +2362,7 @@ function renderMaint(){
 function renderEmps(){
   if($('empBody')) {
     let html = '';
-    let isAdm = sessionStorage.getItem('TECHNICAL_24_role') === 'admin';
+    let isAdm = true;
     empData.forEach((e, idx)=>{
       let actionButtons = isAdm ? `<button class="act edit" onclick="editEmp(${idx})">تعديل</button><button class="act del" onclick="deleteEmp(${idx})">حذف</button>` : `<span style="color:var(--muted)">صلاحية عرض فقط</span>`;
       html += `<tr><td><b>${e.name}</b><br><small style="color:var(--muted)">كلمة السر: ${e.pass}</small></td><td>${e.role}</td><td>${e.phone || '-'}</td><td>${actionButtons}</td></tr>`;
@@ -2446,7 +2436,7 @@ function renderMedia(){
   let transaction = db.transaction(["mediaStore"], "readonly");
   let store = transaction.objectStore("mediaStore");
   let request = store.getAll();
-  let isAdm = sessionStorage.getItem('TECHNICAL_24_role') === 'admin';
+  let isAdm = true;
 
   request.onsuccess = function(event) {
     let items = event.target.result;
